@@ -1,6 +1,7 @@
 # Course Project
 
 The goal of your course project is to empirically investigate a large number of devops pipeline programs and obtain statistical data that describe the content and patterns in devops pipelines. You will search and obtain jenkinsfiles and other pipeline artifacts from open-source repositories, e.g., github contains hundreds of pipeline examples and other code artifacts. The result of your investigation will be a report that summarizes the data - you can find an example of a report on my website (https://www.cs.uic.edu/~drmark/index_htm_files/Treasure.pdf). Examples of research questions that you will address include but not limited to the following.
+
 * What are the most frequent post-condition blocks in the post section within jenkins pipelines? Create distribution graphs for post-condition blocks.
 * How is the presence of triggers in a pipeline correlates with the number of stages in the pipeline?
 * What are the most and the least frequent operations in pipeline stages?
@@ -48,6 +49,7 @@ THE INSTRUCTOR WILL NOT ANSWER ANY REQUESTS FROM STUDENTS STARTING 7PM THE NIGHT
 ------
 
 Evaluation criteria:
+
 * the maximum grade for this homework is 50%. Points are subtracted from this maximum grade: for example, saying that 2% is lost if some requirement is not completed means that the resulting grade will be 50%-2% => 48%;
 
 * no comments or insufficient comments: up to 30% lost;
