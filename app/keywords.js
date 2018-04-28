@@ -3,7 +3,10 @@ var keys = {
     STAGES: 'stages',
     STAGE: 'stage'
 }
+
+var keysArray = [keys.PIPELINE, keys.STAGES, keys.STAGE];
 console.log(keys.PIPELINE);
 module.exports = {
-    keys
+    keys,
+    keysArray
 }
