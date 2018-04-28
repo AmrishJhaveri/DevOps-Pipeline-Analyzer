@@ -1,0 +1,21 @@
+{
+  "name": "devope-pipeline-analyzer",
+  "version": "1.0.0",
+  "description": "CS 540",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://ajhave5@bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp.git"
+  },
+  "keywords": [
+    "devops",
+    "jenkins-pipeline",
+    "analyzer"
+  ],
+  "author": "Amrish Jhaveri, Chinmay Gangal",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp#readme"
+}
