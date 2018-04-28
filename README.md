@@ -62,5 +62,5 @@ Evaluation criteria:
 
 * only a subset of your functionality works: up to 30% lost;
 
-* the minimum grade for this course project cannot be less than zero.
+* the minimum grade for this course project cannot be less than zero. 
 
