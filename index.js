@@ -2,4 +2,4 @@
 const app=require('./app/index.js');
 
 //Call the getRepoData() function in the module.
-// app.getAnalyzerOutput();
+ app.startProcess();
