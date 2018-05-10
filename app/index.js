@@ -6,23 +6,18 @@ const octokit = require('@octokit/rest')();
 // NPM module(Node internal) for file reading & writing operations
 const fs = require('fs');
 
-// NPM module for easy to use utility functions of String, Array
-// const _ = require('lodash');
-
 // NPM module for HTTP request
 const axios = require('axios');
-// axios.defaults.headers.common['Authorization']='Basic YWRtaW46MTIzNDU2Nzg5';
-// axios.defaults.withCredentials=true;
-// const readline=require('readline');
 
 const pipeKeywords = require('./keywords');
 
-const Q1 =
-    'What are the most frequent post-condition blocks in the post section within jenkins pipelines? Create distribution graphs for post-condition blocks.';
-
 var parsedJenkinsFile = [];
-var parseBasedOnOutput =
-    {research_question_1: Q1, counts_of_post_elements: {}, project_details: []}
+var parseBasedOnOutput = {
+  research_question_1:
+      'What are the most frequent post-condition blocks in the post section within jenkins pipelines? Create distribution graphs for post-condition blocks.',
+  counts_of_post_elements: {},
+  project_details: []
+}
 
 const POST_ELEMENTS_CONSTANTS = {
   ALWAYS: 'always',
@@ -108,6 +103,9 @@ async function startProcess() {
   }
 }
 
+/**
+ *
+ */
 function eachParsedJenkinsFileWrapper() {
   return async function(eachFile) {
     parseBasedOnOutput.project_details.push(eachFile);
@@ -121,6 +119,9 @@ function eachParsedJenkinsFileWrapper() {
   }
 }
 
+/**
+ *
+ */
 function processEachConditionBlock() {
   return async function(eachConditionObj) {
     switch (eachConditionObj.condition.toLowerCase()) {
@@ -155,6 +156,10 @@ function processEachConditionBlock() {
   }
 }
 
+/**
+ *
+ * @param {*} element
+ */
 function incrementCount(element) {
   let count = parseBasedOnOutput.counts_of_post_elements[element];
   if (count) {
@@ -165,51 +170,44 @@ function incrementCount(element) {
   parseBasedOnOutput.counts_of_post_elements[element] = count;
 }
 
+/**
+ *
+ */
 function getEachJenkinsFileWrapper() {
   return async function(eachRepoForFile) {
     try {
       let myJsonStructure = {};
       let response = await axios.get(
           eachRepoForFile.git_url + '?access_token=' + accessToken);
-      //   console.log(eachRepoForFile.repository.name + ':' +
-      //   response.data.content);
-      let fileContent = Buffer.from(response.data.content, 'base64');
-      //   console.log(
-      //       eachRepoForFile.repository.name + ':' +
-      //       fileContent.toString('ascii'));
 
-      //   let response_jenkins = await axios.post(
-      //       'http://docker:9080/pipeline-model-converter/toJson',
-      //       {formData:{'jenkinsfile': fileContent.toString('ascii')}}, {
-      //         withCredentials: true,
-      //         auth: {username: 'admin', password: '123456789'}
-      //       });
-      //   console.log(response_jenkins.data.data.errors);
+      let fileContent = Buffer.from(response.data.content, 'base64');
+
       let jsonResponse = await jenkinsJSONPromise(fileContent);
+
       myJsonStructure['full_repo_name'] = eachRepoForFile.repository.full_name;
       myJsonStructure['repo_url'] = eachRepoForFile.repository.html_url;
       myJsonStructure['html_url_jenkinsfile'] = eachRepoForFile.html_url;
       myJsonStructure['api_url_jenkinsfile'] = eachRepoForFile.git_url;
+      //   myJsonStructure['actual_jenkinsfile']=fileContent.toString('ascii');
       myJsonStructure['jenkins_pipeline'] = jsonResponse;
-      //   console.log('jsonResponse:' + jsonResponse);
       parsedJenkinsFile.push(myJsonStructure);
 
-
-
-      // console.log(response);
     } catch (e) {
       console.log(e);
     }
   }
 }
 
+/**
+ *
+ * @param {*} fileContent
+ */
 function jenkinsJSONPromise(fileContent) {
   return new Promise((resolve, reject) => {
     var options = {
       method: 'POST',
       url: 'http://192.168.99.100:9080/pipeline-model-converter/toJson',
       headers: {
-        //   'postman-token': '73d0face-581b-c6f5-984a-bfeb8e37a9a4',
         'cache-control': 'no-cache',
         authorization: 'Basic YWRtaW46MTIzNDU2Nzg5',
         'content-type':
@@ -229,13 +227,13 @@ function jenkinsJSONPromise(fileContent) {
       } else if (JSON.parse(body).data) {
         resolve(JSON.parse(body).data.errors);
       }
-      //   console.log(JSON.stringify(JSON.parse(body).data.json, undefined,
-      //   2));
-      // parsedJenkinsFile.push(JSON.parse(body));
     });
   });
 }
 
+/**
+ *
+ */
 function writeToFile() {
   console.log('File writing started.');
   fs.writeFileSync(
@@ -255,43 +253,5 @@ async function paginateSearchCalls() {
   }
   return data;
 }
-
-
-
-// function startProcess() {
-//     var jenkinsFileArray =
-//     JSON.parse(fs.readFileSync(CONSTANTS.JENKINS_SAMPLE, 'utf8'));
-//     jenkinsFileArray.map(readFileWrapper());
-//     // console.log(jenkinsFileArray);
-// }
-
-// function readFileWrapper() {
-//     return async function readFile(eachJenkinsFile) {
-
-//         let lineReader=readline.createInterface({
-//             input: fs.createReadStream(CONSTANTS.JENKINSFILE_LOCATION_PREPEND
-//             + eachJenkinsFile.localName)
-//         });
-//         lineReader.on('line',(line)=>{
-
-//             if(!line){
-//                 return;
-//             }
-
-//             console.log(eachJenkinsFile.localName+":"+line);
-//             var pattern=/\s*([a-zA-Z]*)\s*{\s*|\s*([a-zA-Z]*)}\s*/;
-//             let tokens=line.split(pattern);
-//             console.log(tokens);
-
-//         });
-
-//         // fs.readFile(CONSTANTS.JENKINSFILE_LOCATION_PREPEND +
-//         eachJenkinsFile.localName, 'utf8', function (err, contents) {
-//         //     console.log(contents);
-
-//         // });
-
-//     }
-// }
 
 module.exports = {startProcess}
