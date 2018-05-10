@@ -17,8 +17,12 @@ const axios = require('axios');
 
 const pipeKeywords = require('./keywords');
 
+const Q1 =
+    'What are the most frequent post-condition blocks in the post section within jenkins pipelines? Create distribution graphs for post-condition blocks.';
+
 var parsedJenkinsFile = [];
-var parseBasedOnOutput = {project_details: [], counts_of_post_elements: {}}
+var parseBasedOnOutput =
+    {research_question_1: Q1, counts_of_post_elements: {}, project_details: []}
 
 const POST_ELEMENTS_CONSTANTS = {
   ALWAYS: 'always',
