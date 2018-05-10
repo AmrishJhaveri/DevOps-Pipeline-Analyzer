@@ -17,6 +17,8 @@ const axios = require('axios');
 
 const pipeKeywords = require('./keywords');
 
+var parsedJenkinsFile = [];
+
 const CONSTANTS = {
   JENKINS_SAMPLE: './jenksinsfile_samples.json',
   JENKINSFILE_LOCATION_PREPEND: './Jenkinsfiles/',
@@ -76,8 +78,8 @@ async function startProcess() {
     let result_data = await paginateSearchCalls();
     console.log('after startProcess()');
 
-    result_data.map(getEachJenkinsFileWrapper());
-
+    const promises= result_data.map(getEachJenkinsFileWrapper());
+    await Promise.all(promises);
     writeToFile(result_data);
 
   } catch (e) {
@@ -104,25 +106,10 @@ function getEachJenkinsFileWrapper() {
       //         auth: {username: 'admin', password: '123456789'}
       //       });
       //   console.log(response_jenkins.data.data.errors);
+      let jsonResponse = await jenkinsJSONPromise(fileContent);
+        console.log('jsonResponse:'+jsonResponse);
+      parsedJenkinsFile.push(jsonResponse);
 
-      var options = {
-        method: 'POST',
-        url: 'http://docker:9080/pipeline-model-converter/toJson',
-        headers: {
-          //   'postman-token': '73d0face-581b-c6f5-984a-bfeb8e37a9a4',
-          'cache-control': 'no-cache',
-          authorization: 'Basic YWRtaW46MTIzNDU2Nzg5',
-          'content-type':
-              'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
-        },
-        formData: {jenkinsfile: fileContent}
-      };
-
-      request(options, function(error, response, body) {
-        if (error) throw new Error(error);
-
-        console.log(JSON.stringify(body, undefined, 2));
-      });
 
 
       // console.log(response);
@@ -132,10 +119,38 @@ function getEachJenkinsFileWrapper() {
   }
 }
 
+function jenkinsJSONPromise(fileContent) {
+  return new Promise((resolve, reject) => {
+    var options = {
+      method: 'POST',
+      url: 'http://192.168.99.100:9080/pipeline-model-converter/toJson',
+      headers: {
+        //   'postman-token': '73d0face-581b-c6f5-984a-bfeb8e37a9a4',
+        'cache-control': 'no-cache',
+        authorization: 'Basic YWRtaW46MTIzNDU2Nzg5',
+        'content-type':
+            'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
+      },
+      formData: {jenkinsfile: fileContent}
+    };
+
+    request(options, function(error, response, body) {
+      if (error) {
+        reject(err)
+      };
+
+      resolve(JSON.parse(body));
+      console.log(JSON.stringify(body, undefined, 2));
+      // parsedJenkinsFile.push(JSON.parse(body));
+    });
+  });
+}
+
 function writeToFile(object) {
+  console.log('File writing started.');
   fs.writeFileSync(
       CONSTANTS.JENKINS_FILE_INFO_WITH_REPO,
-      JSON.stringify(object, undefined, 2));
+      JSON.stringify(parsedJenkinsFile, undefined, 2));
 }
 
 async function paginateSearchCalls() {
