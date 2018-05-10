@@ -18,7 +18,7 @@ const axios = require('axios');
 const pipeKeywords = require('./keywords');
 
 var parsedJenkinsFile = [];
-var parseBasedOnOutput = {git_urls: [], counts_of_post_elements: {}}
+var parseBasedOnOutput = {project_details: [], counts_of_post_elements: {}}
 
 const POST_ELEMENTS_CONSTANTS = {
   ALWAYS: 'always',
@@ -39,7 +39,7 @@ const CONSTANTS = {
 }
 
 const SEARCH_CODE_GIT_CONSTANTS = {
-  REPOS_PER_PAGE: 32,
+  REPOS_PER_PAGE: 15,
   MAX_NO_OF_PAGES_TO_FETCH_FROM: 2
 }
 
@@ -106,9 +106,9 @@ async function startProcess() {
 
 function eachParsedJenkinsFileWrapper() {
   return async function(eachFile) {
-    parseBasedOnOutput.git_urls.push(eachFile.html_url_jenkinsfile);
+    parseBasedOnOutput.project_details.push(eachFile);
 
-    if (eachFile.jenkins_pipeline && eachFile.jenkins_pipeline.pipeline.post) {
+    if (eachFile.jenkins_pipeline && eachFile.jenkins_pipeline.pipeline && eachFile.jenkins_pipeline.pipeline.post) {
       let promises = eachFile.jenkins_pipeline.pipeline.post.conditions.map(
           processEachConditionBlock());
       await Promise.all(promises);
@@ -215,12 +215,15 @@ function jenkinsJSONPromise(fileContent) {
 
     request(options, function(error, response, body) {
       if (error) {
-          console.log(error);
-        reject(error)
+        console.log(error);
+        reject(error);
         return;
       };
-
-      resolve(JSON.parse(body).data.json);
+      if (JSON.parse(body).data.json) {
+        resolve(JSON.parse(body).data.json);
+      } else if (JSON.parse(body).data){
+        resolve(JSON.parse(body).data.errors);
+      }
       //   console.log(JSON.stringify(JSON.parse(body).data.json, undefined,
       //   2));
       // parsedJenkinsFile.push(JSON.parse(body));
