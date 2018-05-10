@@ -1,5 +1,5 @@
 {
-  "name": "devope-pipeline-analyzer",
+  "name": "devops-pipeline-analyzer",
   "version": "1.0.0",
   "description": "CS 540",
   "main": "index.js",
@@ -22,8 +22,6 @@
   "dependencies": {
     "@octokit/rest": "^15.4.0",
     "axios": "^0.18.0",
-    "npm": "^6.0.1",
-    "plotly": "^1.0.6",
     "request": "^2.85.0"
   }
 }
