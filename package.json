@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"node index.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,9 @@
   ],
   "author": "Amrish Jhaveri, Chinmay Gangal",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp#readme"
+  "homepage": "https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp#readme",
+  "dependencies": {
+    "@octokit/rest": "^15.4.0",
+    "axios": "^0.18.0"
+  }
 }
