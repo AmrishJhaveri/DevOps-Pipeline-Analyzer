@@ -78,7 +78,7 @@ async function startProcess() {
     let result_data = await paginateSearchCalls();
     console.log('after startProcess()');
 
-    const promises= result_data.map(getEachJenkinsFileWrapper());
+    const promises = result_data.map(getEachJenkinsFileWrapper());
     await Promise.all(promises);
     writeToFile(result_data);
 
@@ -90,6 +90,7 @@ async function startProcess() {
 function getEachJenkinsFileWrapper() {
   return async function(eachRepoForFile) {
     try {
+      let myJsonStructure = {};
       let response = await axios.get(
           eachRepoForFile.git_url + '?access_token=' + accessToken);
       //   console.log(eachRepoForFile.repository.name + ':' +
@@ -107,8 +108,11 @@ function getEachJenkinsFileWrapper() {
       //       });
       //   console.log(response_jenkins.data.data.errors);
       let jsonResponse = await jenkinsJSONPromise(fileContent);
-        console.log('jsonResponse:'+jsonResponse);
-      parsedJenkinsFile.push(jsonResponse);
+      myJsonStructure['git_url'] = eachRepoForFile.git_url;
+      myJsonStructure['full_repo_name'] = eachRepoForFile.repository.full_name;
+      myJsonStructure['jenkins_pipeline'] = jsonResponse;
+      //   console.log('jsonResponse:' + jsonResponse);
+      parsedJenkinsFile.push(myJsonStructure);
 
 
 
@@ -139,8 +143,9 @@ function jenkinsJSONPromise(fileContent) {
         reject(err)
       };
 
-      resolve(JSON.parse(body));
-      console.log(JSON.stringify(body, undefined, 2));
+      resolve(JSON.parse(body).data.json);
+      //   console.log(JSON.stringify(JSON.parse(body).data.json, undefined,
+      //   2));
       // parsedJenkinsFile.push(JSON.parse(body));
     });
   });
