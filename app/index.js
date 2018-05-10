@@ -1,3 +1,5 @@
+var request = require('request');
+
 // NPM module for GitHub Api
 const octokit = require('@octokit/rest')();
 
@@ -9,88 +11,151 @@ const fs = require('fs');
 
 // NPM module for HTTP request
 const axios = require('axios');
-
+// axios.defaults.headers.common['Authorization']='Basic YWRtaW46MTIzNDU2Nzg5';
+// axios.defaults.withCredentials=true;
 // const readline=require('readline');
 
 const pipeKeywords = require('./keywords');
 
 const CONSTANTS = {
-    JENKINS_SAMPLE: './jenksinsfile_samples.json',
-    JENKINSFILE_LOCATION_PREPEND: './Jenkinsfiles/',
-    JENKINS_FILE_INFO_WITH_REPO:'./data/JenkinsFileDataGit.json'
+  JENKINS_SAMPLE: './jenksinsfile_samples.json',
+  JENKINSFILE_LOCATION_PREPEND: './Jenkinsfiles/',
+  JENKINS_FILE_INFO_WITH_REPO: './data/JenkinsFileDataGit.json'
 }
 
-// Github Personal Access Token. Only Read access to public repos is provided with this token.
+const SEARCH_CODE_GIT_CONSTANTS = {
+  REPOS_PER_PAGE: 2,
+  MAX_NO_OF_PAGES_TO_FETCH_FROM: 2
+}
+
+// Github Personal Access Token. Only Read access to public repos is provided
+// with this token.
 const accessToken = '76a1e4c56ede658b7bd1241ccfb51d6c5511f289';
-// Token setup for Octokit to increase the read limit to 5000 requests every hour.
-octokit.authenticate({
-    type: 'token',
-    token: accessToken
-})
+// Token setup for Octokit to increase the read limit to 5000 requests every
+// hour.
+octokit.authenticate({type: 'token', token: accessToken})
 
 /**
- * This generates the JS object with the search parameters(q), sorting parameter(sort), 
- * ordering of result(order), page number of result(page), and no of requests per page(per_page).
- * This object is the input for octokit.search.repos.
- * 
+ * This generates the JS object with the search parameters(q), sorting
+ * parameter(sort), ordering of result(order), page number of result(page), and
+ * no of requests per page(per_page). This object is the input for
+ * octokit.search.repos.
+ *
  * @param {*} page_no page number of the search query to be considered for finding the repos
  */
 function getParams(page_no) {
-    // Search Java language projects with MIT license
-    let q_param = "Jenkinsfile in:path agent in:file language:Groovy";
-    // let q_param = "mock language:java license:mit";
-    // Sort by the stars of the Github project
-    let sort_param = 'stars';
-    // Order in descending order
-    let order_param = 'desc';
-    // Get 5 projects from this page
-    let per_page_number = 5;
+  // Search Java language projects with MIT license
+  let q_param = 'Jenkinsfile in:path agent in:file language:Groovy';
+  // let q_param = "mock language:java license:mit";
+  // Sort by the stars of the Github project
+  let sort_param = 'stars';
+  // Order in descending order
+  let order_param = 'desc';
+  // Get 5 projects from this page
+  let per_page_number = SEARCH_CODE_GIT_CONSTANTS.REPOS_PER_PAGE;
 
-    return params = {
-        q: q_param,
-        // sort: sort_param,
-        order: order_param,
-        page: page_no,
-        per_page: per_page_number
-    }
+  return params = {
+    q: q_param,
+    // sort: sort_param,
+    order: order_param,
+    // page: page_no,
+    per_page: per_page_number
+  }
 };
 
 /**
- * Async function to fetch the repo data based on the input provided by getParams().
- * Uses octokit.search.repos to fetch the required repositories.
- * Await is used to wait till the repo result is available. 
+ * Async function to fetch the repo data based on the input provided by
+ * getParams(). Uses octokit.search.repos to fetch the required repositories.
+ * Await is used to wait till the repo result is available.
  * Once available then only fetch the pull requests data of each repo.
  */
 async function startProcess() {
+  try {
+    // Make a HTTP call to fetch the Repo details using Octokit Git Api.
+    // Wait till the data is available.
+    let result_data = await paginateSearchCalls();
+    console.log('after startProcess()');
+
+    result_data.map(getEachJenkinsFileWrapper());
+
+    writeToFile(result_data);
+
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+function getEachJenkinsFileWrapper() {
+  return async function(eachRepoForFile) {
     try {
-        // Make a HTTP call to fetch the Repo details using Octokit Git Api. 
-        // Wait till the data is available.
-        const result_data = await octokit.search.code(getParams(1));
-        console.log('after startProcess()');
+      let response = await axios.get(
+          eachRepoForFile.git_url + '?access_token=' + accessToken);
+      //   console.log(eachRepoForFile.repository.name + ':' +
+      //   response.data.content);
+      let fileContent = Buffer.from(response.data.content, 'base64');
+      //   console.log(
+      //       eachRepoForFile.repository.name + ':' +
+      //       fileContent.toString('ascii'));
+
+      //   let response_jenkins = await axios.post(
+      //       'http://docker:9080/pipeline-model-converter/toJson',
+      //       {formData:{'jenkinsfile': fileContent.toString('ascii')}}, {
+      //         withCredentials: true,
+      //         auth: {username: 'admin', password: '123456789'}
+      //       });
+      //   console.log(response_jenkins.data.data.errors);
+
+      var options = {
+        method: 'POST',
+        url: 'http://docker:9080/pipeline-model-converter/toJson',
+        headers: {
+          //   'postman-token': '73d0face-581b-c6f5-984a-bfeb8e37a9a4',
+          'cache-control': 'no-cache',
+          authorization: 'Basic YWRtaW46MTIzNDU2Nzg5',
+          'content-type':
+              'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
+        },
+        formData: {jenkinsfile: fileContent}
+      };
+
+      request(options, function(error, response, body) {
+        if (error) throw new Error(error);
+
+        console.log(JSON.stringify(body, undefined, 2));
+      });
 
 
-        //Once all the data is received, get the pull request data for each repo using pulls_url attribute.
-        //await getPullRequestsForRepos(result_data);
-
-        writeToFile(result_data);
-        
+      // console.log(response);
+    } catch (e) {
+      console.log(e);
     }
-    catch (e) {
-        console.log(e);
-    }
+  }
 }
 
-function writeToFile(object){
-    fs.writeFileSync(CONSTANTS.JENKINS_FILE_INFO_WITH_REPO,JSON.stringify(object,undefined,2));
+function writeToFile(object) {
+  fs.writeFileSync(
+      CONSTANTS.JENKINS_FILE_INFO_WITH_REPO,
+      JSON.stringify(object, undefined, 2));
 }
 
-
-
+async function paginateSearchCalls() {
+  let count_of_pages = SEARCH_CODE_GIT_CONSTANTS.MAX_NO_OF_PAGES_TO_FETCH_FROM;
+  let response = await octokit.search.code(getParams(1));
+  let data = [];
+  data = data.concat(response.data.items);
+  while (count_of_pages > 1 && octokit.hasNextPage(response)) {
+    response = await octokit.getNextPage(response);
+    data = data.concat(response.data.items);
+    count_of_pages--;
+  }
+  return data;
+}
 
 
 
 // function startProcess() {
-//     var jenkinsFileArray = JSON.parse(fs.readFileSync(CONSTANTS.JENKINS_SAMPLE, 'utf8'));
+//     var jenkinsFileArray =
+//     JSON.parse(fs.readFileSync(CONSTANTS.JENKINS_SAMPLE, 'utf8'));
 //     jenkinsFileArray.map(readFileWrapper());
 //     // console.log(jenkinsFileArray);
 // }
@@ -99,7 +164,8 @@ function writeToFile(object){
 //     return async function readFile(eachJenkinsFile) {
 
 //         let lineReader=readline.createInterface({
-//             input: fs.createReadStream(CONSTANTS.JENKINSFILE_LOCATION_PREPEND + eachJenkinsFile.localName)
+//             input: fs.createReadStream(CONSTANTS.JENKINSFILE_LOCATION_PREPEND
+//             + eachJenkinsFile.localName)
 //         });
 //         lineReader.on('line',(line)=>{
 
@@ -114,7 +180,8 @@ function writeToFile(object){
 
 //         });
 
-//         // fs.readFile(CONSTANTS.JENKINSFILE_LOCATION_PREPEND + eachJenkinsFile.localName, 'utf8', function (err, contents) {
+//         // fs.readFile(CONSTANTS.JENKINSFILE_LOCATION_PREPEND +
+//         eachJenkinsFile.localName, 'utf8', function (err, contents) {
 //         //     console.log(contents);
 
 //         // });
@@ -122,6 +189,4 @@ function writeToFile(object){
 //     }
 // }
 
-module.exports = {
-    startProcess
-}
+module.exports = {startProcess}

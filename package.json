@@ -21,6 +21,7 @@
   "homepage": "https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp#readme",
   "dependencies": {
     "@octokit/rest": "^15.4.0",
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
+    "request": "^2.85.0"
   }
 }
