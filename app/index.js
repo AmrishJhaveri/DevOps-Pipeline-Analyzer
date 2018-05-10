@@ -18,6 +18,19 @@ const axios = require('axios');
 const pipeKeywords = require('./keywords');
 
 var parsedJenkinsFile = [];
+var parseBasedOnOutput = {git_urls: [], counts_of_post_elements: {}}
+
+const POST_ELEMENTS_CONSTANTS = {
+  ALWAYS: 'always',
+  CHANGED: 'changed',
+  FIXED: 'fixed',
+  REGRESSION: 'regression',
+  ABORTED: 'aborted',
+  FAILURE: 'failure',
+  SUCCESS: 'success',
+  UNSTABLE: 'unstable',
+  CLEANUP: 'cleanup'
+}
 
 const CONSTANTS = {
   JENKINS_SAMPLE: './jenksinsfile_samples.json',
@@ -26,7 +39,7 @@ const CONSTANTS = {
 }
 
 const SEARCH_CODE_GIT_CONSTANTS = {
-  REPOS_PER_PAGE: 2,
+  REPOS_PER_PAGE: 32,
   MAX_NO_OF_PAGES_TO_FETCH_FROM: 2
 }
 
@@ -47,7 +60,7 @@ octokit.authenticate({type: 'token', token: accessToken})
  */
 function getParams(page_no) {
   // Search Java language projects with MIT license
-  let q_param = 'Jenkinsfile in:path agent in:file language:Groovy';
+  let q_param = 'Jenkinsfile in:path agent post in:file language:Groovy';
   // let q_param = "mock language:java license:mit";
   // Sort by the stars of the Github project
   let sort_param = 'stars';
@@ -78,13 +91,73 @@ async function startProcess() {
     let result_data = await paginateSearchCalls();
     console.log('after startProcess()');
 
-    const promises = result_data.map(getEachJenkinsFileWrapper());
+    let promises = result_data.map(getEachJenkinsFileWrapper());
     await Promise.all(promises);
-    writeToFile(result_data);
+
+    promises = parsedJenkinsFile.map(eachParsedJenkinsFileWrapper());
+    await Promise.all(promises);
+
+    writeToFile();
 
   } catch (e) {
     console.log(e);
   }
+}
+
+function eachParsedJenkinsFileWrapper() {
+  return async function(eachFile) {
+    parseBasedOnOutput.git_urls.push(eachFile.html_url_jenkinsfile);
+
+    if (eachFile.jenkins_pipeline && eachFile.jenkins_pipeline.pipeline.post) {
+      let promises = eachFile.jenkins_pipeline.pipeline.post.conditions.map(
+          processEachConditionBlock());
+      await Promise.all(promises);
+    }
+  }
+}
+
+function processEachConditionBlock() {
+  return async function(eachConditionObj) {
+    switch (eachConditionObj.condition.toLowerCase()) {
+      case POST_ELEMENTS_CONSTANTS.ALWAYS:
+        incrementCount(POST_ELEMENTS_CONSTANTS.ALWAYS);
+        break;
+      case POST_ELEMENTS_CONSTANTS.CHANGED:
+        incrementCount(POST_ELEMENTS_CONSTANTS.CHANGED);
+        break;
+      case POST_ELEMENTS_CONSTANTS.FIXED:
+        incrementCount(POST_ELEMENTS_CONSTANTS.FIXED);
+        break;
+      case POST_ELEMENTS_CONSTANTS.REGRESSION:
+        incrementCount(POST_ELEMENTS_CONSTANTS.REGRESSION);
+        break;
+      case POST_ELEMENTS_CONSTANTS.ABORTED:
+        incrementCount(POST_ELEMENTS_CONSTANTS.ABORTED);
+        break;
+      case POST_ELEMENTS_CONSTANTS.FAILURE:
+        incrementCount(POST_ELEMENTS_CONSTANTS.FAILURE);
+        break;
+      case POST_ELEMENTS_CONSTANTS.SUCCESS:
+        incrementCount(POST_ELEMENTS_CONSTANTS.SUCCESS);
+        break;
+      case POST_ELEMENTS_CONSTANTS.UNSTABLE:
+        incrementCount(POST_ELEMENTS_CONSTANTS.UNSTABLE);
+        break;
+      case POST_ELEMENTS_CONSTANTS.CLEANUP:
+        incrementCount(POST_ELEMENTS_CONSTANTS.CLEANUP);
+        break;
+    }
+  }
+}
+
+function incrementCount(element) {
+  let count = parseBasedOnOutput.counts_of_post_elements[element];
+  if (count) {
+    count++;
+  } else {
+    count = 1;
+  }
+  parseBasedOnOutput.counts_of_post_elements[element] = count;
 }
 
 function getEachJenkinsFileWrapper() {
@@ -142,7 +215,9 @@ function jenkinsJSONPromise(fileContent) {
 
     request(options, function(error, response, body) {
       if (error) {
-        reject(err)
+          console.log(error);
+        reject(error)
+        return;
       };
 
       resolve(JSON.parse(body).data.json);
@@ -153,11 +228,11 @@ function jenkinsJSONPromise(fileContent) {
   });
 }
 
-function writeToFile(object) {
+function writeToFile() {
   console.log('File writing started.');
   fs.writeFileSync(
       CONSTANTS.JENKINS_FILE_INFO_WITH_REPO,
-      JSON.stringify(parsedJenkinsFile, undefined, 2));
+      JSON.stringify(parseBasedOnOutput, undefined, 2));
 }
 
 async function paginateSearchCalls() {
