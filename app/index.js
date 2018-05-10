@@ -108,8 +108,10 @@ function getEachJenkinsFileWrapper() {
       //       });
       //   console.log(response_jenkins.data.data.errors);
       let jsonResponse = await jenkinsJSONPromise(fileContent);
-      myJsonStructure['git_url'] = eachRepoForFile.git_url;
       myJsonStructure['full_repo_name'] = eachRepoForFile.repository.full_name;
+      myJsonStructure['repo_url'] = eachRepoForFile.repository.html_url;
+      myJsonStructure['html_url_jenkinsfile'] = eachRepoForFile.html_url;
+      myJsonStructure['api_url_jenkinsfile'] = eachRepoForFile.git_url;
       myJsonStructure['jenkins_pipeline'] = jsonResponse;
       //   console.log('jsonResponse:' + jsonResponse);
       parsedJenkinsFile.push(myJsonStructure);
