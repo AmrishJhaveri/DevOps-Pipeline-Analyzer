@@ -108,7 +108,8 @@ function eachParsedJenkinsFileWrapper() {
   return async function(eachFile) {
     parseBasedOnOutput.project_details.push(eachFile);
 
-    if (eachFile.jenkins_pipeline && eachFile.jenkins_pipeline.pipeline && eachFile.jenkins_pipeline.pipeline.post) {
+    if (eachFile.jenkins_pipeline && eachFile.jenkins_pipeline.pipeline &&
+        eachFile.jenkins_pipeline.pipeline.post) {
       let promises = eachFile.jenkins_pipeline.pipeline.post.conditions.map(
           processEachConditionBlock());
       await Promise.all(promises);
@@ -221,7 +222,7 @@ function jenkinsJSONPromise(fileContent) {
       };
       if (JSON.parse(body).data.json) {
         resolve(JSON.parse(body).data.json);
-      } else if (JSON.parse(body).data){
+      } else if (JSON.parse(body).data) {
         resolve(JSON.parse(body).data.errors);
       }
       //   console.log(JSON.stringify(JSON.parse(body).data.json, undefined,
