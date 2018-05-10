@@ -7,154 +7,21 @@
   },
   "project_details": [
     {
-      "full_repo_name": "Ilya225/angular-feed",
-      "repo_url": "https://github.com/Ilya225/angular-feed",
-      "html_url_jenkinsfile": "https://github.com/Ilya225/angular-feed/blob/1050049da1cd591426e4baaf39116ec4793e7f57/Jenkinsfile",
-      "api_url_jenkinsfile": "https://api.github.com/repositories/100453445/git/blobs/984164f3744668e6561d709838388cb94c96a5b4",
-      "jenkins_pipeline": {
-        "pipeline": {
-          "stages": [
-            {
-              "name": "build",
-              "branches": [
-                {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "sh",
-                      "arguments": [
-                        {
-                          "key": "script",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "npm install"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Test",
-              "branches": [
-                {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "sh",
-                      "arguments": [
-                        {
-                          "key": "script",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "npm test"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "post": {
-            "conditions": [
-              {
-                "condition": "always",
-                "branch": {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "sh",
-                      "arguments": [
-                        {
-                          "key": "script",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "echo \"end of pipeline\""
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          "agent": {
-            "type": "any"
-          }
+      "full_repo_name": "mozilla/janus-plugin-sfu",
+      "repo_url": "https://github.com/mozilla/janus-plugin-sfu",
+      "html_url_jenkinsfile": "https://github.com/mozilla/janus-plugin-sfu/blob/4051768ce1751644d3fd1697d665b7553d6f10f2/Jenkinsfile",
+      "api_url_jenkinsfile": "https://api.github.com/repositories/105322703/git/blobs/7f3f30c69f4028c8873f2139c4e47f73dfe5f9d4",
+      "jenkins_pipeline": [
+        {
+          "error": "Invalid option type \"ansiColor\". Valid option types: [authorizationMatrix, buildDiscarder, catchError, checkoutToSubdirectory, disableConcurrentBuilds, disableResume, durabilityHint, gitLabConnection, gitlabBuilds, gitlabCommitStatus, overrideIndexTriggers, retry, script, skipDefaultCheckout, skipStagesAfterUnstable, timeout, timestamps, waitUntil, withContext, withCredentials, withEnv, ws] @ line 5, column 5."
         }
-      }
+      ]
     },
     {
-      "full_repo_name": "esboych/pci-compatible-server",
-      "repo_url": "https://github.com/esboych/pci-compatible-server",
-      "html_url_jenkinsfile": "https://github.com/esboych/pci-compatible-server/blob/5ccb773bd4ac9fa6c17a0f55c2e25fae736d91b4/Jenkinsfile",
-      "api_url_jenkinsfile": "https://api.github.com/repositories/117859064/git/blobs/77b0dabfe43da1dc71620bd323ae129c04efaca9",
-      "jenkins_pipeline": {
-        "pipeline": {
-          "stages": [
-            {
-              "name": "Example",
-              "branches": [
-                {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "echo",
-                      "arguments": [
-                        {
-                          "key": "message",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "Example step 1"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "post": {
-            "conditions": [
-              {
-                "condition": "always",
-                "branch": {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "echo",
-                      "arguments": [
-                        {
-                          "key": "message",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "example step 2-3"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          "agent": {
-            "type": "any"
-          }
-        }
-      }
-    },
-    {
-      "full_repo_name": "PradeepDemo-project/repo2",
-      "repo_url": "https://github.com/PradeepDemo-project/repo2",
-      "html_url_jenkinsfile": "https://github.com/PradeepDemo-project/repo2/blob/3e78db6dc06baaafe886ee55985899dc60bb9473/Jenkinsfile",
-      "api_url_jenkinsfile": "https://api.github.com/repositories/113515644/git/blobs/540aac2c477d122056c4ffa50c765cf608d0d8c7",
+      "full_repo_name": "syalioune/jenkins-declarative-pipeline-test",
+      "repo_url": "https://github.com/syalioune/jenkins-declarative-pipeline-test",
+      "html_url_jenkinsfile": "https://github.com/syalioune/jenkins-declarative-pipeline-test/blob/68af9a1ba65c3f5665fde0629826a00daf715b92/Jenkinsfile",
+      "api_url_jenkinsfile": "https://api.github.com/repositories/94267593/git/blobs/540aac2c477d122056c4ffa50c765cf608d0d8c7",
       "jenkins_pipeline": {
         "pipeline": {
           "stages": [
@@ -212,38 +79,27 @@
       }
     },
     {
-      "full_repo_name": "mozilla/janus-plugin-sfu",
-      "repo_url": "https://github.com/mozilla/janus-plugin-sfu",
-      "html_url_jenkinsfile": "https://github.com/mozilla/janus-plugin-sfu/blob/4051768ce1751644d3fd1697d665b7553d6f10f2/Jenkinsfile",
-      "api_url_jenkinsfile": "https://api.github.com/repositories/105322703/git/blobs/7f3f30c69f4028c8873f2139c4e47f73dfe5f9d4",
-      "jenkins_pipeline": [
-        {
-          "error": "Invalid option type \"ansiColor\". Valid option types: [authorizationMatrix, buildDiscarder, catchError, checkoutToSubdirectory, disableConcurrentBuilds, disableResume, durabilityHint, gitLabConnection, gitlabBuilds, gitlabCommitStatus, overrideIndexTriggers, retry, script, skipDefaultCheckout, skipStagesAfterUnstable, timeout, timestamps, waitUntil, withContext, withCredentials, withEnv, ws] @ line 5, column 5."
-        }
-      ]
-    },
-    {
-      "full_repo_name": "bharatraut-izel/myJenkinsCode",
-      "repo_url": "https://github.com/bharatraut-izel/myJenkinsCode",
-      "html_url_jenkinsfile": "https://github.com/bharatraut-izel/myJenkinsCode/blob/6d6a74ebb225b995b3352aba4e50a06d958733bc/WindowsJenkinsFile/Jenkinsfile",
-      "api_url_jenkinsfile": "https://api.github.com/repositories/116546305/git/blobs/c6b871515d587d0cfc6c90a8ef1462d6d0d9283a",
+      "full_repo_name": "JoshuaKahn/Ino",
+      "repo_url": "https://github.com/JoshuaKahn/Ino",
+      "html_url_jenkinsfile": "https://github.com/JoshuaKahn/Ino/blob/1506c2722d207c06a270279ed9b27489a32874a7/Jenkinsfile",
+      "api_url_jenkinsfile": "https://api.github.com/repositories/116748491/git/blobs/9dd5f16189b421730504966d3e18fd647749e80c",
       "jenkins_pipeline": {
         "pipeline": {
           "stages": [
             {
-              "name": "Test On Windows",
+              "name": "Build",
               "branches": [
                 {
                   "name": "default",
                   "steps": [
                     {
-                      "name": "echo",
+                      "name": "sh",
                       "arguments": [
                         {
-                          "key": "message",
+                          "key": "script",
                           "value": {
                             "isLiteral": true,
-                            "value": "Run tests for windows"
+                            "value": "python3 hello.py"
                           }
                         }
                       ]
@@ -255,7 +111,48 @@
                 "type": "label",
                 "argument": {
                   "isLiteral": true,
-                  "value": "windows"
+                  "value": "master"
+                }
+              }
+            },
+            {
+              "name": "test",
+              "branches": [
+                {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "sh",
+                      "arguments": [
+                        {
+                          "key": "script",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "py.test --junitxml results.xml hello.py"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "name": "sh",
+                      "arguments": [
+                        {
+                          "key": "script",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "make check || true"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "agent": {
+                "type": "label",
+                "argument": {
+                  "isLiteral": true,
+                  "value": "test_slave"
                 }
               },
               "post": {
@@ -266,13 +163,13 @@
                       "name": "default",
                       "steps": [
                         {
-                          "name": "echo",
+                          "name": "junit",
                           "arguments": [
                             {
-                              "key": "message",
+                              "key": "testResults",
                               "value": {
                                 "isLiteral": true,
-                                "value": "In post of windows"
+                                "value": "results.xml"
                               }
                             }
                           ]
@@ -286,6 +183,78 @@
           ],
           "agent": {
             "type": "none"
+          }
+        }
+      }
+    },
+    {
+      "full_repo_name": "ivans-innovation-lab/my-company-rugs-materialized-view-generator",
+      "repo_url": "https://github.com/ivans-innovation-lab/my-company-rugs-materialized-view-generator",
+      "html_url_jenkinsfile": "https://github.com/ivans-innovation-lab/my-company-rugs-materialized-view-generator/blob/21dc4ffc22bf7360aa2135036c3ad4f4982729ae/Jenkinsfile",
+      "api_url_jenkinsfile": "https://api.github.com/repositories/99900101/git/blobs/32a42643a35503b70828e45fde8a2f06fc7f6e43",
+      "jenkins_pipeline": [
+        {
+          "error": "Tool type \"maven\" does not have an install of \"maven-3\" configured - did you mean \"Jenkins_maven\"? @ line 4, column 15."
+        }
+      ]
+    },
+    {
+      "full_repo_name": "ChrisBNR/jenkins_test",
+      "repo_url": "https://github.com/ChrisBNR/jenkins_test",
+      "html_url_jenkinsfile": "https://github.com/ChrisBNR/jenkins_test/blob/968c2860fcafa5649437ee59d727a7bbd33ccdac/Jenkinsfile",
+      "api_url_jenkinsfile": "https://api.github.com/repositories/120796336/git/blobs/ca68b1bc29383322f8fad431a6958e14508f44fa",
+      "jenkins_pipeline": {
+        "pipeline": {
+          "stages": [
+            {
+              "name": "Build and Test",
+              "branches": [
+                {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "sh",
+                      "arguments": [
+                        {
+                          "key": "script",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "echo Hello"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "post": {
+            "conditions": [
+              {
+                "condition": "always",
+                "branch": {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "junit",
+                      "arguments": [
+                        {
+                          "key": "testResults",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "**/*.xml"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "agent": {
+            "type": "any"
           }
         }
       }
@@ -428,10 +397,258 @@
       ]
     },
     {
-      "full_repo_name": "JoshuaKahn/Ino",
-      "repo_url": "https://github.com/JoshuaKahn/Ino",
-      "html_url_jenkinsfile": "https://github.com/JoshuaKahn/Ino/blob/1506c2722d207c06a270279ed9b27489a32874a7/Jenkinsfile",
-      "api_url_jenkinsfile": "https://api.github.com/repositories/116748491/git/blobs/9dd5f16189b421730504966d3e18fd647749e80c",
+      "full_repo_name": "nocono/jenkins_declarative_test",
+      "repo_url": "https://github.com/nocono/jenkins_declarative_test",
+      "html_url_jenkinsfile": "https://github.com/nocono/jenkins_declarative_test/blob/c20b6037824c16b94c15fb41a0902491d66a6722/Jenkinsfile",
+      "api_url_jenkinsfile": "https://api.github.com/repositories/88661297/git/blobs/1d72cac62e50771d6fb21cef00b2b936b352f638",
+      "jenkins_pipeline": {
+        "pipeline": {
+          "stages": [
+            {
+              "name": "Build",
+              "branches": [
+                {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "echo",
+                      "arguments": [
+                        {
+                          "key": "message",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "Test"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Test",
+              "branches": [
+                {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "echo",
+                      "arguments": [
+                        {
+                          "key": "message",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "Test -Stage"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "post": {
+            "conditions": [
+              {
+                "condition": "always",
+                "branch": {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "echo",
+                      "arguments": [
+                        {
+                          "key": "message",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "POST - always"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "condition": "success",
+                "branch": {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "echo",
+                      "arguments": [
+                        {
+                          "key": "message",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "POST  - success"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "condition": "failure",
+                "branch": {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "echo",
+                      "arguments": [
+                        {
+                          "key": "message",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "POST - failure"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "agent": {
+            "type": "any"
+          }
+        }
+      }
+    },
+    {
+      "full_repo_name": "bharatraut-izel/myJenkinsCode",
+      "repo_url": "https://github.com/bharatraut-izel/myJenkinsCode",
+      "html_url_jenkinsfile": "https://github.com/bharatraut-izel/myJenkinsCode/blob/6d6a74ebb225b995b3352aba4e50a06d958733bc/WindowsJenkinsFile/Jenkinsfile",
+      "api_url_jenkinsfile": "https://api.github.com/repositories/116546305/git/blobs/c6b871515d587d0cfc6c90a8ef1462d6d0d9283a",
+      "jenkins_pipeline": {
+        "pipeline": {
+          "stages": [
+            {
+              "name": "Test On Windows",
+              "branches": [
+                {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "echo",
+                      "arguments": [
+                        {
+                          "key": "message",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "Run tests for windows"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "agent": {
+                "type": "label",
+                "argument": {
+                  "isLiteral": true,
+                  "value": "windows"
+                }
+              },
+              "post": {
+                "conditions": [
+                  {
+                    "condition": "always",
+                    "branch": {
+                      "name": "default",
+                      "steps": [
+                        {
+                          "name": "echo",
+                          "arguments": [
+                            {
+                              "key": "message",
+                              "value": {
+                                "isLiteral": true,
+                                "value": "In post of windows"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "agent": {
+            "type": "none"
+          }
+        }
+      }
+    },
+    {
+      "full_repo_name": "lqin-pki/sandbox",
+      "repo_url": "https://github.com/lqin-pki/sandbox",
+      "html_url_jenkinsfile": "https://github.com/lqin-pki/sandbox/blob/da5729a214a9945428f9ee0857a1606f98c5c0f9/Jenkinsfile",
+      "api_url_jenkinsfile": "https://api.github.com/repositories/68567197/git/blobs/77242dfde70ade1b4bfedbf3cb6e2fa5a9e424b5",
+      "jenkins_pipeline": {
+        "pipeline": {
+          "stages": [
+            {
+              "name": "Test",
+              "branches": [
+                {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "echo",
+                      "arguments": [
+                        {
+                          "key": "message",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "hello"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "post": {
+            "conditions": [
+              {
+                "condition": "always",
+                "branch": {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "pkiDeleteDir",
+                      "arguments": []
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "agent": {
+            "type": "label",
+            "argument": {
+              "isLiteral": true,
+              "value": "win-vs2017bt"
+            }
+          }
+        }
+      }
+    },
+    {
+      "full_repo_name": "larsvandersangen/SWOS-WEEK-1",
+      "repo_url": "https://github.com/larsvandersangen/SWOS-WEEK-1",
+      "html_url_jenkinsfile": "https://github.com/larsvandersangen/SWOS-WEEK-1/blob/1913837e25a37789c040754456815c5f59a4ca4f/Jenkinsfile",
+      "api_url_jenkinsfile": "https://api.github.com/repositories/102026707/git/blobs/ed896dd8a11b3317568a779f5bcab9495a9fe4d6",
       "jenkins_pipeline": {
         "pipeline": {
           "stages": [
@@ -448,36 +665,7 @@
                           "key": "script",
                           "value": {
                             "isLiteral": true,
-                            "value": "python3 hello.py"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ],
-              "agent": {
-                "type": "label",
-                "argument": {
-                  "isLiteral": true,
-                  "value": "master"
-                }
-              }
-            },
-            {
-              "name": "test",
-              "branches": [
-                {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "sh",
-                      "arguments": [
-                        {
-                          "key": "script",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "py.test --junitxml results.xml hello.py"
+                            "value": "echo \"Hello World\""
                           }
                         }
                       ]
@@ -489,49 +677,327 @@
                           "key": "script",
                           "value": {
                             "isLiteral": true,
-                            "value": "make check || true"
+                            "value": "mvn clean site install\""
                           }
                         }
                       ]
                     }
                   ]
                 }
-              ],
-              "agent": {
-                "type": "label",
-                "argument": {
-                  "isLiteral": true,
-                  "value": "test_slave"
-                }
-              },
-              "post": {
-                "conditions": [
-                  {
-                    "condition": "always",
-                    "branch": {
-                      "name": "default",
-                      "steps": [
+              ]
+            }
+          ],
+          "post": {
+            "conditions": [
+              {
+                "condition": "always",
+                "branch": {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "junit",
+                      "arguments": [
                         {
-                          "name": "junit",
-                          "arguments": [
-                            {
-                              "key": "testResults",
-                              "value": {
-                                "isLiteral": true,
-                                "value": "results.xml"
-                              }
-                            }
-                          ]
+                          "key": "testResults",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "build/reports/**/*.xml"
+                          }
                         }
                       ]
                     }
-                  }
-                ]
+                  ]
+                }
               }
+            ]
+          },
+          "agent": {
+            "type": "any"
+          }
+        }
+      }
+    },
+    {
+      "full_repo_name": "esboych/pci-compatible-server",
+      "repo_url": "https://github.com/esboych/pci-compatible-server",
+      "html_url_jenkinsfile": "https://github.com/esboych/pci-compatible-server/blob/5ccb773bd4ac9fa6c17a0f55c2e25fae736d91b4/Jenkinsfile",
+      "api_url_jenkinsfile": "https://api.github.com/repositories/117859064/git/blobs/77b0dabfe43da1dc71620bd323ae129c04efaca9",
+      "jenkins_pipeline": {
+        "pipeline": {
+          "stages": [
+            {
+              "name": "Example",
+              "branches": [
+                {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "echo",
+                      "arguments": [
+                        {
+                          "key": "message",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "Example step 1"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
             }
           ],
+          "post": {
+            "conditions": [
+              {
+                "condition": "always",
+                "branch": {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "echo",
+                      "arguments": [
+                        {
+                          "key": "message",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "example step 2-3"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
           "agent": {
-            "type": "none"
+            "type": "any"
+          }
+        }
+      }
+    },
+    {
+      "full_repo_name": "LiveProjectVasudev/LiveProjectVasudev",
+      "repo_url": "https://github.com/LiveProjectVasudev/LiveProjectVasudev",
+      "html_url_jenkinsfile": "https://github.com/LiveProjectVasudev/LiveProjectVasudev/blob/8f2ec83c53bd478a5bb14712b3f3e15dd20aedf5/Jenkinsfile",
+      "api_url_jenkinsfile": "https://api.github.com/repositories/120127349/git/blobs/6ea4aeba6884fd90fc4f0ae07685f657ed0402a2",
+      "jenkins_pipeline": {
+        "pipeline": {
+          "stages": [
+            {
+              "name": "Example",
+              "branches": [
+                {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "echo",
+                      "arguments": [
+                        {
+                          "key": "message",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "JOB 2"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "post": {
+            "conditions": [
+              {
+                "condition": "always",
+                "branch": {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "echo",
+                      "arguments": [
+                        {
+                          "key": "message",
+                          "value": {
+                            "isLiteral": true,
+                            "value": " HAI ONCE AGAIN THIS IS JOB 2!"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "agent": {
+            "type": "any"
+          }
+        }
+      }
+    },
+    {
+      "full_repo_name": "PradeepDemo-project/repo2",
+      "repo_url": "https://github.com/PradeepDemo-project/repo2",
+      "html_url_jenkinsfile": "https://github.com/PradeepDemo-project/repo2/blob/3e78db6dc06baaafe886ee55985899dc60bb9473/Jenkinsfile",
+      "api_url_jenkinsfile": "https://api.github.com/repositories/113515644/git/blobs/540aac2c477d122056c4ffa50c765cf608d0d8c7",
+      "jenkins_pipeline": {
+        "pipeline": {
+          "stages": [
+            {
+              "name": "Example",
+              "branches": [
+                {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "echo",
+                      "arguments": [
+                        {
+                          "key": "message",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "Hello World"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "post": {
+            "conditions": [
+              {
+                "condition": "always",
+                "branch": {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "echo",
+                      "arguments": [
+                        {
+                          "key": "message",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "I will always say Hello again!"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "agent": {
+            "type": "any"
+          }
+        }
+      }
+    },
+    {
+      "full_repo_name": "Ysingle/jenkins_MyFirstPipeline",
+      "repo_url": "https://github.com/Ysingle/jenkins_MyFirstPipeline",
+      "html_url_jenkinsfile": "https://github.com/Ysingle/jenkins_MyFirstPipeline/blob/6ff68d83f0241728e9e7698b9a1f46bace72d241/Jenkinsfile",
+      "api_url_jenkinsfile": "https://api.github.com/repositories/125872669/git/blobs/56af19f2ef23373df648faf70ef327d99c47e517",
+      "jenkins_pipeline": {
+        "pipeline": {
+          "stages": [
+            {
+              "name": "Build",
+              "branches": [
+                {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "sh",
+                      "arguments": [
+                        {
+                          "key": "script",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "./gradlew build"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Test",
+              "branches": [
+                {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "sh",
+                      "arguments": [
+                        {
+                          "key": "script",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "./gradlew check"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "post": {
+            "conditions": [
+              {
+                "condition": "always",
+                "branch": {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "archiveArtifacts",
+                      "arguments": [
+                        {
+                          "key": "artifacts",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "build/libs/**/*.jar"
+                          }
+                        },
+                        {
+                          "key": "fingerprint",
+                          "value": {
+                            "isLiteral": true,
+                            "value": true
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "name": "junit",
+                      "arguments": [
+                        {
+                          "key": "testResults",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "build/reports/**/*.xml"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "agent": {
+            "type": "any"
           }
         }
       }
@@ -664,15 +1130,15 @@
       }
     },
     {
-      "full_repo_name": "Ysingle/jenkins_MyFirstPipeline",
-      "repo_url": "https://github.com/Ysingle/jenkins_MyFirstPipeline",
-      "html_url_jenkinsfile": "https://github.com/Ysingle/jenkins_MyFirstPipeline/blob/6ff68d83f0241728e9e7698b9a1f46bace72d241/Jenkinsfile",
-      "api_url_jenkinsfile": "https://api.github.com/repositories/125872669/git/blobs/56af19f2ef23373df648faf70ef327d99c47e517",
+      "full_repo_name": "biganfa/provizor",
+      "repo_url": "https://github.com/biganfa/provizor",
+      "html_url_jenkinsfile": "https://github.com/biganfa/provizor/blob/5f2ad3315aee5aef59ab6edc0c8d40023b47c546/Jenkinsfile",
+      "api_url_jenkinsfile": "https://api.github.com/repositories/88413099/git/blobs/1b15e562b0c65dc7c594fffb98586ec8380cd2f1",
       "jenkins_pipeline": {
         "pipeline": {
           "stages": [
             {
-              "name": "Build",
+              "name": "build",
               "branches": [
                 {
                   "name": "default",
@@ -684,7 +1150,7 @@
                           "key": "script",
                           "value": {
                             "isLiteral": true,
-                            "value": "./gradlew build"
+                            "value": "php --version >> /tmp/php_version"
                           }
                         }
                       ]
@@ -692,11 +1158,13 @@
                   ]
                 }
               ]
-            },
-            {
-              "name": "Test",
-              "branches": [
-                {
+            }
+          ],
+          "post": {
+            "conditions": [
+              {
+                "condition": "always",
+                "branch": {
                   "name": "default",
                   "steps": [
                     {
@@ -706,50 +1174,7 @@
                           "key": "script",
                           "value": {
                             "isLiteral": true,
-                            "value": "./gradlew check"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "post": {
-            "conditions": [
-              {
-                "condition": "always",
-                "branch": {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "archiveArtifacts",
-                      "arguments": [
-                        {
-                          "key": "artifacts",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "build/libs/**/*.jar"
-                          }
-                        },
-                        {
-                          "key": "fingerprint",
-                          "value": {
-                            "isLiteral": true,
-                            "value": true
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "name": "junit",
-                      "arguments": [
-                        {
-                          "key": "testResults",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "build/reports/**/*.xml"
+                            "value": "echo provizor/Jenkinsfile >> /tmp/trash"
                           }
                         }
                       ]
@@ -759,478 +1184,20 @@
               }
             ]
           },
-          "agent": {
-            "type": "any"
-          }
-        }
-      }
-    },
-    {
-      "full_repo_name": "sudhakarvaddi11/RecordingTestsPipeline",
-      "repo_url": "https://github.com/sudhakarvaddi11/RecordingTestsPipeline",
-      "html_url_jenkinsfile": "https://github.com/sudhakarvaddi11/RecordingTestsPipeline/blob/4d35a06b9a442057866f767c25a874993d5ca591/Jenkinsfile",
-      "api_url_jenkinsfile": "https://api.github.com/repositories/132282364/git/blobs/99a75a913286ca454af939b28f3fd1dd3ff5312c",
-      "jenkins_pipeline": {
-        "pipeline": {
-          "stages": [
+          "environment": [
             {
-              "name": "Test",
-              "branches": [
-                {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "sh",
-                      "arguments": [
-                        {
-                          "key": "script",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "./gradlew check"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
+              "key": "SECRET",
+              "value": {
+                "name": "credentials",
+                "arguments": [
+                  {
+                    "isLiteral": true,
+                    "value": "aaa28e35-e29a-4cab-a885-1b2d6c881c31"
+                  }
+                ]
+              }
             }
           ],
-          "post": {
-            "conditions": [
-              {
-                "condition": "always",
-                "branch": {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "junit",
-                      "arguments": [
-                        {
-                          "key": "testResults",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "build/reports/**/*.xml"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          "agent": {
-            "type": "any"
-          }
-        }
-      }
-    },
-    {
-      "full_repo_name": "syalioune/jenkins-declarative-pipeline-test",
-      "repo_url": "https://github.com/syalioune/jenkins-declarative-pipeline-test",
-      "html_url_jenkinsfile": "https://github.com/syalioune/jenkins-declarative-pipeline-test/blob/68af9a1ba65c3f5665fde0629826a00daf715b92/Jenkinsfile",
-      "api_url_jenkinsfile": "https://api.github.com/repositories/94267593/git/blobs/540aac2c477d122056c4ffa50c765cf608d0d8c7",
-      "jenkins_pipeline": {
-        "pipeline": {
-          "stages": [
-            {
-              "name": "Example",
-              "branches": [
-                {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "echo",
-                      "arguments": [
-                        {
-                          "key": "message",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "Hello World"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "post": {
-            "conditions": [
-              {
-                "condition": "always",
-                "branch": {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "echo",
-                      "arguments": [
-                        {
-                          "key": "message",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "I will always say Hello again!"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          "agent": {
-            "type": "any"
-          }
-        }
-      }
-    },
-    {
-      "full_repo_name": "LiveProjectVasudev/LiveProjectVasudev",
-      "repo_url": "https://github.com/LiveProjectVasudev/LiveProjectVasudev",
-      "html_url_jenkinsfile": "https://github.com/LiveProjectVasudev/LiveProjectVasudev/blob/8f2ec83c53bd478a5bb14712b3f3e15dd20aedf5/Jenkinsfile",
-      "api_url_jenkinsfile": "https://api.github.com/repositories/120127349/git/blobs/6ea4aeba6884fd90fc4f0ae07685f657ed0402a2",
-      "jenkins_pipeline": {
-        "pipeline": {
-          "stages": [
-            {
-              "name": "Example",
-              "branches": [
-                {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "echo",
-                      "arguments": [
-                        {
-                          "key": "message",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "JOB 2"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "post": {
-            "conditions": [
-              {
-                "condition": "always",
-                "branch": {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "echo",
-                      "arguments": [
-                        {
-                          "key": "message",
-                          "value": {
-                            "isLiteral": true,
-                            "value": " HAI ONCE AGAIN THIS IS JOB 2!"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          "agent": {
-            "type": "any"
-          }
-        }
-      }
-    },
-    {
-      "full_repo_name": "ChrisBNR/jenkins_test",
-      "repo_url": "https://github.com/ChrisBNR/jenkins_test",
-      "html_url_jenkinsfile": "https://github.com/ChrisBNR/jenkins_test/blob/968c2860fcafa5649437ee59d727a7bbd33ccdac/Jenkinsfile",
-      "api_url_jenkinsfile": "https://api.github.com/repositories/120796336/git/blobs/ca68b1bc29383322f8fad431a6958e14508f44fa",
-      "jenkins_pipeline": {
-        "pipeline": {
-          "stages": [
-            {
-              "name": "Build and Test",
-              "branches": [
-                {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "sh",
-                      "arguments": [
-                        {
-                          "key": "script",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "echo Hello"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "post": {
-            "conditions": [
-              {
-                "condition": "always",
-                "branch": {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "junit",
-                      "arguments": [
-                        {
-                          "key": "testResults",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "**/*.xml"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          "agent": {
-            "type": "any"
-          }
-        }
-      }
-    },
-    {
-      "full_repo_name": "nocono/jenkins_declarative_test",
-      "repo_url": "https://github.com/nocono/jenkins_declarative_test",
-      "html_url_jenkinsfile": "https://github.com/nocono/jenkins_declarative_test/blob/c20b6037824c16b94c15fb41a0902491d66a6722/Jenkinsfile",
-      "api_url_jenkinsfile": "https://api.github.com/repositories/88661297/git/blobs/1d72cac62e50771d6fb21cef00b2b936b352f638",
-      "jenkins_pipeline": {
-        "pipeline": {
-          "stages": [
-            {
-              "name": "Build",
-              "branches": [
-                {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "echo",
-                      "arguments": [
-                        {
-                          "key": "message",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "Test"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Test",
-              "branches": [
-                {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "echo",
-                      "arguments": [
-                        {
-                          "key": "message",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "Test -Stage"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "post": {
-            "conditions": [
-              {
-                "condition": "always",
-                "branch": {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "echo",
-                      "arguments": [
-                        {
-                          "key": "message",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "POST - always"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              },
-              {
-                "condition": "success",
-                "branch": {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "echo",
-                      "arguments": [
-                        {
-                          "key": "message",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "POST  - success"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              },
-              {
-                "condition": "failure",
-                "branch": {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "echo",
-                      "arguments": [
-                        {
-                          "key": "message",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "POST - failure"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          "agent": {
-            "type": "any"
-          }
-        }
-      }
-    },
-    {
-      "full_repo_name": "Benjamin-MUB/test_git",
-      "repo_url": "https://github.com/Benjamin-MUB/test_git",
-      "html_url_jenkinsfile": "https://github.com/Benjamin-MUB/test_git/blob/b6eb08689590eec1e8cc1e992cf604adefa74069/Jenkinsfile",
-      "api_url_jenkinsfile": "https://api.github.com/repositories/102336632/git/blobs/5edc01a2d694b228435ec85881dc67143ebc5a7b",
-      "jenkins_pipeline": {
-        "pipeline": {
-          "stages": [
-            {
-              "name": "begin",
-              "branches": [
-                {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "echo",
-                      "arguments": [
-                        {
-                          "key": "message",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "hello world"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Test",
-              "branches": [
-                {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "sh",
-                      "arguments": [
-                        {
-                          "key": "script",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "lllllllllll"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Last",
-              "branches": [
-                {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "sh",
-                      "arguments": [
-                        {
-                          "key": "script",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "echo 'B2OBA'"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "post": {
-            "conditions": [
-              {
-                "condition": "always",
-                "branch": {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "echo",
-                      "arguments": [
-                        {
-                          "key": "message",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "finish"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              }
-            ]
-          },
           "agent": {
             "type": "any"
           }
@@ -1462,15 +1429,15 @@
       }
     },
     {
-      "full_repo_name": "larsvandersangen/SWOS-WEEK-1",
-      "repo_url": "https://github.com/larsvandersangen/SWOS-WEEK-1",
-      "html_url_jenkinsfile": "https://github.com/larsvandersangen/SWOS-WEEK-1/blob/1913837e25a37789c040754456815c5f59a4ca4f/Jenkinsfile",
-      "api_url_jenkinsfile": "https://api.github.com/repositories/102026707/git/blobs/ed896dd8a11b3317568a779f5bcab9495a9fe4d6",
+      "full_repo_name": "Ilya225/angular-feed",
+      "repo_url": "https://github.com/Ilya225/angular-feed",
+      "html_url_jenkinsfile": "https://github.com/Ilya225/angular-feed/blob/1050049da1cd591426e4baaf39116ec4793e7f57/Jenkinsfile",
+      "api_url_jenkinsfile": "https://api.github.com/repositories/100453445/git/blobs/984164f3744668e6561d709838388cb94c96a5b4",
       "jenkins_pipeline": {
         "pipeline": {
           "stages": [
             {
-              "name": "Build",
+              "name": "build",
               "branches": [
                 {
                   "name": "default",
@@ -1482,19 +1449,7 @@
                           "key": "script",
                           "value": {
                             "isLiteral": true,
-                            "value": "echo \"Hello World\""
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "name": "sh",
-                      "arguments": [
-                        {
-                          "key": "script",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "mvn clean site install\""
+                            "value": "npm install"
                           }
                         }
                       ]
@@ -1502,119 +1457,7 @@
                   ]
                 }
               ]
-            }
-          ],
-          "post": {
-            "conditions": [
-              {
-                "condition": "always",
-                "branch": {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "junit",
-                      "arguments": [
-                        {
-                          "key": "testResults",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "build/reports/**/*.xml"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          "agent": {
-            "type": "any"
-          }
-        }
-      }
-    },
-    {
-      "full_repo_name": "imejri/average",
-      "repo_url": "https://github.com/imejri/average",
-      "html_url_jenkinsfile": "https://github.com/imejri/average/blob/390176e73c5b760d8907e86321bab9392b2d9c09/Jenkinsfile",
-      "api_url_jenkinsfile": "https://api.github.com/repositories/116690465/git/blobs/800ffcdded0340d05ffeb7dd9abb20cc7360797a",
-      "jenkins_pipeline": {
-        "pipeline": {
-          "stages": [
-            {
-              "name": "Build",
-              "branches": [
-                {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "sh",
-                      "arguments": [
-                        {
-                          "key": "script",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "mvn clean package"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ],
-              "post": {
-                "conditions": [
-                  {
-                    "condition": "success",
-                    "branch": {
-                      "name": "default",
-                      "steps": [
-                        {
-                          "name": "echo",
-                          "arguments": [
-                            {
-                              "key": "message",
-                              "value": {
-                                "isLiteral": true,
-                                "value": "Now Archiving..."
-                              }
-                            }
-                          ]
-                        },
-                        {
-                          "name": "archiveArtifacts",
-                          "arguments": [
-                            {
-                              "key": "artifacts",
-                              "value": {
-                                "isLiteral": true,
-                                "value": "**/target/*.war"
-                              }
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  }
-                ]
-              }
-            }
-          ],
-          "agent": {
-            "type": "any"
-          }
-        }
-      }
-    },
-    {
-      "full_repo_name": "lqin-pki/sandbox",
-      "repo_url": "https://github.com/lqin-pki/sandbox",
-      "html_url_jenkinsfile": "https://github.com/lqin-pki/sandbox/blob/da5729a214a9945428f9ee0857a1606f98c5c0f9/Jenkinsfile",
-      "api_url_jenkinsfile": "https://api.github.com/repositories/68567197/git/blobs/77242dfde70ade1b4bfedbf3cb6e2fa5a9e424b5",
-      "jenkins_pipeline": {
-        "pipeline": {
-          "stages": [
+            },
             {
               "name": "Test",
               "branches": [
@@ -1622,13 +1465,13 @@
                   "name": "default",
                   "steps": [
                     {
-                      "name": "echo",
+                      "name": "sh",
                       "arguments": [
                         {
-                          "key": "message",
+                          "key": "script",
                           "value": {
                             "isLiteral": true,
-                            "value": "hello"
+                            "value": "npm test"
                           }
                         }
                       ]
@@ -1646,8 +1489,16 @@
                   "name": "default",
                   "steps": [
                     {
-                      "name": "pkiDeleteDir",
-                      "arguments": []
+                      "name": "sh",
+                      "arguments": [
+                        {
+                          "key": "script",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "echo \"end of pipeline\""
+                          }
+                        }
+                      ]
                     }
                   ]
                 }
@@ -1655,11 +1506,7 @@
             ]
           },
           "agent": {
-            "type": "label",
-            "argument": {
-              "isLiteral": true,
-              "value": "win-vs2017bt"
-            }
+            "type": "any"
           }
         }
       }
@@ -1719,92 +1566,6 @@
               }
             ]
           },
-          "agent": {
-            "type": "any"
-          }
-        }
-      }
-    },
-    {
-      "full_repo_name": "ivans-innovation-lab/my-company-rugs-materialized-view-generator",
-      "repo_url": "https://github.com/ivans-innovation-lab/my-company-rugs-materialized-view-generator",
-      "html_url_jenkinsfile": "https://github.com/ivans-innovation-lab/my-company-rugs-materialized-view-generator/blob/21dc4ffc22bf7360aa2135036c3ad4f4982729ae/Jenkinsfile",
-      "api_url_jenkinsfile": "https://api.github.com/repositories/99900101/git/blobs/32a42643a35503b70828e45fde8a2f06fc7f6e43",
-      "jenkins_pipeline": [
-        {
-          "error": "Tool type \"maven\" does not have an install of \"maven-3\" configured - did you mean \"Jenkins_maven\"? @ line 4, column 15."
-        }
-      ]
-    },
-    {
-      "full_repo_name": "biganfa/provizor",
-      "repo_url": "https://github.com/biganfa/provizor",
-      "html_url_jenkinsfile": "https://github.com/biganfa/provizor/blob/5f2ad3315aee5aef59ab6edc0c8d40023b47c546/Jenkinsfile",
-      "api_url_jenkinsfile": "https://api.github.com/repositories/88413099/git/blobs/1b15e562b0c65dc7c594fffb98586ec8380cd2f1",
-      "jenkins_pipeline": {
-        "pipeline": {
-          "stages": [
-            {
-              "name": "build",
-              "branches": [
-                {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "sh",
-                      "arguments": [
-                        {
-                          "key": "script",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "php --version >> /tmp/php_version"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "post": {
-            "conditions": [
-              {
-                "condition": "always",
-                "branch": {
-                  "name": "default",
-                  "steps": [
-                    {
-                      "name": "sh",
-                      "arguments": [
-                        {
-                          "key": "script",
-                          "value": {
-                            "isLiteral": true,
-                            "value": "echo provizor/Jenkinsfile >> /tmp/trash"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          "environment": [
-            {
-              "key": "SECRET",
-              "value": {
-                "name": "credentials",
-                "arguments": [
-                  {
-                    "isLiteral": true,
-                    "value": "aaa28e35-e29a-4cab-a885-1b2d6c881c31"
-                  }
-                ]
-              }
-            }
-          ],
           "agent": {
             "type": "any"
           }
@@ -1924,6 +1685,206 @@
       }
     },
     {
+      "full_repo_name": "imejri/average",
+      "repo_url": "https://github.com/imejri/average",
+      "html_url_jenkinsfile": "https://github.com/imejri/average/blob/390176e73c5b760d8907e86321bab9392b2d9c09/Jenkinsfile",
+      "api_url_jenkinsfile": "https://api.github.com/repositories/116690465/git/blobs/800ffcdded0340d05ffeb7dd9abb20cc7360797a",
+      "jenkins_pipeline": {
+        "pipeline": {
+          "stages": [
+            {
+              "name": "Build",
+              "branches": [
+                {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "sh",
+                      "arguments": [
+                        {
+                          "key": "script",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "mvn clean package"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "post": {
+                "conditions": [
+                  {
+                    "condition": "success",
+                    "branch": {
+                      "name": "default",
+                      "steps": [
+                        {
+                          "name": "echo",
+                          "arguments": [
+                            {
+                              "key": "message",
+                              "value": {
+                                "isLiteral": true,
+                                "value": "Now Archiving..."
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "name": "archiveArtifacts",
+                          "arguments": [
+                            {
+                              "key": "artifacts",
+                              "value": {
+                                "isLiteral": true,
+                                "value": "**/target/*.war"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "agent": {
+            "type": "any"
+          }
+        }
+      }
+    },
+    {
+      "full_repo_name": "Benjamin-MUB/test_git",
+      "repo_url": "https://github.com/Benjamin-MUB/test_git",
+      "html_url_jenkinsfile": "https://github.com/Benjamin-MUB/test_git/blob/b6eb08689590eec1e8cc1e992cf604adefa74069/Jenkinsfile",
+      "api_url_jenkinsfile": "https://api.github.com/repositories/102336632/git/blobs/5edc01a2d694b228435ec85881dc67143ebc5a7b",
+      "jenkins_pipeline": {
+        "pipeline": {
+          "stages": [
+            {
+              "name": "begin",
+              "branches": [
+                {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "echo",
+                      "arguments": [
+                        {
+                          "key": "message",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "hello world"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Test",
+              "branches": [
+                {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "sh",
+                      "arguments": [
+                        {
+                          "key": "script",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "lllllllllll"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Last",
+              "branches": [
+                {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "sh",
+                      "arguments": [
+                        {
+                          "key": "script",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "echo 'B2OBA'"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "post": {
+            "conditions": [
+              {
+                "condition": "always",
+                "branch": {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "echo",
+                      "arguments": [
+                        {
+                          "key": "message",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "finish"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "agent": {
+            "type": "any"
+          }
+        }
+      }
+    },
+    {
+      "full_repo_name": "damaro05/JenkingsTest",
+      "repo_url": "https://github.com/damaro05/JenkingsTest",
+      "html_url_jenkinsfile": "https://github.com/damaro05/JenkingsTest/blob/8e386a7637f1d80eb0458731199803e67c840ec9/Jenkinsfile",
+      "api_url_jenkinsfile": "https://api.github.com/repositories/95551315/git/blobs/756964a56571e47a398d2aa4d04e961b828d6a00",
+      "jenkins_pipeline": [
+        {
+          "error": "unable to resolve class Declarative \n @ line 1, column 26."
+        }
+      ]
+    },
+    {
+      "full_repo_name": "yhanx/jenkins",
+      "repo_url": "https://github.com/yhanx/jenkins",
+      "html_url_jenkinsfile": "https://github.com/yhanx/jenkins/blob/7e9cd67e8429d85ab2375f8fcf5a041aaa4f4b0a/Jenkinsfile",
+      "api_url_jenkinsfile": "https://api.github.com/repositories/100748111/git/blobs/14ccc7499c4dc4c205926461261893f4039048eb",
+      "jenkins_pipeline": [
+        {
+          "error": "unable to resolve class Declarative \n @ line 1, column 26."
+        }
+      ]
+    },
+    {
       "full_repo_name": "sham165/TestingDeployment",
       "repo_url": "https://github.com/sham165/TestingDeployment",
       "html_url_jenkinsfile": "https://github.com/sham165/TestingDeployment/blob/933188366bc17ffa652bb9428c4ad8043a148281/Jenkinsfile",
@@ -1933,6 +1894,67 @@
           "error": "unable to resolve class Scripted \n @ line 1, column 23."
         }
       ]
+    },
+    {
+      "full_repo_name": "sudhakarvaddi11/RecordingTestsPipeline",
+      "repo_url": "https://github.com/sudhakarvaddi11/RecordingTestsPipeline",
+      "html_url_jenkinsfile": "https://github.com/sudhakarvaddi11/RecordingTestsPipeline/blob/4d35a06b9a442057866f767c25a874993d5ca591/Jenkinsfile",
+      "api_url_jenkinsfile": "https://api.github.com/repositories/132282364/git/blobs/99a75a913286ca454af939b28f3fd1dd3ff5312c",
+      "jenkins_pipeline": {
+        "pipeline": {
+          "stages": [
+            {
+              "name": "Test",
+              "branches": [
+                {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "sh",
+                      "arguments": [
+                        {
+                          "key": "script",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "./gradlew check"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "post": {
+            "conditions": [
+              {
+                "condition": "always",
+                "branch": {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "junit",
+                      "arguments": [
+                        {
+                          "key": "testResults",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "build/reports/**/*.xml"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "agent": {
+            "type": "any"
+          }
+        }
+      }
     },
     {
       "full_repo_name": "janrotter/jenkins-template",
@@ -1995,28 +2017,6 @@
           }
         }
       }
-    },
-    {
-      "full_repo_name": "yhanx/jenkins",
-      "repo_url": "https://github.com/yhanx/jenkins",
-      "html_url_jenkinsfile": "https://github.com/yhanx/jenkins/blob/7e9cd67e8429d85ab2375f8fcf5a041aaa4f4b0a/Jenkinsfile",
-      "api_url_jenkinsfile": "https://api.github.com/repositories/100748111/git/blobs/14ccc7499c4dc4c205926461261893f4039048eb",
-      "jenkins_pipeline": [
-        {
-          "error": "unable to resolve class Declarative \n @ line 1, column 26."
-        }
-      ]
-    },
-    {
-      "full_repo_name": "damaro05/JenkingsTest",
-      "repo_url": "https://github.com/damaro05/JenkingsTest",
-      "html_url_jenkinsfile": "https://github.com/damaro05/JenkingsTest/blob/8e386a7637f1d80eb0458731199803e67c840ec9/Jenkinsfile",
-      "api_url_jenkinsfile": "https://api.github.com/repositories/95551315/git/blobs/756964a56571e47a398d2aa4d04e961b828d6a00",
-      "jenkins_pipeline": [
-        {
-          "error": "unable to resolve class Declarative \n @ line 1, column 26."
-        }
-      ]
     },
     {
       "full_repo_name": "chanahl/jenkins-shared-library",
