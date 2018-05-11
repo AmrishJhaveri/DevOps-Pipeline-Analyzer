@@ -38,8 +38,8 @@ const CONSTANTS = {
 }
 
 const SEARCH_CODE_GIT_CONSTANTS = {
-  REPOS_PER_PAGE: 15,
-  MAX_NO_OF_PAGES_TO_FETCH_FROM: 2
+  REPOS_PER_PAGE: 70,
+  MAX_NO_OF_PAGES_TO_FETCH_FROM: 3
 }
 
 // Github Personal Access Token. Only Read access to public repos is provided
@@ -99,6 +99,7 @@ async function startProcess() {
     writeToFile();
 
   } catch (e) {
+    console.log('startProcess');
     console.log(e);
   }
 }
@@ -181,8 +182,14 @@ function getEachJenkinsFileWrapper() {
           eachRepoForFile.git_url + '?access_token=' + accessToken);
 
       let fileContent = Buffer.from(response.data.content, 'base64');
+      let jsonResponse;
+      try {
+        jsonResponse = await jenkinsJSONPromise(fileContent);
+      } catch (e) {
+        // console.log('getEachJenkinsFileWrapper try');
+        // console.log(e);
+      }
 
-      let jsonResponse = await jenkinsJSONPromise(fileContent);
 
       myJsonStructure['full_repo_name'] = eachRepoForFile.repository.full_name;
       myJsonStructure['repo_url'] = eachRepoForFile.repository.html_url;
@@ -193,6 +200,7 @@ function getEachJenkinsFileWrapper() {
       parsedJenkinsFile.push(myJsonStructure);
 
     } catch (e) {
+      console.log('getEachJenkinsFileWrapper');
       console.log(e);
     }
   }
@@ -204,30 +212,56 @@ function getEachJenkinsFileWrapper() {
  */
 function jenkinsJSONPromise(fileContent) {
   return new Promise((resolve, reject) => {
-    var options = {
+    let options = {
       method: 'POST',
       url: 'http://192.168.99.100:9080/pipeline-model-converter/toJson',
       headers: {
         'cache-control': 'no-cache',
         authorization: 'Basic YWRtaW46MTIzNDU2Nzg5',
         'content-type':
-            'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
+            'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
+        'Connection': 'keep-alive'
       },
       formData: {jenkinsfile: fileContent}
     };
 
-    request(options, function(error, response, body) {
-      if (error) {
-        console.log(error);
-        reject(error);
-        return;
-      };
-      if (JSON.parse(body).data.json) {
-        resolve(JSON.parse(body).data.json);
-      } else if (JSON.parse(body).data) {
-        resolve(JSON.parse(body).data.errors);
+    recursiveRequest(resolve, reject, options);
+
+    // request(options, function(error, response, body) {
+    //   if (error) {
+    //     // console.log(error);
+    //     //reject(error);
+    //     console.log(JSON.stringify(error));
+
+    //     return;
+    //   };
+    //   if (JSON.parse(body).data.json) {
+    //     resolve(JSON.parse(body).data.json);
+    //   } else if (JSON.parse(body).data) {
+    //     resolve(JSON.parse(body).data.errors);
+    //   }
+    // });
+  });
+}
+
+function recursiveRequest(resolve, reject, options) {
+  request(options, function(error, response, body) {
+    if (error) {
+      // console.log(error);
+    //   console.log(JSON.stringify(error));
+      if (error.code === 'ECONNRESET') {
+        recursiveRequest(resolve, reject, options);
+          return;
+
       }
-    });
+      // console.log(JSON.stringify(error));
+        reject(error);
+      return;
+    } else if (JSON.parse(body).data.json) {
+      resolve(JSON.parse(body).data.json);
+    } else if (JSON.parse(body).data) {
+      resolve(JSON.parse(body).data.errors);
+    }
   });
 }
 
