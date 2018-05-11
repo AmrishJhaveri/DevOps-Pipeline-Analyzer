@@ -12,31 +12,19 @@ const axios = require('axios');
 
 var parsedJenkinsFile = [];
 var parseBasedOnOutput = {
-  research_question_1:
-      'What are the most frequent post-condition blocks in the post section within jenkins pipelines? Create distribution graphs for post-condition blocks.',
-  counts_of_post_elements: {},
+  research_question_3:
+      'What are the most and the least frequent operations in pipeline stages?',
+  counts_of_operation_stages: {},
   project_details: []
 }
 
-const POST_ELEMENTS_CONSTANTS = {
-  ALWAYS: 'always',
-  CHANGED: 'changed',
-  FIXED: 'fixed',
-  REGRESSION: 'regression',
-  ABORTED: 'aborted',
-  FAILURE: 'failure',
-  SUCCESS: 'success',
-  UNSTABLE: 'unstable',
-  CLEANUP: 'cleanup'
-}
-
 const CONSTANTS = {
-  JENKINS_FILE_INFO_WITH_REPO: './app/q1/finalOutput.json',
-  INTERMEDIATE_OUTPUT_FOR_PYTHON: './app/q1/intermediateOutput.json'
+  JENKINS_FILE_INFO_WITH_REPO: './app/q3/finalOutput.json',
+  INTERMEDIATE_OUTPUT_FOR_PYTHON: './app/q3/intermediateOutput.json'
 }
 
 const SEARCH_CODE_GIT_CONSTANTS = {
-  REPOS_PER_PAGE: 65,
+  REPOS_PER_PAGE: 30,
   MAX_NO_OF_PAGES_TO_FETCH_FROM: 3,
   RECURSIVE_CALLS_TO_JENKINS: 2
 }
@@ -58,7 +46,8 @@ octokit.authenticate({type: 'token', token: accessToken})
  */
 function getParams(page_no) {
   // Search Java language projects with MIT license
-  let q_param = 'Jenkinsfile in:path agent post in:file language:Groovy';
+  let q_param =
+      'Jenkinsfile in:path agent steps size>100 in:file language:Groovy';
   // let q_param = "mock language:java license:mit";
   // Sort by the stars of the Github project
   let sort_param = 'stars';
@@ -112,9 +101,9 @@ function eachParsedJenkinsFileWrapper() {
     parseBasedOnOutput.project_details.push(eachFile);
 
     if (eachFile.jenkins_pipeline && eachFile.jenkins_pipeline.pipeline &&
-        eachFile.jenkins_pipeline.pipeline.post) {
-      let promises = eachFile.jenkins_pipeline.pipeline.post.conditions.map(
-          processEachConditionBlock());
+        eachFile.jenkins_pipeline.pipeline.stages) {
+      let promises = eachFile.jenkins_pipeline.pipeline.stages.map(
+          processEachStageBlock());
       await Promise.all(promises);
     }
   }
@@ -123,52 +112,16 @@ function eachParsedJenkinsFileWrapper() {
 /**
  *
  */
-function processEachConditionBlock() {
-  return async function(eachConditionObj) {
-    switch (eachConditionObj.condition.toLowerCase()) {
-      case POST_ELEMENTS_CONSTANTS.ALWAYS:
-        incrementCount(POST_ELEMENTS_CONSTANTS.ALWAYS);
-        break;
-      case POST_ELEMENTS_CONSTANTS.CHANGED:
-        incrementCount(POST_ELEMENTS_CONSTANTS.CHANGED);
-        break;
-      case POST_ELEMENTS_CONSTANTS.FIXED:
-        incrementCount(POST_ELEMENTS_CONSTANTS.FIXED);
-        break;
-      case POST_ELEMENTS_CONSTANTS.REGRESSION:
-        incrementCount(POST_ELEMENTS_CONSTANTS.REGRESSION);
-        break;
-      case POST_ELEMENTS_CONSTANTS.ABORTED:
-        incrementCount(POST_ELEMENTS_CONSTANTS.ABORTED);
-        break;
-      case POST_ELEMENTS_CONSTANTS.FAILURE:
-        incrementCount(POST_ELEMENTS_CONSTANTS.FAILURE);
-        break;
-      case POST_ELEMENTS_CONSTANTS.SUCCESS:
-        incrementCount(POST_ELEMENTS_CONSTANTS.SUCCESS);
-        break;
-      case POST_ELEMENTS_CONSTANTS.UNSTABLE:
-        incrementCount(POST_ELEMENTS_CONSTANTS.UNSTABLE);
-        break;
-      case POST_ELEMENTS_CONSTANTS.CLEANUP:
-        incrementCount(POST_ELEMENTS_CONSTANTS.CLEANUP);
-        break;
+function processEachStageBlock() {
+  return async function(eachStageObj) {
+    let stageName = eachStageObj.name.toLowerCase();
+    let count = parseBasedOnOutput.counts_of_operation_stages[stageName];
+    if (!parseBasedOnOutput.counts_of_operation_stages[stageName]) {
+      parseBasedOnOutput.counts_of_operation_stages[stageName] = 1;
+    } else {
+      parseBasedOnOutput.counts_of_operation_stages[stageName] = count + 1;
     }
   }
-}
-
-/**
- *
- * @param {*} element
- */
-function incrementCount(element) {
-  let count = parseBasedOnOutput.counts_of_post_elements[element];
-  if (count) {
-    count++;
-  } else {
-    count = 1;
-  }
-  parseBasedOnOutput.counts_of_post_elements[element] = count;
 }
 
 /**
@@ -248,7 +201,6 @@ function jenkinsJSONPromise(fileContent) {
 function recursiveRequest(resolve, reject, options, count) {
   count++;
   request(options, function(error, response, body) {
-    
     if (error) {
       // console.log(error);
       //   console.log(JSON.stringify(error));
@@ -280,7 +232,8 @@ function writeToFile() {
 function writeIntermediateFile() {
   fs.writeFileSync(
       CONSTANTS.INTERMEDIATE_OUTPUT_FOR_PYTHON,
-      JSON.stringify(parseBasedOnOutput.counts_of_post_elements, undefined, 2));
+      JSON.stringify(
+          parseBasedOnOutput.counts_of_operation_stages, undefined, 2));
 }
 
 async function paginateSearchCalls() {

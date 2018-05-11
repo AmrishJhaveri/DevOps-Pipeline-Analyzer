@@ -1,8 +1,8 @@
 {
-  "always": 80,
-  "changed": 3,
-  "failure": 11,
-  "success": 15,
-  "unstable": 1,
-  "aborted": 1
+  "always": 70,
+  "success": 13,
+  "failure": 10,
+  "unstable": 4,
+  "changed": 4,
+  "aborted": 3
 }
