@@ -14,17 +14,19 @@ var parsedJenkinsFile = [];
 var parseBasedOnOutput = {
   research_question_3:
       'What are the most and the least frequent operations in pipeline stages?',
+  counts_commands_in_stages_operations: {},
   counts_of_operation_stages: {},
   project_details: []
 }
 
 const CONSTANTS = {
   JENKINS_FILE_INFO_WITH_REPO: './app/q3/finalOutput.json',
-  INTERMEDIATE_OUTPUT_FOR_PYTHON: './app/q3/intermediateOutput.json'
+  INTERMEDIATE_OUTPUT_FOR_PYTHON: './app/q3/intermediateOutput.json',
+  INTERMEDIATE_OUTPUT_FOR_PYTHON_2: './app/q3/intermediateOutput_2.json'
 }
 
 const SEARCH_CODE_GIT_CONSTANTS = {
-  REPOS_PER_PAGE: 30,
+  REPOS_PER_PAGE: 50,
   MAX_NO_OF_PAGES_TO_FETCH_FROM: 3,
   RECURSIVE_CALLS_TO_JENKINS: 2
 }
@@ -86,6 +88,7 @@ async function startProcess() {
 
     writeToFile();
     writeIntermediateFile();
+    writeIntermediateFile2();
 
   } catch (e) {
     console.log('startProcess');
@@ -121,6 +124,21 @@ function processEachStageBlock() {
     } else {
       parseBasedOnOutput.counts_of_operation_stages[stageName] = count + 1;
     }
+
+    const promises =
+        eachStageObj.branches[0].steps.map(processEachStepWrapper(stageName));
+    await Promise.all(promises);
+  }
+}
+
+function processEachStepWrapper(stageName) {
+  return async function(eachStepObj) {
+    if (!parseBasedOnOutput.counts_commands_in_stages_operations[stageName]) {
+      parseBasedOnOutput.counts_commands_in_stages_operations[stageName] = [];
+    }
+
+    parseBasedOnOutput.counts_commands_in_stages_operations[stageName].push(
+        eachStepObj.name);
   }
 }
 
@@ -220,6 +238,13 @@ function writeIntermediateFile() {
       JSON.stringify(
           parseBasedOnOutput.counts_of_operation_stages, undefined, 2));
 }
+
+function writeIntermediateFile2() {
+    fs.writeFileSync(
+        CONSTANTS.INTERMEDIATE_OUTPUT_FOR_PYTHON_2,
+        JSON.stringify(
+            parseBasedOnOutput.counts_commands_in_stages_operations, undefined, 2));
+  }
 
 async function paginateSearchCalls() {
   let count_of_pages = SEARCH_CODE_GIT_CONSTANTS.MAX_NO_OF_PAGES_TO_FETCH_FROM;

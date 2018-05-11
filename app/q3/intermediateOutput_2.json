@@ -1,0 +1,353 @@
+{
+  "check source": [
+    "deleteDir",
+    "checkout",
+    "dir"
+  ],
+  "validate and tokenize": [
+    "sh"
+  ],
+  "copy to temp": [
+    "sh"
+  ],
+  "deploy to api cloud": [
+    "configFileProvider"
+  ],
+  "initialize": [
+    "withCredentials"
+  ],
+  "build develop apk": [
+    "withCredentials"
+  ],
+  "build beta apk": [
+    "withCredentials"
+  ],
+  "build prod apk": [
+    "withCredentials"
+  ],
+  "upload": [
+    "archiveArtifacts"
+  ],
+  "report": [
+    "echo"
+  ],
+  "init": [
+    "sh"
+  ],
+  "kangaroo-common": [
+    "sh"
+  ],
+  "kangaroo-server-authz": [
+    "sh"
+  ],
+  "integration": [
+    "sh"
+  ],
+  "build": [
+    "sh"
+  ],
+  "dockerize": [
+    "sh"
+  ],
+  "deploy to ec2": [
+    "sh"
+  ],
+  "test": [
+    "milestone",
+    "echo",
+    "sh",
+    "dir",
+    "step",
+    "publishHTML"
+  ],
+  "test - flaky": [
+    "milestone",
+    "echo",
+    "sh"
+  ],
+  "deploy to stage": [
+    "milestone",
+    "echo"
+  ],
+  "scm: code update": [
+    "checkout",
+    "sh",
+    "sh",
+    "sh"
+  ],
+  "docker build": [
+    "script"
+  ],
+  "run test": [
+    "script"
+  ],
+  "build with unit testing": [
+    "script",
+    "script",
+    "script",
+    "script",
+    "script",
+    "script",
+    "script",
+    "script",
+    "script",
+    "script"
+  ],
+  "integration tests": [
+    "script",
+    "script",
+    "cucumber",
+    "script",
+    "cucumber",
+    "script",
+    "cucumber",
+    "script",
+    "cucumber",
+    "script",
+    "cucumber",
+    "script",
+    "script",
+    "cucumber",
+    "script",
+    "cucumber",
+    "script"
+  ],
+  "sonar check": [
+    "script",
+    "script"
+  ],
+  "itt deploy approval and deployment": [
+    "timeout",
+    "timeout",
+    "timeout",
+    "timeout"
+  ],
+  "sonar scan execution": [
+    "script",
+    "script",
+    "script",
+    "script",
+    "script",
+    "script",
+    "script"
+  ],
+  "sonar scan result check": [
+    "timeout",
+    "timeout",
+    "timeout",
+    "timeout",
+    "timeout",
+    "timeout",
+    "timeout"
+  ],
+  "development deploy approval and deployment": [
+    "script",
+    "script",
+    "script",
+    "script",
+    "script",
+    "script",
+    "script",
+    "script"
+  ],
+  "dev sanity check": [
+    "sleep",
+    "script",
+    "sleep",
+    "script",
+    "sleep",
+    "script",
+    "sleep",
+    "script",
+    "sleep",
+    "script",
+    "sleep",
+    "script",
+    "sleep",
+    "script"
+  ],
+  "release and publish artifact": [
+    "script",
+    "script",
+    "script",
+    "script",
+    "script",
+    "script",
+    "script",
+    "script"
+  ],
+  "deploy to acceptance": [
+    "script",
+    "script",
+    "script",
+    "script",
+    "script",
+    "script",
+    "script",
+    "script"
+  ],
+  "acc e2e tests": [
+    "sleep",
+    "script",
+    "sleep",
+    "script",
+    "sleep",
+    "script",
+    "sleep",
+    "script",
+    "sleep",
+    "script",
+    "sleep",
+    "script",
+    "sleep",
+    "script",
+    "script"
+  ],
+  "create build": [
+    "echo",
+    "notifySlack",
+    "echo",
+    "sh",
+    "sh",
+    "sh",
+    "sh",
+    "sh",
+    "sh",
+    "sh",
+    "sh",
+    "sh",
+    "sh",
+    "sh",
+    "sh",
+    "sh",
+    "sh",
+    "sh",
+    "sh",
+    "sh",
+    "sh",
+    "sh",
+    "sh",
+    "sh",
+    "sh",
+    "sh",
+    "echo",
+    "sh"
+  ],
+  "deploy": [
+    "echo",
+    "sh"
+  ],
+  "preparation": [
+    "git",
+    "sh"
+  ],
+  "clean build": [
+    "script"
+  ],
+  "build release": [
+    "script"
+  ],
+  "sonarqube analysis": [
+    "withSonarQubeEnv"
+  ],
+  "sonarqube quality gate": [
+    "node"
+  ],
+  "unit test report": [
+    "junit"
+  ],
+  "code coverage report": [
+    "cobertura"
+  ],
+  "maven nexus deploy": [
+    "sh"
+  ],
+  "jira update issues": [
+    "echo",
+    "step"
+  ],
+  "security dependency check": [
+    "echo",
+    "dependencyCheckAnalyzer"
+  ],
+  "security dependency publisher": [
+    "echo",
+    "dependencyCheckPublisher"
+  ],
+  "aws code deploy": [
+    "echo",
+    "echo",
+    "echo",
+    "step"
+  ],
+  "ensure env and branch": [
+    "sh"
+  ],
+  "ensure cf_version and ami_id when refresh_only is false": [
+    "sh"
+  ],
+  "notify hipchat": [
+    "withCredentials"
+  ],
+  "install requirements": [
+    "dir"
+  ],
+  "set private key file": [
+    "script"
+  ],
+  "checkout": [
+    "checkout"
+  ],
+  "create app server": [
+    "script"
+  ],
+  "build app server": [
+    "script"
+  ],
+  "deploy/refresh code": [
+    "script"
+  ],
+  "set name and description": [
+    "script"
+  ],
+  "delete jaeger": [
+    "sh",
+    "sh"
+  ],
+  "delete old job": [
+    "sh"
+  ],
+  "cleanup, checkout, build": [
+    "deleteDir",
+    "checkout",
+    "sh"
+  ],
+  "deploy cassandra": [
+    "sh"
+  ],
+  "deploy elasticsearch": [
+    "sh"
+  ],
+  "deploy jaeger with cassandra": [
+    "sh"
+  ],
+  "deploy jaeger with elasticsearch": [
+    "sh"
+  ],
+  "wait for jaeger deployment": [
+    "openshiftVerifyService",
+    "openshiftVerifyService"
+  ],
+  "run tests": [
+    "withEnv"
+  ],
+  "delete jaeger at end": [
+    "script"
+  ],
+  "delete job at end": [
+    "sh"
+  ],
+  "cleanup pods": [
+    "script"
+  ]
+}
