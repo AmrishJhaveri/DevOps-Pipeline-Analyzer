@@ -22,4 +22,4 @@ fig = plt.figure(figsize=(9,max(counts)))
 plt.bar(np.arange(9),counts)
 plt.xticks(np.arange(9),myKeys)
 
-fig.savefig('post_section.jpg')
+fig.savefig('plots/post_section.jpg')
