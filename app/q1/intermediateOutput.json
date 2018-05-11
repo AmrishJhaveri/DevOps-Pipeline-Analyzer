@@ -1,8 +1,5 @@
 {
-  "always": 70,
-  "success": 13,
-  "failure": 10,
-  "unstable": 4,
-  "changed": 4,
-  "aborted": 3
+  "always": 61,
+  "success": 4,
+  "failure": 5
 }

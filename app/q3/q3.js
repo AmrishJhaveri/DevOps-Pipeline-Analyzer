@@ -180,21 +180,6 @@ function jenkinsJSONPromise(fileContent) {
 
     let count = 0;
     recursiveRequest(resolve, reject, options, count);
-
-    // request(options, function(error, response, body) {
-    //   if (error) {
-    //     // console.log(error);
-    //     //reject(error);
-    //     console.log(JSON.stringify(error));
-
-    //     return;
-    //   };
-    //   if (JSON.parse(body).data.json) {
-    //     resolve(JSON.parse(body).data.json);
-    //   } else if (JSON.parse(body).data) {
-    //     resolve(JSON.parse(body).data.errors);
-    //   }
-    // });
   });
 }
 

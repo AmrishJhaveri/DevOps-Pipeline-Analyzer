@@ -15,6 +15,7 @@ var parseBasedOnOutput = {
   research_question_1:
       'What are the most frequent post-condition blocks in the post section within jenkins pipelines? Create distribution graphs for post-condition blocks.',
   counts_of_post_elements: {},
+  counts_of_tools_in_post_blocks: {},
   project_details: []
 }
 
@@ -36,7 +37,7 @@ const CONSTANTS = {
 }
 
 const SEARCH_CODE_GIT_CONSTANTS = {
-  REPOS_PER_PAGE: 65,
+  REPOS_PER_PAGE: 50,
   MAX_NO_OF_PAGES_TO_FETCH_FROM: 3,
   RECURSIVE_CALLS_TO_JENKINS: 2
 }
@@ -154,6 +155,22 @@ function processEachConditionBlock() {
         incrementCount(POST_ELEMENTS_CONSTANTS.CLEANUP);
         break;
     }
+
+    eachConditionObj.branch.steps.map(processStepInPostBlock);
+  }
+}
+
+/**
+ *
+ * @param {*} eachStep
+ */
+function processStepInPostBlock(eachStep) {
+  let stageName = eachStep.name.toLowerCase();
+  let count = parseBasedOnOutput.counts_of_tools_in_post_blocks[stageName];
+  if (!parseBasedOnOutput.counts_of_tools_in_post_blocks[stageName]) {
+    parseBasedOnOutput.counts_of_tools_in_post_blocks[stageName] = 1;
+  } else {
+    parseBasedOnOutput.counts_of_tools_in_post_blocks[stageName] = count + 1;
   }
 }
 
@@ -248,7 +265,6 @@ function jenkinsJSONPromise(fileContent) {
 function recursiveRequest(resolve, reject, options, count) {
   count++;
   request(options, function(error, response, body) {
-    
     if (error) {
       // console.log(error);
       //   console.log(JSON.stringify(error));
