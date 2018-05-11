@@ -1,0 +1,15 @@
+{
+  "echo": 37,
+  "junit": 20,
+  "postnotifyslack": 1,
+  "deletedir": 7,
+  "pkideletedir": 1,
+  "archiveartifacts": 3,
+  "sh": 7,
+  "cp": 1,
+  "mail": 1,
+  "archive": 3,
+  "bat": 1,
+  "cleanws": 2,
+  "slacksend": 2
+}

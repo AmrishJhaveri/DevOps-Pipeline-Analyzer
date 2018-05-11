@@ -12,33 +12,20 @@ const axios = require('axios');
 
 var parsedJenkinsFile = [];
 var parseBasedOnOutput = {
-  research_question_1:
-      'What are the most frequent post-condition blocks in the post section within jenkins pipelines? Create distribution graphs for post-condition blocks. What are the most frequent activities done inside post block? ',
-  counts_of_post_elements: {},
-  counts_of_activities_in_post_blocks: {},
+  research_question_2:
+      'How is the presence of triggers in a pipeline correlates with the number of stages in the pipeline? What are the common types of triggers used in pipelines',
+  counts_of_types_of_triggers : {},
+  counts_of_triggers_and_stages: [],
   project_details: []
 }
 
-const POST_ELEMENTS_CONSTANTS = {
-  ALWAYS: 'always',
-  CHANGED: 'changed',
-  FIXED: 'fixed',
-  REGRESSION: 'regression',
-  ABORTED: 'aborted',
-  FAILURE: 'failure',
-  SUCCESS: 'success',
-  UNSTABLE: 'unstable',
-  CLEANUP: 'cleanup'
-}
-
 const CONSTANTS = {
-  JENKINS_FILE_INFO_WITH_REPO: './app/q1/finalOutput.json',
-  INTERMEDIATE_OUTPUT_FOR_PYTHON: './app/q1/intermediateOutput.json',
-  INTERMEDIATE_OUTPUT_FOR_PYTHON_2: './app/q1/intermediateOutput_2.json'
+  JENKINS_FILE_INFO_WITH_REPO: './app/q2/finalOutput.json',
+  INTERMEDIATE_OUTPUT_FOR_PYTHON: './app/q2/intermediateOutput.json'
 }
 
 const SEARCH_CODE_GIT_CONSTANTS = {
-  REPOS_PER_PAGE: 40,
+  REPOS_PER_PAGE: 35,
   MAX_NO_OF_PAGES_TO_FETCH_FROM: 3,
   RECURSIVE_CALLS_TO_JENKINS: 2
 }
@@ -60,7 +47,8 @@ octokit.authenticate({type: 'token', token: accessToken})
  */
 function getParams(page_no) {
   // Search Java language projects with MIT license
-  let q_param = 'Jenkinsfile in:path agent post in:file language:Groovy';
+  let q_param =
+      'Jenkinsfile in:path agent stages triggers in:file language:Groovy';
   // let q_param = "mock language:java license:mit";
   // Sort by the stars of the Github project
   let sort_param = 'stars';
@@ -99,7 +87,6 @@ async function startProcess() {
 
     writeToFile();
     writeIntermediateFile();
-    writeIntermediateFile2();
 
   } catch (e) {
     console.log('startProcess');
@@ -113,81 +100,38 @@ async function startProcess() {
 function eachParsedJenkinsFileWrapper() {
   return async function(eachFile) {
     parseBasedOnOutput.project_details.push(eachFile);
-
+    let count_stages = 0, count_triggers = 0;
     if (eachFile.jenkins_pipeline && eachFile.jenkins_pipeline.pipeline &&
-        eachFile.jenkins_pipeline.pipeline.post) {
-      let promises = eachFile.jenkins_pipeline.pipeline.post.conditions.map(
-          processEachConditionBlock());
+        eachFile.jenkins_pipeline.pipeline.stages) {
+      count_stages = eachFile.jenkins_pipeline.pipeline.stages.length;
+    }
+    if (eachFile.jenkins_pipeline && eachFile.jenkins_pipeline.pipeline &&
+        eachFile.jenkins_pipeline.pipeline.triggers &&
+        eachFile.jenkins_pipeline.pipeline.triggers.triggers) {
+      count_triggers =
+          eachFile.jenkins_pipeline.pipeline.triggers.triggers.length;
+      let promises = eachFile.jenkins_pipeline.pipeline.triggers.triggers.map(
+          processEachTrigger());
       await Promise.all(promises);
     }
+    parseBasedOnOutput.counts_of_triggers_and_stages.push(
+        {'triggers': count_triggers, 'stages': count_stages});
   }
 }
 
 /**
  *
  */
-function processEachConditionBlock() {
-  return async function(eachConditionObj) {
-    switch (eachConditionObj.condition.toLowerCase()) {
-      case POST_ELEMENTS_CONSTANTS.ALWAYS:
-        incrementCount(POST_ELEMENTS_CONSTANTS.ALWAYS);
-        break;
-      case POST_ELEMENTS_CONSTANTS.CHANGED:
-        incrementCount(POST_ELEMENTS_CONSTANTS.CHANGED);
-        break;
-      case POST_ELEMENTS_CONSTANTS.FIXED:
-        incrementCount(POST_ELEMENTS_CONSTANTS.FIXED);
-        break;
-      case POST_ELEMENTS_CONSTANTS.REGRESSION:
-        incrementCount(POST_ELEMENTS_CONSTANTS.REGRESSION);
-        break;
-      case POST_ELEMENTS_CONSTANTS.ABORTED:
-        incrementCount(POST_ELEMENTS_CONSTANTS.ABORTED);
-        break;
-      case POST_ELEMENTS_CONSTANTS.FAILURE:
-        incrementCount(POST_ELEMENTS_CONSTANTS.FAILURE);
-        break;
-      case POST_ELEMENTS_CONSTANTS.SUCCESS:
-        incrementCount(POST_ELEMENTS_CONSTANTS.SUCCESS);
-        break;
-      case POST_ELEMENTS_CONSTANTS.UNSTABLE:
-        incrementCount(POST_ELEMENTS_CONSTANTS.UNSTABLE);
-        break;
-      case POST_ELEMENTS_CONSTANTS.CLEANUP:
-        incrementCount(POST_ELEMENTS_CONSTANTS.CLEANUP);
-        break;
+function processEachTrigger() {
+  return async function(eachStageObj) {
+    let triggerName = eachStageObj.name.toLowerCase();
+    let count = parseBasedOnOutput.counts_of_types_of_triggers[triggerName];
+    if (!parseBasedOnOutput.counts_of_types_of_triggers[triggerName]) {
+      parseBasedOnOutput.counts_of_types_of_triggers[triggerName] = 1;
+    } else {
+      parseBasedOnOutput.counts_of_types_of_triggers[triggerName] = count + 1;
     }
-
-    eachConditionObj.branch.steps.map(processStepInPostBlock);
   }
-}
-
-/**
- *
- * @param {*} eachStep
- */
-function processStepInPostBlock(eachStep) {
-  let stageName = eachStep.name.toLowerCase();
-  let count = parseBasedOnOutput.counts_of_activities_in_post_blocks[stageName];
-  if (!parseBasedOnOutput.counts_of_activities_in_post_blocks[stageName]) {
-    parseBasedOnOutput.counts_of_activities_in_post_blocks[stageName] = 1;
-  } else {
-    parseBasedOnOutput.counts_of_activities_in_post_blocks[stageName] = count + 1;
-  }
-}
-
-/**
- *
- * @param {*} element
- */
-function incrementCount(element) {
-  let count = parseBasedOnOutput.counts_of_post_elements[element];
-  if (count) {
-    count++;
-  } else {
-    count = 1;
-  }
-  parseBasedOnOutput.counts_of_post_elements[element] = count;
 }
 
 /**
@@ -202,12 +146,12 @@ function getEachJenkinsFileWrapper() {
 
       let fileContent = Buffer.from(response.data.content, 'base64');
       let jsonResponse;
-      try {
+    //   try {
         jsonResponse = await jenkinsJSONPromise(fileContent);
-      } catch (e) {
-        // console.log('getEachJenkinsFileWrapper try');
-        console.log(e);
-      }
+    //   } catch (e) {
+    //     // console.log('getEachJenkinsFileWrapper try');
+    //     console.log(e);
+    //   }
 
 
       myJsonStructure['full_repo_name'] = eachRepoForFile.repository.full_name;
@@ -246,21 +190,6 @@ function jenkinsJSONPromise(fileContent) {
 
     let count = 0;
     recursiveRequest(resolve, reject, options, count);
-
-    // request(options, function(error, response, body) {
-    //   if (error) {
-    //     // console.log(error);
-    //     //reject(error);
-    //     console.log(JSON.stringify(error));
-
-    //     return;
-    //   };
-    //   if (JSON.parse(body).data.json) {
-    //     resolve(JSON.parse(body).data.json);
-    //   } else if (JSON.parse(body).data) {
-    //     resolve(JSON.parse(body).data.errors);
-    //   }
-    // });
   });
 }
 
@@ -298,13 +227,8 @@ function writeToFile() {
 function writeIntermediateFile() {
   fs.writeFileSync(
       CONSTANTS.INTERMEDIATE_OUTPUT_FOR_PYTHON,
-      JSON.stringify(parseBasedOnOutput.counts_of_post_elements, undefined, 2));
-}
-
-function writeIntermediateFile2() {
-  fs.writeFileSync(
-      CONSTANTS.INTERMEDIATE_OUTPUT_FOR_PYTHON_2,
-      JSON.stringify(parseBasedOnOutput.counts_of_activities_in_post_blocks, undefined, 2));
+      JSON.stringify(
+          parseBasedOnOutput.counts_of_triggers_and_stages, undefined, 2));
 }
 
 async function paginateSearchCalls() {
