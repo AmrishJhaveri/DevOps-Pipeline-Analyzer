@@ -14,7 +14,7 @@ var parsedJenkinsFile = [];
 var parseBasedOnOutput = {
   research_question_2:
       'How is the presence of triggers in a pipeline correlates with the number of stages in the pipeline? What are the common types of triggers used in pipelines',
-  counts_of_types_of_triggers : {},
+  counts_of_types_of_triggers: {},
   counts_of_triggers_and_stages: [],
   project_details: []
 }
@@ -101,9 +101,11 @@ function eachParsedJenkinsFileWrapper() {
   return async function(eachFile) {
     parseBasedOnOutput.project_details.push(eachFile);
     let count_stages = 0, count_triggers = 0;
+    let validFlag = false;
     if (eachFile.jenkins_pipeline && eachFile.jenkins_pipeline.pipeline &&
         eachFile.jenkins_pipeline.pipeline.stages) {
       count_stages = eachFile.jenkins_pipeline.pipeline.stages.length;
+      validFlag = true;
     }
     if (eachFile.jenkins_pipeline && eachFile.jenkins_pipeline.pipeline &&
         eachFile.jenkins_pipeline.pipeline.triggers &&
@@ -113,9 +115,12 @@ function eachParsedJenkinsFileWrapper() {
       let promises = eachFile.jenkins_pipeline.pipeline.triggers.triggers.map(
           processEachTrigger());
       await Promise.all(promises);
+      validFlag = true;
     }
-    parseBasedOnOutput.counts_of_triggers_and_stages.push(
-        {'triggers': count_triggers, 'stages': count_stages});
+    if (validFlag) {
+      parseBasedOnOutput.counts_of_triggers_and_stages.push(
+          {'triggers': count_triggers, 'stages': count_stages});
+    }
   }
 }
 
@@ -146,12 +151,12 @@ function getEachJenkinsFileWrapper() {
 
       let fileContent = Buffer.from(response.data.content, 'base64');
       let jsonResponse;
-    //   try {
-        jsonResponse = await jenkinsJSONPromise(fileContent);
-    //   } catch (e) {
-    //     // console.log('getEachJenkinsFileWrapper try');
-    //     console.log(e);
-    //   }
+      //   try {
+      jsonResponse = await jenkinsJSONPromise(fileContent);
+      //   } catch (e) {
+      //     // console.log('getEachJenkinsFileWrapper try');
+      //     console.log(e);
+      //   }
 
 
       myJsonStructure['full_repo_name'] = eachRepoForFile.repository.full_name;
