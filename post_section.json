@@ -1,0 +1,10 @@
+{
+	"always"		: 6,
+	"changed"		: 1,
+	"fixed"			: 1,
+	"aborted"		: 2,
+	"failure"		: 5,
+	"success"		: 4,
+	"unstable"		: 2,
+	"cleanup"		: 1
+}
