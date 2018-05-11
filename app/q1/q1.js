@@ -9,7 +9,6 @@ const fs = require('fs');
 // NPM module for HTTP request
 const axios = require('axios');
 
-const pipeKeywords = require('./keywords');
 
 var parsedJenkinsFile = [];
 var parseBasedOnOutput = {
@@ -32,13 +31,12 @@ const POST_ELEMENTS_CONSTANTS = {
 }
 
 const CONSTANTS = {
-  JENKINS_SAMPLE: './jenksinsfile_samples.json',
-  JENKINSFILE_LOCATION_PREPEND: './Jenkinsfiles/',
-  JENKINS_FILE_INFO_WITH_REPO: './data/JenkinsFileDataGit.json'
+  JENKINS_FILE_INFO_WITH_REPO: './app/q1/finalOutput.json',
+  INTERMEDIATE_OUTPUT_FOR_PYTHON: './app/q1/intermediateOutput.json'
 }
 
 const SEARCH_CODE_GIT_CONSTANTS = {
-  REPOS_PER_PAGE: 70,
+  REPOS_PER_PAGE: 80,
   MAX_NO_OF_PAGES_TO_FETCH_FROM: 3
 }
 
@@ -97,6 +95,7 @@ async function startProcess() {
     await Promise.all(promises);
 
     writeToFile();
+    writeIntermediateFile();
 
   } catch (e) {
     console.log('startProcess');
@@ -225,7 +224,8 @@ function jenkinsJSONPromise(fileContent) {
       formData: {jenkinsfile: fileContent}
     };
 
-    recursiveRequest(resolve, reject, options);
+    let count = 0;
+    recursiveRequest(resolve, reject, options, count);
 
     // request(options, function(error, response, body) {
     //   if (error) {
@@ -244,18 +244,17 @@ function jenkinsJSONPromise(fileContent) {
   });
 }
 
-function recursiveRequest(resolve, reject, options) {
+function recursiveRequest(resolve, reject, options, count) {
   request(options, function(error, response, body) {
+    count++;
     if (error) {
       // console.log(error);
-    //   console.log(JSON.stringify(error));
-      if (error.code === 'ECONNRESET') {
-        recursiveRequest(resolve, reject, options);
-          return;
-
+      //   console.log(JSON.stringify(error));
+      if (count < 2 && error.code === 'ECONNRESET') {
+        recursiveRequest(resolve, reject, options, count);
+        return;
       }
-      // console.log(JSON.stringify(error));
-        reject(error);
+      reject(error);
       return;
     } else if (JSON.parse(body).data.json) {
       resolve(JSON.parse(body).data.json);
@@ -273,6 +272,12 @@ function writeToFile() {
   fs.writeFileSync(
       CONSTANTS.JENKINS_FILE_INFO_WITH_REPO,
       JSON.stringify(parseBasedOnOutput, undefined, 2));
+}
+
+function writeIntermediateFile() {
+  fs.writeFileSync(
+      CONSTANTS.INTERMEDIATE_OUTPUT_FOR_PYTHON,
+      JSON.stringify(parseBasedOnOutput.counts_of_post_elements, undefined, 2));
 }
 
 async function paginateSearchCalls() {
