@@ -66,4 +66,10 @@ then execute `pip3 install pillow`.
 
 ## Architecture
 ----------
-![](https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp/raw/master/images/Architecture.png)
+![](https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp/raw/master/images/Architecture_db_add.png)
+
+- A Jenkins Server will be running on the local Docker VM exposed via 9080 port and 192.168.99.100 IP address.
+- The NodeJS application will collect the data from Github via its API and then pass the jenkinsfile to pipeline-model-definition API of Jenkins.
+- Once response is received we retrieve the required data from the JSON representation of the Jenkinsfile and use the data to answer the research questions.
+- Final Output is stored in JSON files in a pre-defined structure(shown later).
+- IntermediateOutput JSON files are used by python scripts to create the graphs or calculate co-relation co-efficients. 
