@@ -1,66 +1,118 @@
-# Course Project
+**Note:**	Please view this file in a web browser.
 
-The goal of your course project is to empirically investigate a large number of devops pipeline programs and obtain statistical data that describe the content and patterns in devops pipelines. You will search and obtain jenkinsfiles and other pipeline artifacts from open-source repositories, e.g., github contains hundreds of pipeline examples and other code artifacts. The result of your investigation will be a report that summarizes the data - you can find an example of a report on my website (https://www.cs.uic.edu/~drmark/index_htm_files/Treasure.pdf). Examples of research questions that you will address include but not limited to the following.
+# DevOps-Pipeline-Analyzer
 
-* What are the most frequent post-condition blocks in the post section within jenkins pipelines? Create distribution graphs for post-condition blocks.
-* How is the presence of triggers in a pipeline correlates with the number of stages in the pipeline?
-* What are the most and the least frequent operations in pipeline stages?
-* How often timeout periods are used in the pipeline runs and what are the most frequent intervals? How does the presence of timeouts correlate with certain commands executed at different stages of the pipeline?
-* What tools are the most and the least frequently used in pipelines?
+DevOps-Pipeline-Analyzer collects large number of DevOps pipeline programs and obtains statistical data that describe the content and patterns in DevOps pipelines.
 
-You will analyze pipelines in a number of steps. First, you need to obtain pipelines from various open-source repos, and the obvious starting point is to search and pull pipeline projects from Github, Krugle, and other open-source repositories of your choice. Just like in the previous two homeworks you will obtain devops projects from the repo and create a program that reads in the devops configuration file and analyzes the structure of the pipeline. The logic of your pipeline analyzer will be centered on answering the research questions that you formulate for this course project. However, you will go in a greater depth to determine what utilities and procedures are used in stages of the pipeline, how they interact with the project artifacts (e.g., run a test with certain parameters and then copy some files to a different directory). If the pipeline creates new artifacts (e.g., a new git project branch or an environment variable), your analyzer will examine if this branch exists in the project's git repo or the environment variable is accessed by its name in the source code of the software project. The depth of your analysis in the course project will determine your grade.
+## Getting Started
 
-The output of your analyzer will be in a format of your choice (e.g., JSON, XML) that contain answers to your research questions. For example, the following entry describes the answer to the research question on how the presence of triggers in a pipeline correlates with the number of stages in the pipeline?
-```
-<rq correlationCoeff="0.87">How is the presence of triggers in a pipeline correlates with the number of stages in the pipeline?
-	<proj1>gitURL1
-		<trigger type="cron">H */4 * * 1-5
-		</trigger>
-		<trigger type="pollSCM">12
-		</trigger>
-		...
-		<stage>1
-		...
-		</stage>
-	</proj1>
-</rq>
-```
+----------
 
-The part of the course project that requires a lot of thinking is the analysis of all components of the devops pipelines, linking them to commands that are used in stages, determining how to obtain information from the interactions among the commands and the project artifacts. Once you understand all relevant aspects of devops pipelines you will formulate research questions. Next, you will create abstractions based on which you will design programming components of this project and determine how to present the results of the analyses.
+### Prerequisites
 
-Please make sure that you were already added as a member of CS_540_2018 team in Bitbucket. Separate repositories will be created for each of your homeworks and for the course project. You will find a corresponding entry for this homework. You will fork this repository and your fork will be private, no one else besides you, your teammates and your course instructor will have access to your fork. Please remember to grant a read access to your repository to your instructor. You can commit and push your code as many times as you want. Your code will not be visible and it should not be visible to other students, except for your teammates. When you push it, your instructor will see you code in your separate private fork. Making your fork public or inviting other students to join your fork will result in losing your grade. For grading, only the latest push timed before the deadline will be considered. If you push after the deadline, your grade for the course priject will be zero. For more information about using git and bitbucket specifically, please use this link as the starting point https://confluence.atlassian.com/bitbucket/bitbucket-cloud-documentation-home-221448814.html.
+- Node `v9.9.0`(NPM is installed with Node)
+- Python `v3.6.1`
+- Docker `v18.01.0-ce` running on `192.168.99.100` (if different then change the IP in code files).
 
-------
+### Installing
 
-For an additional bonus (up to 10%!) you will incorporate a machine learning algorithm for capturing and generalizing patterns of stages and commands in pipelines. Your ideas and creativity are highly welcome and will be rewarded! For example, like in your homeworks, you can obtain issues for each pulled software project and you can attempt to link these issues to specific organizations of the devops pipelines, if applicable.. You can create a separate database into which you can save the attributes of the pulled repos and bug reports and generalized patterns of pipelines. In short, your additional bonus will be based on how you connect various sources of information, not on simply downloading bits and pieces of information. Let your imagination fly!
+1. Assuming docker is running on your system. We have to install Jenkins on the docker. Open docker terminal and execute the following command:
 
-------
+	`docker run --detach --name jenkins -p 9080:8080 -p 50000:50000 ajhave5/jenkins:latest`
+	*8080 : exposes web interface,	50000: access to remote JAVA API.*
 
-Even though this is a individual course project, it can be done collaboratively. You are allowed to form groups between three to five teammates. If you want to work alone, it is perfectly fine. Logistically, one of you will create a private fork and will invite one or two of her classmates with the write access to your fork. You should be careful - once you form a group and write and submit code, you cannot start dividing your work and claim you did most of the work. Your forkmates may turn out to be freeloaders and you will be screwed. Be very careful and make sure that you trust your classmates before forming your group. I cannot and I will not resolve your internal group conflicts. Your submission will include the names of all of your forkmates and you will receive the same grade for this course project. 
+	Open the URL `192.168.99.100:9080` . Follow the instructions of installation and install the defualt plugins(pipeline-model-definition should be there).Create a `admin` user with password `123456789`. Important that you keep the username and password same as given above since Basic Authorization is used to connect to the Jenkins Server. If asked for a key during installation then use the command:
+	`docker logs jenkins` and you will find the key there and then setup the `admin` user.
 
-I allow you to post questions and replies, statements, comments, discussion, etc. on Piazza. Remember that you cannot share your code and your solutions, but you can ask and advise others using Piazza on where resources and sample programs can be found on the internet, how to resolve dependencies and configuration issues, and how to design the logic of the algorithms and the workflows. Yet, your implementation should be your own or your team's and you cannot share it with the entire class. Alternatively, you cannot copy and paste someone else's implementation and put your name on it. Your submissions will be checked for plagiarism. When posting question and answers on Piazza, please select the appropriate folder, i.e., hw2 to ensure that all discussion threads can be easily located.
+2. Make sure `node` and `npm` is installed on the system. To check run the following commands from command prompt or shell: `node -v` & `npm -v`.
 
-------
+3. Run `npm install` from the directory where `package.json` is present.
+This will install the required modules present in `package.json` into the project directory inside `node_modules` directory.
 
-Submission deadline: Saturday, May 12 at 11PM CST. Your submission will include your source code, detailed documentation on all aspects of the installation and configuration of your solution, one or more of the SBT/Gradle/Maven build configurations, the README.md file in the root directory that contains the description of your implementation, how to compile and run it using your chosen build tool(s), and what are the limitations of your implementation. Please follow this naming convention while submitting your work : "Firstname_Lastname_hw2", so that we can easily recognize your submission. Those who work in groups can use longer names: "Firstname1_Lastname1_Firstname2_Lastname2_Firstname3_Lastname3_cp". I repeat, please make sure that you will give me read access to your private forked repository.
+### Project Structure
+Inside `app` folder various folders like `q1`,`q2`,`q3` and `q4` are present. Each represent the research questions we are answering.
+Inside each such folder, a JS file, Python script and multiple JSON files will be seen.
 
-------
-THE INSTRUCTOR WILL NOT ANSWER ANY REQUESTS FROM STUDENTS STARTING 7PM THE NIGHT BEFORE THE SUBMISSION DEADLINE.
-------
+1. JS File collects the data from Github, hits Jenkins's pipeline-model-definition API to convert each Jenkinsfile into a JSON representation, parse this JSON to answer the research question and output the results into a `finalOutput.json`.
+2. Various intermediate files are created which are required for the Python Script.
+3. Python Script reads the `intermediateOutput.json` and uses to calculate co-relation co-efficient or create distribution graphs as required.
+4. If its a co-relation co-efficient result than its updated in the `finalOutput.json`. If graphs than they are saved to the same question folder. 
 
-Evaluation criteria:
+### Running the Application
+**Important Note-** *It is possible to run all 4 files(q1.js,q2.js,q3.js,q4.js) simultaneously, we would advice you to run them independently. If you don't then a issue 'You have triggered an abuse detection mechanism.' will arise form the Github API end.*
 
-* the maximum grade for this homework is 50%. Points are subtracted from this maximum grade: for example, saying that 2% is lost if some requirement is not completed means that the resulting grade will be 50%-2% => 48%;
+Follow the below steps for each question:
 
-* no comments or insufficient comments: up to 30% lost;
+- Navigate to folder `q1`.
+- Run the file `q1.js` by the command `node q1.js`. Once completed, it will create the output files as required.
+- Once completed, you can run the python script in that particular folder: `python post_section.py` 
+- The graph will be created.
 
-* no unit and integration tests: up to 30% lost;
+If issue like this occur: 
 
-* code does not compile or it crashes without completing the core functionality: up to 50% lost;
+    Traceback (most recent call last):
+	  File "post_section.py", line 28, in <module>
+	fig.savefig('post_section.jpg')
+	  File "F:\Program Files\Python\Python36\lib\site-packages\matplotlib\figure.py", line 1834, in savefig
+	self.canvas.print_figure(fname, **kwargs)
+	  File "F:\Program Files\Python\Python36\lib\site-packages\matplotlib\backend_bases.py", line 2170, in print_figure
+	canvas = self._get_output_canvas(format)
+	  File "F:\Program Files\Python\Python36\lib\site-packages\matplotlib\backend_bases.py", line 2113, in _get_output_canvas
+	'%s.' % (format, ', '.join(formats)))
+	ValueError: Format "jpg" is not supported.
+	Supported formats: eps, pdf, pgf, png, ps, raw, rgba, svg, svgz.
 
-* the documentation is missing or insufficient to understand how to compile and run your program: up to 40% lost;
+then execute `pip3 install pillow`.
 
-* only a subset of your functionality works: up to 30% lost;
+## Architecture
+----------
+![](https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp/raw/master/images/Architecture_db_add.png)
 
-* the minimum grade for this course project cannot be less than zero. 
+- A Jenkins Server will be running on the local Docker VM exposed via `9080` port and `192.168.99.100` IP address.
+- The NodeJS application will collect the data from Github via its API and then pass the jenkinsfile to pipeline-model-definition API of Jenkins.
+- Once response is received we retrieve the required data from the JSON representation of the Jenkinsfile and use the data to answer the research questions.
+- Final Output is stored in JSON files in a pre-defined structure(shown later).
+- IntermediateOutput JSON files are used by python scripts to create the graphs or calculate co-relation co-efficients.
 
+
+## Output Structure
+----------
+The output present in finalOutput.json will have the following structure :
+
+Attribute Name|Data Type|Purpose
+--|--|--
+research_question_1a|JSON String|What are the most frequent post-condition blocks in the post section within jenkins pipelines? Create distribution graphs for post-condition blocks.
+counts_of_post_elements|JSON Object|Only for Q1. Counts of various conditional blocks found in POST section of jenkins file
+research_question_1b|JSON String|What are the most frequent activities in the post section conditional blocks within jenkins pipelines? Create distribution graphs for post-condition blocks.
+counts_of_activities_in_post_blocks|JSON Object|Only for Q1. Counts of various activities executed inside the conditional blocks of POST section.
+research_question_2|JSON String|How is the presence of triggers in a pipeline correlates with the number of stages in the pipeline? What are the common types of triggers used in pipelines?
+corelation_coefficient|JSON String or JSON Number|Only for Q2. The actual value is calculated from the python script.
+counts_of_types_of_triggers|JSON Object|Only for Q2. Counts of different triggers present in the triggers section.
+counts_of_triggers_and_stages|JSON Array|Only for Q2. A list of no. of triggers and stages for each jenkisnfile.
+research_question_3a|JSON String|What are the most and the least frequent commands in pipeline stages?
+counts_commands_in_stages_operations|JSON Object| Only for Q3. stores objects for each stage with a list of for commands executed for that stage.
+research_question_3b|JSON String| What are the most and the least frequent operations in pipeline stages?
+counts_of_operation_stages|JSON Object| Only for Q3.Stores counts for each operation stages.
+research_question_4|JSON String| For stages in parallel, fail-fast feature is used for what type of operations(stage names)? When it is used/unused, what are the operations running in parallel?
+parallel_stages_analysis|JSON Array|Only for Q4. A list containing objects for each jenkinsfile with data of outer_stage_name,parallel stages, fail-fast used or not.
+project_details|JSON Array|List of Jenkinsfile's Project and the parsed JSON output of the jenkinsfile.
+
+
+## Built With
+
+----------
+
+* [Node](https://nodejs.org/en/) - Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient.
+* [Octokit](https://github.com/octokit/rest.js) - GitHub REST API client for Node.js
+* [Python](https://www.python.org/) - Used for graph creation and co-relation factor calculations
+* [Matplotlib](https://matplotlib.org/) - Python library which is used for graph creation.
+* [Pipeline-model-definition-plugin of Jenkins](https://github.com/jenkinsci/pipeline-model-definition-plugin/blob/master/EXTENDING.md#conversion-to-json-representation-from-jenkinsfile) - Takes a Jenkinsfile and converts it to the JSON representation for its pipeline step.
+* [Docker](https://www.docker.com/) - Serves as platform for various application containers.
+* [Jenkins](https://jenkins.io/) - Server to automate building, testing and deploying software.
+
+## Authors
+
+----------
+
+* [**Amrish Jhaveri**](https://github.com/AmrishJhaveri)
+* [**Chinmay Gangal**](https://github.com/chinmay2312)
