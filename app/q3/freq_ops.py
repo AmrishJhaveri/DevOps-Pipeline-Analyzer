@@ -75,6 +75,11 @@ subPlotCount = len(ops)
 
 keyList = list(cmdDict.keys())
 
+tmpArr = []
+for i,v in enumerate(range(subPlotCount)):
+    tmpArr.extend(list(cmdDict[keyList[v]].values()))
+maxLim = max(tmpArr)
+
 for i,v in enumerate(range(subPlotCount)):
 	myDict = cmdDict[keyList[v]]
 	myKeys = list(myDict.keys())
@@ -84,6 +89,7 @@ for i,v in enumerate(range(subPlotCount)):
 	v = v+1
 	ax1 = subplot(subPlotCount,1,v)
 	ax1.barh(range(length),counts,0.9)
+	ax1.set_xlim(0,maxLim+1)
 	ax1.set_yticks(range(length))
 	ax1.set_yticklabels(myKeys)
 	ax1.set_ylabel(keyList[v-1])
