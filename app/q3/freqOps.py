@@ -5,8 +5,19 @@ import operator
 
 with open('intermediateOutput.json') as f:
     allOps = json.load(f)
+	
+with open('intermediateOutput_2.json') as f:
+    allStageOps = json.load(f)
 
-ops = {'init':0, 'build':0, 'test':0, 'deploy':0, 'checkout':0,'check':0, 'report':0, 'release':0, 'delete':0,'cleanup':0}
+ops = {'init':0, 'build':0, 'report':0, 'test':0, 'deploy':0, 'checkout':0,'check':0,  'release':0, 'delete':0,'cleanup':0}
+
+cmdDict = {}
+
+for ao in list(allStageOps.keys()):
+	if 'sonar' in ao:
+		newKey = ao.replace("sonar","report ")
+		allStageOps[newKey] = allStageOps.pop(ao);
+		allOps[newKey] = allOps.pop(ao);
 
 #update ops while iterating through allOps
 for ao in allOps.items():
@@ -29,7 +40,9 @@ for ao in allOps.items():
 for o in list(ops.keys()):
 	if ops[o]<=1:
 		del ops[o]
-	
+for o in ops.items():
+	print(o)
+		
 myKeys = list(ops.keys())
 counts = list(ops.values())
 len = len(myKeys)
@@ -42,3 +55,18 @@ plt.ylabel('Frequency')
 #plt.autoscale_view()
 
 fig.savefig('freq_ops.jpg')
+
+for aso in allStageOps.keys():
+	for o in ops.keys():
+		if o in aso:
+			stageCmdList = allStageOps[aso]
+			if o not in cmdDict:
+				cmdDict[o] = {}
+			for s in stageCmdList:
+				cmdDict[o][s] = cmdDict[o].get(s, 0) + 1
+				#cmdDict[o][s] = cmdDict[o][s] + 1
+			break
+			
+for o in cmdDict.items():
+	print(o)
+	

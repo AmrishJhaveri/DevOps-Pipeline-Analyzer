@@ -17,7 +17,8 @@ for stage in stageList:
     try:
         shList.append(data[stage]['sh'])
     except:
-        shList.append(0)
+        print('no sh in ',stage)
+		#shList.append(0)
 
 stageCount = len(stageList)
 ind = np.arange(stageCount)
