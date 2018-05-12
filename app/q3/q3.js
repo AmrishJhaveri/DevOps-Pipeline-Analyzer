@@ -136,12 +136,15 @@ async function startProcess() {
 }
 
 /**
- *
+ * This function is a wrapper around the async function which takes JSON
+ * representation of the jenkinsfile as input. Checks for valid pipeline present
+ * in the JSON with a Stage section.
  */
 function eachParsedJenkinsFileWrapper() {
   return async function(eachFile) {
     parseBasedOnOutput.project_details.push(eachFile);
 
+    // checks for valid pipeline and stages and iterates over each stage
     if (eachFile.jenkins_pipeline && eachFile.jenkins_pipeline.pipeline &&
         eachFile.jenkins_pipeline.pipeline.stages) {
       let promises = eachFile.jenkins_pipeline.pipeline.stages.map(
@@ -152,6 +155,10 @@ function eachParsedJenkinsFileWrapper() {
 }
 
 /**
+ * This function returns an async function.
+ * We extract the name of the stage and add a count to the global object if
+ * present else we initialize the count to 1. We also iterate over each steps to
+ * get the results of the commands used in various stages.
  *
  */
 function processEachStageBlock() {
@@ -170,6 +177,11 @@ function processEachStageBlock() {
   }
 }
 
+/**
+ * Get a list of all the operations done.
+ *
+ * @param {*} stageName
+ */
 function processEachStepWrapper(stageName) {
   return async function(eachStepObj) {
     if (!parseBasedOnOutput.counts_commands_in_stages_operations[stageName]) {
