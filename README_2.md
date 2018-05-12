@@ -39,4 +39,31 @@ Inside each such folder, a JS file, Python script and multiple JSON files will b
 4. If its a co-relation co-efficient result than its updated in the `finalOutput.json`. If graphs than they are saved to the same question folder. 
 
 ### Running the Application
-- Run `npm start` will start the application and fetch the repository details and clone the repositories in the project directory. This will generate 2 JSON files.
+**Important Note-** *It is possible to run all 4 files(q1.js,q2.js,q3.js,q4.js) simultaneously, we would advice you to run them independently. If you don't then a issue 'You have triggered an abuse detection mechanism.' will arise form the Github API end.*
+
+Follow the below steps for each question:
+
+- Navigate to folder `q1`.
+- Run the file `q1.js` by the command `node q1.js`. Once completed, it will create the output files as required.
+- Once completed, you can run the python script in that particular folder: `python post_section.py` 
+- The graph will be created.
+
+If issue like this occur: 
+
+    Traceback (most recent call last):
+	  File "post_section.py", line 28, in <module>
+	fig.savefig('post_section.jpg')
+	  File "F:\Program Files\Python\Python36\lib\site-packages\matplotlib\figure.py", line 1834, in savefig
+	self.canvas.print_figure(fname, **kwargs)
+	  File "F:\Program Files\Python\Python36\lib\site-packages\matplotlib\backend_bases.py", line 2170, in print_figure
+	canvas = self._get_output_canvas(format)
+	  File "F:\Program Files\Python\Python36\lib\site-packages\matplotlib\backend_bases.py", line 2113, in _get_output_canvas
+	'%s.' % (format, ', '.join(formats)))
+	ValueError: Format "jpg" is not supported.
+	Supported formats: eps, pdf, pgf, png, ps, raw, rgba, svg, svgz.
+
+then execute `pip3 install pillow`.
+
+## Architecture
+----------
+![](https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp/raw/master/images/Architecture.png)
