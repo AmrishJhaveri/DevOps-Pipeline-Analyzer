@@ -97,3 +97,22 @@ research_question_4|JSON String| For stages in parallel, fail-fast feature is us
 parallel_stages_analysis|JSON Array|Only for Q4. A list containing objects for each jenkinsfile with data of outer_stage_name,parallel stages, fail-fast used or not.
 project_details|JSON Array|List of Jenkinsfile's Project and the parsed JSON output of the jenkinsfile.
 
+
+## Built With
+
+----------
+
+* [Node](https://nodejs.org/en/) - Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient.
+* [Octokit](https://github.com/octokit/rest.js) - GitHub REST API client for Node.js
+* [Python](https://www.python.org/) - Used for graph creation and co-relation factor calculations
+* [Matplotlib](https://matplotlib.org/) - Python library which is used for graph creation.
+* [Pipeline-model-definition-plugin of Jenkins](https://github.com/jenkinsci/pipeline-model-definition-plugin/blob/master/EXTENDING.md#conversion-to-json-representation-from-jenkinsfile) - Takes a Jenkinsfile and converts it to the JSON representation for its pipeline step.
+* [Docker](https://www.docker.com/) - Serves as platform for various application containers.
+* [Jenkins](https://jenkins.io/) - Server to automate building, testing and deploying software.
+
+## Authors
+
+----------
+
+* [**Amrish Jhaveri**](https://github.com/AmrishJhaveri)
+* [**Chinmay Gangal**](https://github.com/chinmay2312)
