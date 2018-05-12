@@ -68,8 +68,32 @@ then execute `pip3 install pillow`.
 ----------
 ![](https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp/raw/master/images/Architecture_db_add.png)
 
-- A Jenkins Server will be running on the local Docker VM exposed via 9080 port and 192.168.99.100 IP address.
+- A Jenkins Server will be running on the local Docker VM exposed via `9080` port and `192.168.99.100` IP address.
 - The NodeJS application will collect the data from Github via its API and then pass the jenkinsfile to pipeline-model-definition API of Jenkins.
 - Once response is received we retrieve the required data from the JSON representation of the Jenkinsfile and use the data to answer the research questions.
 - Final Output is stored in JSON files in a pre-defined structure(shown later).
-- IntermediateOutput JSON files are used by python scripts to create the graphs or calculate co-relation co-efficients. 
+- IntermediateOutput JSON files are used by python scripts to create the graphs or calculate co-relation co-efficients.
+
+
+## Output Structure
+----------
+The output present in finalOutput.json will have the following structure :
+
+Attribute Name|Data Type|Purpose
+--|--|--
+research_question_1a|JSON String|What are the most frequent post-condition blocks in the post section within jenkins pipelines? Create distribution graphs for post-condition blocks.
+counts_of_post_elements|JSON Object|Only for Q1. Counts of various conditional blocks found in POST section of jenkins file
+research_question_1b|JSON String|What are the most frequent activities in the post section conditional blocks within jenkins pipelines? Create distribution graphs for post-condition blocks.
+counts_of_activities_in_post_blocks|JSON Object|Only for Q1. Counts of various activities executed inside the conditional blocks of POST section.
+research_question_2|JSON String|How is the presence of triggers in a pipeline correlates with the number of stages in the pipeline? What are the common types of triggers used in pipelines?
+corelation_coefficient|JSON String or JSON Number|Only for Q2. The actual value is calculated from the python script.
+counts_of_types_of_triggers|JSON Object|Only for Q2. Counts of different triggers present in the triggers section.
+counts_of_triggers_and_stages|JSON Array|Only for Q2. A list of no. of triggers and stages for each jenkisnfile.
+research_question_3a|JSON String|What are the most and the least frequent commands in pipeline stages?
+counts_commands_in_stages_operations|JSON Object| Only for Q3. stores objects for each stage with a list of for commands executed for that stage.
+research_question_3b|JSON String| What are the most and the least frequent operations in pipeline stages?
+counts_of_operation_stages|JSON Object| Only for Q3.Stores counts for each operation stages.
+research_question_4|JSON String| For stages in parallel, fail-fast feature is used for what type of operations(stage names)? When it is used/unused, what are the operations running in parallel?
+parallel_stages_analysis|JSON Array|Only for Q4. A list containing objects for each jenkinsfile with data of outer_stage_name,parallel stages, fail-fast used or not.
+project_details|JSON Array|List of Jenkinsfile's Project and the parsed JSON output of the jenkinsfile.
+

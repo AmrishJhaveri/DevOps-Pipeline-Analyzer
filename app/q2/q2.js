@@ -19,7 +19,7 @@ var parsedJenkinsFile = [];
 var parseBasedOnOutput = {
   // Research question
   research_question_2:
-      'How is the presence of triggers in a pipeline correlates with the number of stages in the pipeline? What are the common types of triggers used in pipelines',
+      'How is the presence of triggers in a pipeline correlates with the number of stages in the pipeline? What are the common types of triggers used in pipelines?',
   // to be added to final json output file by th python script
   corelation_coefficient: 'to_be_calculated_by_python_script',
   // counts of different triggers present in the triggers section.
