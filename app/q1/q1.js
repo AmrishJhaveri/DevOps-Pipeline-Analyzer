@@ -94,9 +94,8 @@ const JENKINS_SERVER = {
  * @param {*} page_no page number of the search query to be considered for finding the repos
  */
 function getParams(page_no) {
-  // Search Java language projects with MIT license
+  // Search Jenkinsfile with agent and post keywords in the file, written in Groovy.
   let q_param = 'Jenkinsfile in:path agent post in:file language:Groovy';
-  // let q_param = "mock language:java license:mit";
   // Sort by the stars of the Github project
   let sort_param = 'stars';
   // Order in descending order
