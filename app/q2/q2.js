@@ -14,18 +14,21 @@ var parsedJenkinsFile = [];
 var parseBasedOnOutput = {
   research_question_2:
       'How is the presence of triggers in a pipeline correlates with the number of stages in the pipeline? What are the common types of triggers used in pipelines',
+  corelation_coefficient:'to_be_calculated_by_python_script',
   counts_of_types_of_triggers: {},
   counts_of_triggers_and_stages: [],
   project_details: []
 }
 
 const CONSTANTS = {
-  JENKINS_FILE_INFO_WITH_REPO: './app/q2/finalOutput.json',
-  INTERMEDIATE_OUTPUT_FOR_PYTHON: './app/q2/intermediateOutput.json'
+//   JENKINS_FILE_INFO_WITH_REPO: './app/q2/finalOutput.json',
+//   INTERMEDIATE_OUTPUT_FOR_PYTHON: './app/q2/intermediateOutput.json'
+  JENKINS_FILE_INFO_WITH_REPO: './finalOutput.json',
+  INTERMEDIATE_OUTPUT_FOR_PYTHON: './intermediateOutput.json'
 }
 
 const SEARCH_CODE_GIT_CONSTANTS = {
-  REPOS_PER_PAGE: 35,
+  REPOS_PER_PAGE: 30,
   MAX_NO_OF_PAGES_TO_FETCH_FROM: 3,
   RECURSIVE_CALLS_TO_JENKINS: 2
 }
@@ -249,4 +252,5 @@ async function paginateSearchCalls() {
   return data;
 }
 
+startProcess();
 module.exports = {startProcess}
