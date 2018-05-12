@@ -1,15 +1,16 @@
 {
-  "echo": 37,
-  "junit": 20,
   "postnotifyslack": 1,
+  "echo": 34,
+  "junit": 16,
+  "cleanws": 3,
   "deletedir": 7,
-  "pkideletedir": 1,
-  "archiveartifacts": 3,
+  "archive": 4,
+  "notifypuzzlechat": 1,
   "sh": 7,
-  "cp": 1,
   "mail": 1,
-  "archive": 3,
+  "archiveartifacts": 3,
+  "pkideletedir": 1,
   "bat": 1,
-  "cleanws": 2,
+  "cp": 1,
   "slacksend": 2
 }

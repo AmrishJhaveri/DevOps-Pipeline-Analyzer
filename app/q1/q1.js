@@ -51,18 +51,18 @@ const POST_ELEMENTS_CONSTANTS = {
 // Constants for file locations of output
 const CONSTANTS = {
   // This will contain the final output in JSON form.
-  JENKINS_FILE_INFO_WITH_REPO: './app/q1/finalOutput.json',
+  JENKINS_FILE_INFO_WITH_REPO: './finalOutput.json',
   // This file will be used by Python script to generate grpah for Q1.a
-  INTERMEDIATE_OUTPUT_FOR_PYTHON: './app/q1/intermediateOutput.json',
+  INTERMEDIATE_OUTPUT_FOR_PYTHON: './intermediateOutput.json',
   // This file will be used by Python script to generate grpah for Q1.b
-  INTERMEDIATE_OUTPUT_FOR_PYTHON_2: './app/q1/intermediateOutput_2.json'
+  INTERMEDIATE_OUTPUT_FOR_PYTHON_2: './intermediateOutput_2.json'
 }
 
 // Configuration which can be changed for fetching more files from GITHUB.
 // Recursive calls to Jenkins Server can be configured here but can go into
 // infinelty loop.
 const SEARCH_CODE_GIT_CONSTANTS = {
-  REPOS_PER_PAGE: 40,
+  REPOS_PER_PAGE: 35,
   MAX_NO_OF_PAGES_TO_FETCH_FROM: 3,
   RECURSIVE_CALLS_TO_JENKINS: 2
 }
@@ -264,26 +264,30 @@ function getEachJenkinsFileWrapper() {
   return async function(eachRepoForFile) {
     try {
       let myJsonStructure = {};
+      // Getting the blob details of the Jenkinsfile.
       let response = await axios.get(
           eachRepoForFile.git_url + '?access_token=' + accessToken);
 
+      // decode the content part of the reponse
       let fileContent = Buffer.from(response.data.content, 'base64');
       let jsonResponse;
-      // try {
-      jsonResponse = await jenkinsJSONPromise(fileContent);
-      // } catch (e) {
-      // console.log('getEachJenkinsFileWrapper try');
-      //   console.log(e);
-      // }
 
+      try {
+        // this can throw an error because of bottleneck on Jenkins side. Tried
+        // to resolve by recursive calls but not a foolproof solution.
+        jsonResponse = await jenkinsJSONPromise(fileContent);
+        myJsonStructure['full_repo_name'] =
+            eachRepoForFile.repository.full_name;
+        myJsonStructure['repo_url'] = eachRepoForFile.repository.html_url;
+        myJsonStructure['html_url_jenkinsfile'] = eachRepoForFile.html_url;
+        myJsonStructure['api_url_jenkinsfile'] = eachRepoForFile.git_url;
+        myJsonStructure['jenkins_pipeline'] = jsonResponse;
 
-      myJsonStructure['full_repo_name'] = eachRepoForFile.repository.full_name;
-      myJsonStructure['repo_url'] = eachRepoForFile.repository.html_url;
-      myJsonStructure['html_url_jenkinsfile'] = eachRepoForFile.html_url;
-      myJsonStructure['api_url_jenkinsfile'] = eachRepoForFile.git_url;
-      //   myJsonStructure['actual_jenkinsfile']=fileContent.toString('ascii');
-      myJsonStructure['jenkins_pipeline'] = jsonResponse;
-      parsedJenkinsFile.push(myJsonStructure);
+        parsedJenkinsFile.push(myJsonStructure);
+
+      } catch (e) {
+        // Absorbing this error. Since bottleneck on Jenkins side.
+      }
 
     } catch (e) {
       console.log('Error at getEachJenkinsFileWrapper()', e);
@@ -320,43 +324,53 @@ function jenkinsJSONPromise(fileContent) {
 
     let count = 0;
 
-    //first call made inside this recursive function.
+    // first call made inside this recursive function.
     recursiveRequest(resolve, reject, options, count);
   });
 }
 
 /**
- * 
- * 
- * 
- * @param {*} resolve 
- * @param {*} reject 
- * @param {*} options 
- * @param {*} count 
+ * This function is recursive so we can imrpove on the bottleneck issue faced on
+ * the Jenkins end. We check if the result is valid, if so, then resolve the
+ * promise. If not valid then check the error code and make the call again.
+ * Recursive calls is limited by the parameter
+ * SEARCH_CODE_GIT_CONSTANTS.RECURSIVE_CALLS_TO_JENKINS, so to avoid infinite
+ * loop.
+ *
+ *
+ * @param {*} resolve If successful then use this to resolve the Promise and provide the response.
+ * @param {*} reject If unsuccessful then use this reject the promise and provide error object.
+ * @param {*} options all confis related to the call to be made as required by NPM request module
+ * @param {*} count number calls made for this jenkinsfile. So avoid infinite loop.
  */
 function recursiveRequest(resolve, reject, options, count) {
   count++;
   request(options, function(error, response, body) {
     if (error) {
-      // console.log(error);
-      //   console.log(JSON.stringify(error));
+      // If particular type of error and count of calls is less the number
+      // allowed then make the call again.
       if (count < SEARCH_CODE_GIT_CONSTANTS.RECURSIVE_CALLS_TO_JENKINS &&
           error.code === 'ECONNRESET') {
         recursiveRequest(resolve, reject, options, count);
         return;
       }
+      // if above conditions not met then reject the promise.
       reject(error);
       return;
     } else if (JSON.parse(body).data.json) {
+      // Valid JSON structure is present. So resolve it and provide it as
+      // parameter.
       resolve(JSON.parse(body).data.json);
     } else if (JSON.parse(body).data) {
+      // Jenkins file has some issue. So provide the error message in the
+      // parameter.
       resolve(JSON.parse(body).data.errors);
     }
   });
 }
 
 /**
- *
+ *  Write synchronously to the final output json file.
  */
 function writeToFile() {
   console.log('File writing started.');
@@ -366,7 +380,8 @@ function writeToFile() {
 }
 
 /**
- *
+ *  Write synchronously to the Intermediate file which will be used by the
+ * python script.
  */
 function writeIntermediateFile() {
   fs.writeFileSync(
@@ -375,7 +390,8 @@ function writeIntermediateFile() {
 }
 
 /**
- *
+ *  Write synchronously to the Intermediate file which will be used by the
+ * python script.
  */
 function writeIntermediateFile2() {
   fs.writeFileSync(
@@ -386,6 +402,10 @@ function writeIntermediateFile2() {
 }
 
 /**
+ *  Async function for getting results from Github api.
+ * Using octokit.search.code api for fetching the results.
+ * Using pagination for retriving the required number of results mentioned in
+ * SEARCH_CODE_GIT_CONSTANTS.MAX_NO_OF_PAGES_TO_FETCH_FROM
  *
  */
 async function paginateSearchCalls() {
@@ -400,5 +420,10 @@ async function paginateSearchCalls() {
   }
   return data;
 }
+
+// Starting the entire process.
 startProcess();
+// Exporting the functions can be called from index.js
+// currently not used because of GIT API restrictions for 'You have triggered an
+// abuse detection mechanism.'
 module.exports = {startProcess}
