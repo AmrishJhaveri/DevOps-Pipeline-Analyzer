@@ -35,7 +35,7 @@ var parseBasedOnOutput = {
 const CONSTANTS = {
   // This will contain the final output in JSON form.
   JENKINS_FILE_INFO_WITH_REPO: './finalOutput.json',
-  // This file will be used by Python script to generate grpah for Q1.a
+  // This file will be used by Python script to generate grpah for Q2.a
   INTERMEDIATE_OUTPUT_FOR_PYTHON: './intermediateOutput.json'
 }
 
