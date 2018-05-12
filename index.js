@@ -8,11 +8,17 @@ const q4 = require('./app/q4/q4.js');
 // Fires all questions.
 // PLEASE DO NOT USE THIS. Execute all questions independently.
 // You will get a message 'You have triggered an abuse detection mechanism.'
+// from Github Api
 async function startApp() {
-  await q1.startProcess();
-  await q2.startProcess();
-  await q3.startProcess();
-  await q4.startProcess();
+  let promises = [];
+  promises.push(q1.startProcess());
+  promises.push(q2.startProcess());
+  promises.push(q3.startProcess());
+  promises.push(q4.startProcess());
+  await Promise.all(promises);
 }
+
+// This is commented as a precaution. So application cannot be started. If used
+// then file paths in all independent questions needs to be changed.
 
 // startApp();
