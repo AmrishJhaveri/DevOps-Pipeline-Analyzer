@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import json
 import operator
 
+#Graph 1
 with open('intermediateOutput.json') as f:
     data = json.load(f)
 	
@@ -26,6 +27,7 @@ plt.ylabel('Frequency')
 
 fig.savefig('post_section.jpg')
 
+#Graph 2
 with open('intermediateOutput_2.json') as f:
     data = json.load(f)
 
