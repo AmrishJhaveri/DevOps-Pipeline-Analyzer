@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import json
-import operator
+from pylab import *
 
 with open('intermediateOutput.json') as f:
     allOps = json.load(f)
@@ -40,16 +40,16 @@ for ao in allOps.items():
 for o in list(ops.keys()):
 	if ops[o]<=1:
 		del ops[o]
-for o in ops.items():
-	print(o)
+#for o in ops.items():
+#	print(o)
 		
 myKeys = list(ops.keys())
 counts = list(ops.values())
-len = len(myKeys)
+length = len(myKeys)
 
-fig = plt.figure(clear=True,figsize=(len*1.5,max(counts)/1.5))
-plt.bar(np.arange(len),counts)
-plt.xticks(np.arange(len),myKeys)
+fig = plt.figure(clear=True,figsize=(length*1.5,max(counts)/1.5))
+plt.bar(np.arange(length),counts)
+plt.xticks(np.arange(length),myKeys)
 plt.xlabel('Stage operations')
 plt.ylabel('Frequency')
 #plt.autoscale_view()
@@ -67,6 +67,26 @@ for aso in allStageOps.keys():
 				#cmdDict[o][s] = cmdDict[o][s] + 1
 			break
 			
-for o in cmdDict.items():
-	print(o)
+#for o in cmdDict.items():
+#	print(o)
 	
+f, (ax1, ax2, ax3) = plt.subplots(3, sharex=True, sharey=True, figsize=(15,20))
+subPlotCount = len(ops)
+
+keyList = list(cmdDict.keys())
+
+for i,v in enumerate(range(subPlotCount)):
+	myDict = cmdDict[keyList[v]]
+	myKeys = list(myDict.keys())
+	#print(myKeys)
+	length = len(myKeys)
+	counts = list(myDict.values())
+	v = v+1
+	ax1 = subplot(subPlotCount,1,v)
+	ax1.barh(range(length),counts,0.9)
+	ax1.set_yticks(range(length))
+	ax1.set_yticklabels(myKeys)
+	ax1.set_ylabel(keyList[v-1])
+	ax1.yaxis.set_label_position("right")
+
+f.savefig('bigPlot.jpg',bbox_inches="tight")
