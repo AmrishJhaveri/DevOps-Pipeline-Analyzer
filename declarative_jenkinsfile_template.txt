@@ -1,0 +1,73 @@
+pipeline {
+
+//list of directives: [environment|options|parameters|triggers|stage|tools|input|when]
+
+	//Required section
+	//At top-level pipeline block level: must be defined here
+	//At stage-level: Optional usage
+	agent 
+	- any 
+	- none 
+	- { label 'my-defined-label' }
+	- { node { [label | customWorkspace] '<argument>' }}
+	- { docker {[args | label | image] '<argument>'}}
+	- { dockerfile {[filename | dir | label] '<argument>'}}
+
+	//Directive
+	//Allowed at top-level pipeline block & each stage block
+	environment {
+		//store key:value pairs
+		CC = 'clang'
+		//credentials(): access predefined credentials by id from Jenkins environment
+		AN_ACCESS_KEY = credentials('my-prefined-secret-text')	
+	}
+	
+	//Only once: inside pipeline block
+	triggers {
+		-cron('H */4 * * 1-5')	//example
+		-pollSCM('H */4 * * 1-5')
+		-upstream(upstreamProjects: 'job1,job2', threshold: <value>)	//<comma-separated-string of jobs>
+	}
+	
+	//Inside pipeline block or stage block
+	tools {
+		-maven 'apache-maven-3.0.1'
+		-jdk ''
+		-gradle ''
+	}
+	
+	//Required section
+	//Only once: inside pipeline block
+	stages {
+		//sequence of 1 or more stage directives
+		stage('stage_name') {
+		
+			//same as before
+			agent {
+			}
+		
+			//same as before
+			environment {
+			}
+		
+			//Required
+			//Inside each stage block
+			steps {
+				echo 'Hello World'
+				sh 'mvn --version'
+				
+				script {
+				
+				}			
+			}
+		}
+	}
+	
+	//Section
+	//Allowed at top-level pipeline block & each stage block
+	//Usually at end of pipeline
+	post {
+		[always|changed|fixed|regression|aborted|failure|success|unstable|cleanup] {}
+	}
+
+}

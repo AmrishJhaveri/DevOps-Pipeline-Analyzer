@@ -7,8 +7,6 @@ from scipy.stats.stats import pearsonr
 with open('intermediateOutput.json') as f:
     vals = json.load(f)
 	
-
-	
 triggerList = []
 stageCountList = []
 
