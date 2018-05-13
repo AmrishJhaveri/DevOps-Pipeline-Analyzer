@@ -30,7 +30,7 @@ var parseBasedOnOutput = {
   // section.
   counts_of_activities_in_post_blocks: {},
 
-  // keeps the count of the files scanned for the analyses
+  // keeps the count of the valid files scanned for the analyses
   valid_jenkinsfiles_scanned: 0,
 
   // List of Jenkinsfile's Project and the parsed JSON output of the

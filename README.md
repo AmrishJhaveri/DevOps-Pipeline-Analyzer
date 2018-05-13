@@ -11,7 +11,7 @@ DevOps-Pipeline-Analyzer collects large number of DevOps pipeline programs and o
 ### Prerequisites
 
 - Node `v9.9.0`(NPM is installed with Node)
-- Python `v3.6.1`
+- Python `v3.6.1`. Also `pip install scipy`
 - Docker `v18.01.0-ce` running on `192.168.99.100` (if different then change the IP in code files).
 
 ### Installing
@@ -95,6 +95,7 @@ research_question_3b|JSON String| What are the most and the least frequent opera
 counts_of_operation_stages|JSON Object| Only for Q3.Stores counts for each operation stages.
 research_question_4|JSON String| For stages in parallel, fail-fast feature is used for what type of operations(stage names)? When it is used/unused, what are the operations running in parallel?
 parallel_stages_analysis|JSON Array|Only for Q4. A list containing objects for each jenkinsfile with data of outer_stage_name,parallel stages, fail-fast used or not.
+valid_jenkinsfiles_scanned|JSON Number|Keeps the count of the valid files scanned for the analyses.
 project_details|JSON Array|List of Jenkinsfile's Project and the parsed JSON output of the jenkinsfile.
 
 

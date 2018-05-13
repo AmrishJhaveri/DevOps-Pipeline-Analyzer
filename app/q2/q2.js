@@ -26,6 +26,10 @@ var parseBasedOnOutput = {
   counts_of_types_of_triggers: {},
   // a list of no. of triggers and stages for each jenkisnfile.
   counts_of_triggers_and_stages: [],
+
+  // keeps the count of the valid files scanned for the analyses
+  valid_jenkinsfiles_scanned: 0,
+
   // List of Jenkinsfile's Project and the parsed JSON output of the
   // jenkinsfile.
   project_details: []
@@ -43,7 +47,7 @@ const CONSTANTS = {
 // Recursive calls to Jenkins Server can be configured here but can go into
 // infinelty loop.
 const SEARCH_CODE_GIT_CONSTANTS = {
-  REPOS_PER_PAGE: 30,
+  REPOS_PER_PAGE: 45,
   MAX_NO_OF_PAGES_TO_FETCH_FROM: 3,
   RECURSIVE_CALLS_TO_JENKINS: 2
 }
@@ -202,39 +206,39 @@ function processEachTrigger() {
  *
  */
 function getEachJenkinsFileWrapper() {
-    return async function(eachRepoForFile) {
+  return async function(eachRepoForFile) {
+    try {
+      let myJsonStructure = {};
+      // Getting the blob details of the Jenkinsfile.
+      let response = await axios.get(
+          eachRepoForFile.git_url + '?access_token=' + accessToken);
+
+      // decode the content part of the reponse
+      let fileContent = Buffer.from(response.data.content, 'base64');
+      let jsonResponse;
+
       try {
-        let myJsonStructure = {};
-        // Getting the blob details of the Jenkinsfile.
-        let response = await axios.get(
-            eachRepoForFile.git_url + '?access_token=' + accessToken);
-  
-        // decode the content part of the reponse
-        let fileContent = Buffer.from(response.data.content, 'base64');
-        let jsonResponse;
-  
-        try {
-          // this can throw an error because of bottleneck on Jenkins side. Tried
-          // to resolve by recursive calls but not a foolproof solution.
-          jsonResponse = await jenkinsJSONPromise(fileContent);
-          myJsonStructure['full_repo_name'] =
-              eachRepoForFile.repository.full_name;
-          myJsonStructure['repo_url'] = eachRepoForFile.repository.html_url;
-          myJsonStructure['html_url_jenkinsfile'] = eachRepoForFile.html_url;
-          myJsonStructure['api_url_jenkinsfile'] = eachRepoForFile.git_url;
-          myJsonStructure['jenkins_pipeline'] = jsonResponse;
-  
-          parsedJenkinsFile.push(myJsonStructure);
-  
-        } catch (e) {
-          // Absorbing this error. Since bottleneck on Jenkins side.
-        }
-  
+        // this can throw an error because of bottleneck on Jenkins side. Tried
+        // to resolve by recursive calls but not a foolproof solution.
+        jsonResponse = await jenkinsJSONPromise(fileContent);
+        myJsonStructure['full_repo_name'] =
+            eachRepoForFile.repository.full_name;
+        myJsonStructure['repo_url'] = eachRepoForFile.repository.html_url;
+        myJsonStructure['html_url_jenkinsfile'] = eachRepoForFile.html_url;
+        myJsonStructure['api_url_jenkinsfile'] = eachRepoForFile.git_url;
+        myJsonStructure['jenkins_pipeline'] = jsonResponse;
+
+        parsedJenkinsFile.push(myJsonStructure);
+
       } catch (e) {
-        console.log('Error at getEachJenkinsFileWrapper()', e);
+        // Absorbing this error. Since bottleneck on Jenkins side.
       }
+
+    } catch (e) {
+      console.log('Error at getEachJenkinsFileWrapper()', e);
     }
   }
+}
 
 /**
  * This function returns a promise.
@@ -248,27 +252,27 @@ function getEachJenkinsFileWrapper() {
  * @param {*} fileContent
  */
 function jenkinsJSONPromise(fileContent) {
-    return new Promise((resolve, reject) => {
-      let options = {
-        method: 'POST',
-        url: 'http://' + JENKINS_SERVER.IP + ':' + JENKINS_SERVER.PORT +
-            '/pipeline-model-converter/toJson',
-        headers: {
-          'cache-control': 'no-cache',
-          authorization: JENKINS_SERVER.BASIC_AUTHORIZATION,
-          'content-type':
-              'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
-          'Connection': 'keep-alive'
-        },
-        formData: {jenkinsfile: fileContent}
-      };
-  
-      let count = 0;
-  
-      // first call made inside this recursive function.
-      recursiveRequest(resolve, reject, options, count);
-    });
-  }
+  return new Promise((resolve, reject) => {
+    let options = {
+      method: 'POST',
+      url: 'http://' + JENKINS_SERVER.IP + ':' + JENKINS_SERVER.PORT +
+          '/pipeline-model-converter/toJson',
+      headers: {
+        'cache-control': 'no-cache',
+        authorization: JENKINS_SERVER.BASIC_AUTHORIZATION,
+        'content-type':
+            'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
+        'Connection': 'keep-alive'
+      },
+      formData: {jenkinsfile: fileContent}
+    };
+
+    let count = 0;
+
+    // first call made inside this recursive function.
+    recursiveRequest(resolve, reject, options, count);
+  });
+}
 
 /**
  * This function is recursive so we can imrpove on the bottleneck issue faced on
@@ -285,30 +289,32 @@ function jenkinsJSONPromise(fileContent) {
  * @param {*} count number calls made for this jenkinsfile. So avoid infinite loop.
  */
 function recursiveRequest(resolve, reject, options, count) {
-    count++;
-    request(options, function(error, response, body) {
-      if (error) {
-        // If particular type of error and count of calls is less the number
-        // allowed then make the call again.
-        if (count < SEARCH_CODE_GIT_CONSTANTS.RECURSIVE_CALLS_TO_JENKINS &&
-            error.code === 'ECONNRESET') {
-          recursiveRequest(resolve, reject, options, count);
-          return;
-        }
-        // if above conditions not met then reject the promise.
-        reject(error);
+  count++;
+  request(options, function(error, response, body) {
+    if (error) {
+      // If particular type of error and count of calls is less the number
+      // allowed then make the call again.
+      if (count < SEARCH_CODE_GIT_CONSTANTS.RECURSIVE_CALLS_TO_JENKINS &&
+          error.code === 'ECONNRESET') {
+        recursiveRequest(resolve, reject, options, count);
         return;
-      } else if (JSON.parse(body).data.json) {
-        // Valid JSON structure is present. So resolve it and provide it as
-        // parameter.
-        resolve(JSON.parse(body).data.json);
-      } else if (JSON.parse(body).data) {
-        // Jenkins file has some issue. So provide the error message in the
-        // parameter.
-        resolve(JSON.parse(body).data.errors);
       }
-    });
-  }
+      // if above conditions not met then reject the promise.
+      reject(error);
+      return;
+    } else if (JSON.parse(body).data.json) {
+      // Valid JSON structure is present. So resolve it and provide it as
+      // parameter.
+      resolve(JSON.parse(body).data.json);
+      parseBasedOnOutput.valid_jenkinsfiles_scanned =
+          parseBasedOnOutput.valid_jenkinsfiles_scanned + 1;
+    } else if (JSON.parse(body).data) {
+      // Jenkins file has some issue. So provide the error message in the
+      // parameter.
+      resolve(JSON.parse(body).data.errors);
+    }
+  });
+}
 
 /**
  *  Write synchronously to the final output json file.
