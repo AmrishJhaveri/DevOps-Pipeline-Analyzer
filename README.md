@@ -74,6 +74,14 @@ then execute `pip3 install pillow`.
 - Final Output is stored in JSON files in a pre-defined structure(shown later).
 - IntermediateOutput JSON files are used by python scripts to create the graphs or calculate co-relation co-efficients.
 
+##Detail Report
+----------
+
+Please find the report of the analysis in the following document.
+
+##Flow Chart for Q1:
+The below image shows the flow for Q1. Flow for other questions is similar to this.
+![](https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp/raw/master/images/q1.png)
 
 ## Output Structure
 ----------
@@ -97,6 +105,9 @@ research_question_4|JSON String| For stages in parallel, fail-fast feature is us
 parallel_stages_analysis|JSON Array|Only for Q4. A list containing objects for each jenkinsfile with data of outer_stage_name,parallel stages, fail-fast used or not.
 valid_jenkinsfiles_scanned|JSON Number|Keeps the count of the valid files scanned for the analyses.
 project_details|JSON Array|List of Jenkinsfile's Project and the parsed JSON output of the jenkinsfile.
+
+
+
 
 
 ## Built With
