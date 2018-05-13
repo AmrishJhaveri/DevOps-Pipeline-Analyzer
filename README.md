@@ -1,4 +1,4 @@
-**Note:**	Please view this file in a web browser.
+**Note:**	Please view this file in a web browser. Detailed Project report is present in a different file: [ProjectReport](https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp/raw/master/Project%20Report.pdf "ProjectReport")
 
 # DevOps-Pipeline-Analyzer
 
@@ -11,7 +11,7 @@ DevOps-Pipeline-Analyzer collects large number of DevOps pipeline programs and o
 ### Prerequisites
 
 - Node `v9.9.0`(NPM is installed with Node)
-- Python `v3.6.1`. Also `pip install scipy`
+- Python `v3.6.1`. Also `pip` & `pip install scipy`.
 - Docker `v18.01.0-ce` running on `192.168.99.100` (if different then change the IP in code files).
 
 ### Installing
@@ -77,17 +77,21 @@ then execute `pip3 install pillow`.
 ##Detailed Report
 ----------
 
-Please find the report of the analysis in the following document.
+Please find the report of the analysis by opening the following document:
+
+[https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp/raw/master/Project%20Report.pdf](https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp/raw/master/Project%20Report.pdf "Project_Report")
+
 
 
 ##Flow Chart for Q1:
 ----------
-The below image shows the flow for Q1. Flow for other questions is similar to this.
+The below image shows the flow for Q1. Flow for other questions is similar to this:
+
 ![](https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp/raw/master/images/q1.png)
 
 ## Output Structure
 ----------
-The output present in finalOutput.json will have the following structure :
+The output present in `finalOutput.json` will have the following structure :
 
 Attribute Name|Data Type|Purpose
 --|--|--
