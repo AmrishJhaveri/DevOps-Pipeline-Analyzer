@@ -1,0 +1,656 @@
+{
+  "research_question_3a": "What are the most and the least frequent commands in pipeline stages?",
+  "counts_commands_in_stages_operations": {
+    "multimodel": [
+      "echo",
+      "sh"
+    ],
+    "individual pn getsolution": [
+      "script"
+    ],
+    "test results": [
+      "junit"
+    ],
+    "build": [
+      "checkout",
+      "withMaven",
+      "withMaven"
+    ],
+    "environment": [
+      "dir"
+    ],
+    "simulation": [
+      "withMaven"
+    ]
+  },
+  "research_question_3b": "What are the most and the least frequent operations in pipeline stages?",
+  "counts_of_operation_stages": {
+    "multimodel": 1,
+    "individual pn getsolution": 1,
+    "test results": 1,
+    "build": 1,
+    "environment": 1,
+    "simulation": 1
+  },
+  "valid_jenkinsfiles_scanned": 2,
+  "project_details": [
+    {
+      "full_repo_name": "akshaya1987/ServiceCenterAPI",
+      "repo_url": "https://github.com/akshaya1987/ServiceCenterAPI",
+      "html_url_jenkinsfile": "https://github.com/akshaya1987/ServiceCenterAPI/blob/d87517e314029e57aff80e84b37bd49544517183/Jenkinsfile",
+      "api_url_jenkinsfile": "https://api.github.com/repositories/126334720/git/blobs/9166e2e7315fcb437fed3f611aa710930c2f3517",
+      "jenkins_pipeline": {
+        "pipeline": {
+          "stages": [
+            {
+              "name": "Multimodel",
+              "branches": [
+                {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "echo",
+                      "arguments": [
+                        {
+                          "key": "message",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "Run the Multimodel job."
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "name": "sh",
+                      "arguments": [
+                        {
+                          "key": "script",
+                          "value": {
+                            "isLiteral": false,
+                            "value": "\"newman run col/SEALS/getSolution/validResponse.json -d data/byFamily/${family}/multimodel.json -e env/SEALS_${env}.json -n ${multimodelSECount} --delay-request 500 --reporters junit,cli --reporter-junit-export newman/${family}/GetSolution_Multimodel.xml --insecure --no-color -x\""
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Individual PN getSolution",
+              "branches": [
+                {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "script",
+                      "arguments": [
+                        {
+                          "key": "scriptBlock",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "for (int i = 0; i < PNs.size(); i++){\n                            stage(\"${PNs[i]}\") {\n                                echo \"${PNs[i]} is the right PN for you\"\n                                echo \"newman run col/SEALS/getSolution/validResponse.json -d data/byFamily/${family}/${PNs[i]}_data.json -e env/SEALS_${env}.json -n ${totalSECount} --delay-request 500 --reporters junit,cli --reporter-junit-export newman/${family}/GetSolution_${PNs[i]}.xml --insecure --no-color -x\"\n                                echo \"newman run col/SEALS/getSolution/validResponse.json -d data/byFamily/Thor/failure.json -e env/SEALS_ITG.json -n 4 --delay-request 500 --reporters junit,cli --reporter-junit-export newman/Thor/GetSolution_Multimodel.xml --insecure --no-color -x\"\n                            }\n                        }"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Test Results",
+              "branches": [
+                {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "junit",
+                      "arguments": [
+                        {
+                          "key": "testResults",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "newman/**/*.xml"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "environment": [
+            {
+              "key": "http_proxy",
+              "value": {
+                "isLiteral": true,
+                "value": "http://web-proxy.europe.hp.com:8080"
+              }
+            },
+            {
+              "key": "https_proxy",
+              "value": {
+                "isLiteral": true,
+                "value": "http://web-proxy.europe.hp.com:8080"
+              }
+            }
+          ],
+          "agent": {
+            "type": "any"
+          },
+          "options": {
+            "options": [
+              {
+                "name": "buildDiscarder",
+                "arguments": [
+                  {
+                    "name": "logRotator",
+                    "arguments": [
+                      {
+                        "key": "numToKeepStr",
+                        "value": {
+                          "isLiteral": true,
+                          "value": "5"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "full_repo_name": "nblair/continuous-performance-testing",
+      "repo_url": "https://github.com/nblair/continuous-performance-testing",
+      "html_url_jenkinsfile": "https://github.com/nblair/continuous-performance-testing/blob/3ea1eb8c151b815ae24774162ccda841a7ce85f6/performance-testsuite/Jenkinsfile",
+      "api_url_jenkinsfile": "https://api.github.com/repositories/107594634/git/blobs/02a336c244fe3fdd82799656d39b093ddf1ba425",
+      "jenkins_pipeline": {
+        "pipeline": {
+          "stages": [
+            {
+              "name": "Build",
+              "branches": [
+                {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "checkout",
+                      "arguments": [
+                        {
+                          "key": "scm",
+                          "value": {
+                            "isLiteral": false,
+                            "value": "${scm}"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "name": "withMaven",
+                      "arguments": [
+                        {
+                          "key": "options",
+                          "value": {
+                            "isLiteral": false,
+                            "value": "${[ artifactsPublisher(disabled: true) ]}"
+                          }
+                        }
+                      ],
+                      "children": [
+                        {
+                          "name": "sh",
+                          "arguments": [
+                            {
+                              "key": "script",
+                              "value": {
+                                "isLiteral": true,
+                                "value": "mvn clean install -DskipTests=true"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "withMaven",
+                      "arguments": [],
+                      "children": [
+                        {
+                          "name": "sh",
+                          "arguments": [
+                            {
+                              "key": "script",
+                              "value": {
+                                "isLiteral": true,
+                                "value": "mvn dependency:copy-dependencies -pl :performance-testsuite"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Environment",
+              "branches": [
+                {
+                  "name": "default",
+                  "steps": [
+                    {
+                      "name": "dir",
+                      "arguments": {
+                        "isLiteral": true,
+                        "value": "performance-testsuite"
+                      },
+                      "children": [
+                        {
+                          "name": "sh",
+                          "arguments": [
+                            {
+                              "key": "script",
+                              "value": {
+                                "isLiteral": true,
+                                "value": "terraform init"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "name": "sh",
+                          "arguments": [
+                            {
+                              "key": "script",
+                              "value": {
+                                "isLiteral": true,
+                                "value": "terraform apply"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "name": "sh",
+                          "arguments": [
+                            {
+                              "key": "script",
+                              "value": {
+                                "isLiteral": true,
+                                "value": "terraform output -json > target/terraformOutput.json"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "name": "sh",
+                          "arguments": [
+                            {
+                              "key": "script",
+                              "value": {
+                                "isLiteral": false,
+                                "value": "\"\"\"\n          ./configure-gatling.sh \\\n            -c ${params.sampleNameSize} \\\n            -d \\\"${params.duration}\\\" \\\n            -m \\\"${params.ramp}\\\" \\\n            -t ${params.threads} \n          \"\"\""
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "post": {
+                "conditions": [
+                  {
+                    "condition": "always",
+                    "branch": {
+                      "name": "default",
+                      "steps": [
+                        {
+                          "name": "archive",
+                          "arguments": [
+                            {
+                              "key": "includes",
+                              "value": {
+                                "isLiteral": true,
+                                "value": "performance-testsuite/terraform.tfstate"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "name": "archive",
+                          "arguments": [
+                            {
+                              "key": "includes",
+                              "value": {
+                                "isLiteral": true,
+                                "value": "performance-testsuite/target/terraformOutput.json"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "name": "archive",
+                          "arguments": [
+                            {
+                              "key": "includes",
+                              "value": {
+                                "isLiteral": true,
+                                "value": "performance-testsuite/src/test/resources/application.conf"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "condition": "failure",
+                    "branch": {
+                      "name": "default",
+                      "steps": [
+                        {
+                          "name": "dir",
+                          "arguments": {
+                            "isLiteral": true,
+                            "value": "performance-testsuite"
+                          },
+                          "children": [
+                            {
+                              "name": "sh",
+                              "arguments": [
+                                {
+                                  "key": "script",
+                                  "value": {
+                                    "isLiteral": true,
+                                    "value": "terraform destroy --force"
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "Simulation",
+              "branches": [
+                {
+                  "name": "gatling",
+                  "steps": [
+                    {
+                      "name": "withMaven",
+                      "arguments": [
+                        {
+                          "key": "options",
+                          "value": {
+                            "isLiteral": false,
+                            "value": "${[ artifactsPublisher(disabled: true) ]}"
+                          }
+                        }
+                      ],
+                      "children": [
+                        {
+                          "name": "dir",
+                          "arguments": {
+                            "isLiteral": true,
+                            "value": "performance-testsuite"
+                          },
+                          "children": [
+                            {
+                              "name": "sh",
+                              "arguments": [
+                                {
+                                  "key": "script",
+                                  "value": {
+                                    "isLiteral": true,
+                                    "value": "./wait-for.sh"
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "name": "sh",
+                              "arguments": [
+                                {
+                                  "key": "script",
+                                  "value": {
+                                    "isLiteral": true,
+                                    "value": "mvn package verify -P gatling"
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "name": "sh",
+                              "arguments": [
+                                {
+                                  "key": "script",
+                                  "value": {
+                                    "isLiteral": false,
+                                    "value": "\"OUTPUT=\\$(ls -t target/gatling/results/ | head -1) && mv target/gatling/results/\\$OUTPUT target/gatling/results/${env.BUILD_TAG}\""
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "publishHTML",
+                          "arguments": [
+                            {
+                              "key": "target",
+                              "value": {
+                                "isLiteral": false,
+                                "value": "[\n                        allowMissing: false,\n                        alwaysLinkToLastBuild: false,\n                        keepAll: true,\n                        reportDir: \"performance-testsuite/target/gatling/results/${env.BUILD_TAG}\",\n                        reportFiles: 'index.html',\n                        reportName: \"Gatling Report\"\n                    ]"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "manipulator",
+                  "steps": [
+                    {
+                      "name": "echo",
+                      "arguments": [
+                        {
+                          "key": "message",
+                          "value": {
+                            "isLiteral": true,
+                            "value": "ready to manipulate while simulation is running"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "post": {
+                "conditions": [
+                  {
+                    "condition": "always",
+                    "branch": {
+                      "name": "default",
+                      "steps": [
+                        {
+                          "name": "dir",
+                          "arguments": {
+                            "isLiteral": true,
+                            "value": "performance-testsuite"
+                          },
+                          "children": [
+                            {
+                              "name": "sh",
+                              "arguments": [
+                                {
+                                  "key": "script",
+                                  "value": {
+                                    "isLiteral": true,
+                                    "value": "./fetch-state.sh"
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "archive",
+                          "arguments": [
+                            {
+                              "key": "includes",
+                              "value": {
+                                "isLiteral": true,
+                                "value": "performance-testsuite/target/log/**/*"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "name": "dir",
+                          "arguments": {
+                            "isLiteral": true,
+                            "value": "performance-testsuite"
+                          },
+                          "children": [
+                            {
+                              "name": "sh",
+                              "arguments": [
+                                {
+                                  "key": "script",
+                                  "value": {
+                                    "isLiteral": true,
+                                    "value": "terraform destroy --force"
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "junit",
+                          "arguments": [
+                            {
+                              "key": "testResults",
+                              "value": {
+                                "isLiteral": true,
+                                "value": "performance-testsuite/target/gatling/**/assertions.xml"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "condition": "success",
+                    "branch": {
+                      "name": "default",
+                      "steps": [
+                        {
+                          "name": "dir",
+                          "arguments": {
+                            "isLiteral": true,
+                            "value": "performance-testsuite"
+                          },
+                          "children": [
+                            {
+                              "name": "sh",
+                              "arguments": [
+                                {
+                                  "key": "script",
+                                  "value": {
+                                    "isLiteral": true,
+                                    "value": "./check-state.sh"
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "environment": [
+            {
+              "key": "TF_VAR_build_key",
+              "value": {
+                "isLiteral": false,
+                "value": "\"${env.BUILD_TAG}\""
+              }
+            },
+            {
+              "key": "TF_VAR_java_min_heap",
+              "value": {
+                "isLiteral": false,
+                "value": "\"${params.java_min_mem}\""
+              }
+            },
+            {
+              "key": "TF_VAR_java_max_heap",
+              "value": {
+                "isLiteral": false,
+                "value": "\"${params.java_max_mem}\""
+              }
+            },
+            {
+              "key": "TF_VAR_java_max_direct_memory",
+              "value": {
+                "isLiteral": false,
+                "value": "\"${params.java_direct_mem}\""
+              }
+            },
+            {
+              "key": "TF_VAR_data_volume_size",
+              "value": {
+                "isLiteral": false,
+                "value": "\"${params.workdir_volumesize}\""
+              }
+            },
+            {
+              "key": "TF_VAR_data_volume_type",
+              "value": {
+                "isLiteral": false,
+                "value": "\"${params.workdir_volumetype}\""
+              }
+            },
+            {
+              "key": "TF_VAR_data_volume_iops",
+              "value": {
+                "isLiteral": false,
+                "value": "\"${params.workdir_volumeiops}\""
+              }
+            },
+            {
+              "key": "TF_VAR_runner",
+              "value": {
+                "isLiteral": false,
+                "value": "\"${OWNER}\""
+              }
+            }
+          ],
+          "agent": {
+            "type": "any"
+          }
+        }
+      }
+    }
+  ]
+}
