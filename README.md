@@ -74,12 +74,14 @@ then execute `pip3 install pillow`.
 - Final Output is stored in JSON files in a pre-defined structure(shown later).
 - IntermediateOutput JSON files are used by python scripts to create the graphs or calculate co-relation co-efficients.
 
-##Detail Report
+##Detailed Report
 ----------
 
 Please find the report of the analysis in the following document.
 
+
 ##Flow Chart for Q1:
+----------
 The below image shows the flow for Q1. Flow for other questions is similar to this.
 ![](https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp/raw/master/images/q1.png)
 
@@ -107,7 +109,17 @@ valid_jenkinsfiles_scanned|JSON Number|Keeps the count of the valid files scanne
 project_details|JSON Array|List of Jenkinsfile's Project and the parsed JSON output of the jenkinsfile.
 
 
-
+##Issues Faced:
+----------
+1. Jenkins API Bottleneck:
+	
+	Many simultaneous requests are sent to Jenkins pipeline-model-definition API which converts the Jenkinsfile and provides in JSON form. If port is not free for new request, the request returns an error code `ECONNRESET`. 
+	
+	Currently we made recursive calls until we get a valid response or some other error message. This recursive call is limited by the number provided else it goes into infinite loop.
+	
+2. Github `Abuse Detection Mechanism`:
+ 
+	If the application is run from index.js in root level, all questions module would be running simultaneously. This is detected by Github API as a `You have triggered an abuse detection mechanism.`. So please execute manually all the questions.
 
 
 ## Built With
