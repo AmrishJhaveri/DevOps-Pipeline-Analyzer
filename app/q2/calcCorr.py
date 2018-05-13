@@ -23,7 +23,7 @@ with open('finalOutput.json','r+',encoding="utf8") as f:
 	json.dump(full,f,indent=4)
 	f.truncate()
 
-xy = [[0]*(len(set(stageCountList))) for i in range(max(triggerList)+1)]
+xy = [[0]*(max(stageCountList)) for i in range(max(triggerList)+1)]
 for i in range(len(stageCountList)):
     #print(i)
     xy[triggerList[i]][stageCountList[i]-1] += 10

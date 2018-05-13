@@ -25,7 +25,7 @@ plt.xticks(np.arange(9),myKeys)
 plt.xlabel('post-condition blocks')
 plt.ylabel('Frequency')
 
-fig.savefig('post_section.jpg')
+fig.savefig('post_section.jpg',bbox_inches="tight")
 
 #Graph 2
 with open('intermediateOutput_2.json') as f:
@@ -45,4 +45,4 @@ plt.xlabel('post-condition command')
 plt.ylabel('Frequency')
 #plt.autoscale_view()
 
-fig.savefig('post_section_cmds.jpg')
+fig.savefig('post_section_cmds.jpg',bbox_inches="tight")
