@@ -27,6 +27,10 @@ var parseBasedOnOutput = {
       'What are the most and the least frequent operations in pipeline stages?',
   // stores counts for each operation stages.
   counts_of_operation_stages: {},
+
+  // keeps the count of the valid files scanned for the analyses
+  valid_jenkinsfiles_scanned: 0,
+
   // List of Jenkinsfile's Project and the parsed JSON output of the
   // jenkinsfile.
   project_details: []
@@ -46,7 +50,7 @@ const CONSTANTS = {
 // Recursive calls to Jenkins Server can be configured here but can go into
 // infinelty loop.
 const SEARCH_CODE_GIT_CONSTANTS = {
-  REPOS_PER_PAGE: 50,
+  REPOS_PER_PAGE: 70,
   MAX_NO_OF_PAGES_TO_FETCH_FROM: 3,
   RECURSIVE_CALLS_TO_JENKINS: 2
 }
@@ -306,6 +310,10 @@ function recursiveRequest(resolve, reject, options, count) {
       // Valid JSON structure is present. So resolve it and provide it as
       // parameter.
       resolve(JSON.parse(body).data.json);
+
+      parseBasedOnOutput.valid_jenkinsfiles_scanned =
+          parseBasedOnOutput.valid_jenkinsfiles_scanned + 1;
+
     } else if (JSON.parse(body).data) {
       // Jenkins file has some issue. So provide the error message in the
       // parameter.
