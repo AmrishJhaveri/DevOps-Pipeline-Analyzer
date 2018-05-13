@@ -30,6 +30,9 @@ var parseBasedOnOutput = {
   // section.
   counts_of_activities_in_post_blocks: {},
 
+  // keeps the count of the files scanned for the analyses
+  valid_jenkinsfiles_scanned: 0,
+
   // List of Jenkinsfile's Project and the parsed JSON output of the
   // jenkinsfile.
   project_details: []
@@ -94,7 +97,8 @@ const JENKINS_SERVER = {
  * @param {*} page_no page number of the search query to be considered for finding the repos
  */
 function getParams(page_no) {
-  // Search Jenkinsfile with agent and post keywords in the file, written in Groovy.
+  // Search Jenkinsfile with agent and post keywords in the file, written in
+  // Groovy.
   let q_param = 'Jenkinsfile in:path agent post in:file language:Groovy';
   // Sort by the stars of the Github project
   let sort_param = 'stars';
@@ -360,6 +364,8 @@ function recursiveRequest(resolve, reject, options, count) {
       // Valid JSON structure is present. So resolve it and provide it as
       // parameter.
       resolve(JSON.parse(body).data.json);
+      parseBasedOnOutput.valid_jenkinsfiles_scanned =
+          parseBasedOnOutput.valid_jenkinsfiles_scanned + 1;
     } else if (JSON.parse(body).data) {
       // Jenkins file has some issue. So provide the error message in the
       // parameter.
