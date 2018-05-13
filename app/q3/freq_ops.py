@@ -54,7 +54,7 @@ plt.xlabel('Stage operations')
 plt.ylabel('Frequency')
 #plt.autoscale_view()
 
-fig.savefig('freq_ops.jpg')
+fig.savefig('freq_ops.jpg',bbox_inches="tight")
 
 for aso in allStageOps.keys():
 	for o in ops.keys():
