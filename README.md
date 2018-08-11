@@ -1,4 +1,4 @@
-**Note:**	Please view this file in a web browser. Detailed Project report is present in a different file: [ProjectReport](https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp/raw/master/Project%20Report.pdf "ProjectReport")
+**Note:**	Please view this file in a web browser. Detailed Project report is present in a different file: [ProjectReport](https://github.com/AmrishJhaveri/DevOps-Pipeline-Analyzer/blob/master/Project%20Report.pdf "ProjectReport")
 
 # DevOps-Pipeline-Analyzer
 
@@ -74,23 +74,24 @@ then execute `pip3 install pillow`.
 - Final Output is stored in JSON files in a pre-defined structure(shown later).
 - IntermediateOutput JSON files are used by python scripts to create the graphs or calculate co-relation co-efficients.
 
-##Detailed Report
+## Detailed Report
 ----------
 
 Please find the report of the analysis by opening the following document:
 
-[https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp/raw/master/Project%20Report.pdf](https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp/raw/master/Project%20Report.pdf "Project_Report")
+[https://github.com/AmrishJhaveri/DevOps-Pipeline-Analyzer/blob/master/Project%20Report.pdf](https://github.com/AmrishJhaveri/DevOps-Pipeline-Analyzer/blob/master/Project%20Report.pdf "Project_Report")
 
 
 
-##Flow Chart for Q1:
+## Flow Chart for Q1:
 ----------
 The below image shows the flow for Q1. Flow for other questions is similar to this:
 
-![](https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp/raw/master/images/q1.png)
+![](https://github.com/AmrishJhaveri/DevOps-Pipeline-Analyzer/blob/master/images/q1.png)
 
 ## Output Structure
 ----------
+The actual output file is present at the location: [Q1_Final_Output](https://github.com/AmrishJhaveri/DevOps-Pipeline-Analyzer/blob/master/app/q1/finalOutput.json).
 The output present in `finalOutput.json` will have the following structure :
 
 Attribute Name|Data Type|Purpose
@@ -113,7 +114,7 @@ valid_jenkinsfiles_scanned|JSON Number|Keeps the count of the valid files scanne
 project_details|JSON Array|List of Jenkinsfile's Project and the parsed JSON output of the jenkinsfile.
 
 
-##Issues Faced:
+## Issues Faced:
 ----------
 1. Jenkins API Bottleneck:
 	
