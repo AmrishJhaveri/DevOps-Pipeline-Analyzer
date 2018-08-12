@@ -1,8 +1,7 @@
-**Note:**	Please view this file in a web browser. Detailed Project report is present in a different file: [ProjectReport](https://github.com/AmrishJhaveri/DevOps-Pipeline-Analyzer/blob/master/Project%20Report.pdf "ProjectReport")
+**Note:**	Please view this file in a web browser. 
+# Empirical-Analysis-of-DevOps-Pipeline
 
-# DevOps-Pipeline-Analyzer
-
-DevOps-Pipeline-Analyzer collects large number of DevOps pipeline programs and obtains statistical data that describe the content and patterns in DevOps pipelines.
+The goal of this project is to empirically investigate a large number of devops pipeline programs and obtain statistical data that describe the content and patterns in devops pipelines. We searched and obtained Jenkinsfiles and other pipeline artifacts from open-source repositories, e.g. Github. The result of this investigation is summarized in the [Project Report](https://github.com/AmrishJhaveri/DevOps-Pipeline-Analyzer/blob/master/Project%20Report.pdf)
 
 ## Getting Started
 
@@ -39,7 +38,7 @@ Inside each such folder, a JS file, Python script and multiple JSON files will b
 4. If its a co-relation co-efficient result than its updated in the `finalOutput.json`. If graphs than they are saved to the same question folder. 
 
 ### Running the Application
-**Important Note-** *It is possible to run all 4 files(q1.js,q2.js,q3.js,q4.js) simultaneously, we would advice you to run them independently. If you don't then a issue 'You have triggered an abuse detection mechanism.' will arise form the Github API end.*
+**Important Note-** *It is possible to run all 4 files(q1.js,q2.js,q3.js,q4.js) simultaneously, we would advice you to run them independently. If you don't than a issue 'You have triggered an abuse detection mechanism.' will arise form the Github API end.*
 
 Follow the below steps for each question:
 
