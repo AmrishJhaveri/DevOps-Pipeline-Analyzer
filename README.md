@@ -79,9 +79,15 @@ then execute `pip3 install pillow`.
 
 Please find the report of the analysis by opening the following document:
 
-[https://github.com/AmrishJhaveri/DevOps-Pipeline-Analyzer/blob/master/Project%20Report.pdf](https://github.com/AmrishJhaveri/DevOps-Pipeline-Analyzer/blob/master/Project%20Report.pdf "Project_Report")
+[https://github.com/AmrishJhaveri/DevOps-Pipeline-Analyzer/blob/master/Project%20Report.pdf](https://github.com/AmrishJhaveri/DevOps-Pipeline-Analyzer/blob/master/Project%20Report.pdf)
 
+### Implementation
 
+1. Fire query to GitHub API to search for repositories having Jenkinsfile containing the section to be analysed for the corresponding research question. Since there are huge number of results, we use pagination to process them in batches.
+2. Using the API of the jenkinsci/pipeline-model-definition-plugin, we parse the Jenkinsfile (which is in Groovy) of each repo into a JSON structure. This is a plugin for Jenkins, which means to parse a Jenkinsfile, we need to first run it in Jenkins, where we make the required API calls for converting to JSON structure, which is then stored for analysis
+3. We now check if the JSON structure contains the section corresponding to the research question in the desired format. This is because the JSON structure may contain errors due to improper syntaxes or a keyword not supported by the plugin. In such a case, we would not be able to use this file for our study, and hence must be neglected.
+4. From the files that contain the desired section(s), we store the results i.e. counting of various fields and actions observed in the file, into a common JSON file, which would be later retrieved for analysis.
+5. While the above portion has been implemented using NodeJS, we perform the actual analysis, inference and visualization using Python scripts, one for each research question. Based on the results stored in a global JSON structure as mentioned above, we plot various graphs to help understand the data distribution, and in some cases store analysis results in the common JSON.
 
 ## Flow Chart for Q1:
 ----------
