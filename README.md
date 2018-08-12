@@ -45,7 +45,7 @@ Inside each such folder, a JS file, Python script and multiple JSON files will b
 3. Generate a token whic required only access to public_repos.
 4. Copy this token and provide it in the code files to 'accessToken' variable.
 
-Follow the below steps for each question:
+**Follow the below steps for each question:**
 
 - Navigate to folder `q1`.
 - Run the file `q1.js` by the command `node q1.js`. Once completed, it will create the output files as required.
