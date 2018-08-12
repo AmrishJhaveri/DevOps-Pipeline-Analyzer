@@ -1,4 +1,3 @@
-**Note:**	Please view this file in a web browser. 
 # Empirical-Analysis-of-DevOps-Pipeline
 
 The goal of this project is to empirically investigate a large number of devops pipeline programs and obtain statistical data that describe the content and patterns in devops pipelines. We searched and obtained Jenkinsfiles and other pipeline artifacts from open-source repositories, e.g. Github. The result of this investigation is summarized in the [Project Report](https://github.com/AmrishJhaveri/DevOps-Pipeline-Analyzer/blob/master/Project%20Report.pdf)
@@ -39,6 +38,12 @@ Inside each such folder, a JS file, Python script and multiple JSON files will b
 
 ### Running the Application
 **Important Note-** *It is possible to run all 4 files(q1.js,q2.js,q3.js,q4.js) simultaneously, we would advice you to run them independently. If you don't than a issue 'You have triggered an abuse detection mechanism.' will arise form the Github API end.*
+
+**Generate your own Personal Access Token-**
+1. Login to Github with your credentials.
+2. Navigate to Settings --> Developer Settings --> Personal Access Token
+3. Generate a token whic required only access to public_repos.
+4. Copy this token and provide it in the code files to 'accessToken' variable.
 
 Follow the below steps for each question:
 
