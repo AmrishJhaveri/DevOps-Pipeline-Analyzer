@@ -66,7 +66,7 @@ then execute `pip3 install pillow`.
 
 ## Architecture
 ----------
-![](https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp/raw/master/images/Architecture_db_add.png)
+![](https://github.com/AmrishJhaveri/DevOps-Pipeline-Analyzer/blob/master/images/Architecture_db_add.png)
 
 - A Jenkins Server will be running on the local Docker VM exposed via `9080` port and `192.168.99.100` IP address.
 - The NodeJS application will collect the data from Github via its API and then pass the jenkinsfile to pipeline-model-definition API of Jenkins.
