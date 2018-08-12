@@ -1,6 +1,6 @@
 # Empirical-Analysis-of-DevOps-Pipeline
 
-The goal of this project is to empirically investigate a large number of devops pipeline programs and obtain statistical data that describe the content and patterns in devops pipelines. We searched and obtained Jenkinsfiles and other pipeline artifacts from open-source repositories, e.g. Github. The result of this investigation is summarized in the [Project Report](https://github.com/AmrishJhaveri/DevOps-Pipeline-Analyzer/blob/master/Project%20Report.pdf)
+The goal of this project is to empirically investigate a large number of devops pipeline programs and obtain statistical data that describe the content and patterns in devops pipelines. We searched and obtained Jenkinsfiles and other pipeline artifacts from open-source repositories, e.g. Github. The result of this investigation is summarized in the [Project Report](https://github.com/AmrishJhaveri/DevOps-Pipeline-Analyzer/blob/master/Project%20Report.pdf).
 
 ## Getting Started
 
