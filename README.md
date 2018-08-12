@@ -1,4 +1,4 @@
-**Note:**	Please view this file in a web browser. Detailed Project report is present in a different file: [ProjectReport](https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp/raw/master/Project%20Report.pdf "ProjectReport")
+**Note:**	Please view this file in a web browser. Detailed Project report is present in a different file: [ProjectReport](https://github.com/AmrishJhaveri/DevOps-Pipeline-Analyzer/blob/master/Project%20Report.pdf "ProjectReport")
 
 # DevOps-Pipeline-Analyzer
 
@@ -66,7 +66,7 @@ then execute `pip3 install pillow`.
 
 ## Architecture
 ----------
-![](https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp/raw/master/images/Architecture_db_add.png)
+![](https://github.com/AmrishJhaveri/DevOps-Pipeline-Analyzer/blob/master/images/Architecture_db_add.png)
 
 - A Jenkins Server will be running on the local Docker VM exposed via `9080` port and `192.168.99.100` IP address.
 - The NodeJS application will collect the data from Github via its API and then pass the jenkinsfile to pipeline-model-definition API of Jenkins.
@@ -74,23 +74,30 @@ then execute `pip3 install pillow`.
 - Final Output is stored in JSON files in a pre-defined structure(shown later).
 - IntermediateOutput JSON files are used by python scripts to create the graphs or calculate co-relation co-efficients.
 
-##Detailed Report
+## Detailed Report
 ----------
 
 Please find the report of the analysis by opening the following document:
 
-[https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp/raw/master/Project%20Report.pdf](https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp/raw/master/Project%20Report.pdf "Project_Report")
+[https://github.com/AmrishJhaveri/DevOps-Pipeline-Analyzer/blob/master/Project%20Report.pdf](https://github.com/AmrishJhaveri/DevOps-Pipeline-Analyzer/blob/master/Project%20Report.pdf)
 
+### Implementation
 
+1. Fire query to GitHub API to search for repositories having Jenkinsfile containing the section to be analysed for the corresponding research question. Since there are huge number of results, we use pagination to process them in batches.
+2. Using the API of the jenkinsci/pipeline-model-definition-plugin, we parse the Jenkinsfile (which is in Groovy) of each repo into a JSON structure. This is a plugin for Jenkins, which means to parse a Jenkinsfile, we need to first run it in Jenkins, where we make the required API calls for converting to JSON structure, which is then stored for analysis
+3. We now check if the JSON structure contains the section corresponding to the research question in the desired format. This is because the JSON structure may contain errors due to improper syntaxes or a keyword not supported by the plugin. In such a case, we would not be able to use this file for our study, and hence must be neglected.
+4. From the files that contain the desired section(s), we store the results i.e. counting of various fields and actions observed in the file, into a common JSON file, which would be later retrieved for analysis.
+5. While the above portion has been implemented using NodeJS, we perform the actual analysis, inference and visualization using Python scripts, one for each research question. Based on the results stored in a global JSON structure as mentioned above, we plot various graphs to help understand the data distribution, and in some cases store analysis results in the common JSON.
 
-##Flow Chart for Q1:
+## Flow Chart for Q1:
 ----------
 The below image shows the flow for Q1. Flow for other questions is similar to this:
 
-![](https://bitbucket.org/chinmay2312/amrish_jhaveri_chinmay-gangal_cp/raw/master/images/q1.png)
+![](https://github.com/AmrishJhaveri/DevOps-Pipeline-Analyzer/blob/master/images/q1.png)
 
 ## Output Structure
 ----------
+The actual output file is present at the location: [Q1_Final_Output](https://github.com/AmrishJhaveri/DevOps-Pipeline-Analyzer/blob/master/app/q1/finalOutput.json).
 The output present in `finalOutput.json` will have the following structure :
 
 Attribute Name|Data Type|Purpose
@@ -113,7 +120,7 @@ valid_jenkinsfiles_scanned|JSON Number|Keeps the count of the valid files scanne
 project_details|JSON Array|List of Jenkinsfile's Project and the parsed JSON output of the jenkinsfile.
 
 
-##Issues Faced:
+## Issues Faced:
 ----------
 1. Jenkins API Bottleneck:
 	
