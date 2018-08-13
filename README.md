@@ -122,19 +122,20 @@ project_details|JSON Array|List of Jenkinsfile's Project and the parsed JSON out
 
 3. If issue like this occur: 
 
-    Traceback (most recent call last):
-	  File "post_section.py", line 28, in <module>
-	fig.savefig('post_section.jpg')
-	  File "F:\Program Files\Python\Python36\lib\site-packages\matplotlib\figure.py", line 1834, in savefig
-	self.canvas.print_figure(fname, **kwargs)
-	  File "F:\Program Files\Python\Python36\lib\site-packages\matplotlib\backend_bases.py", line 2170, in print_figure
-	canvas = self._get_output_canvas(format)
-	  File "F:\Program Files\Python\Python36\lib\site-packages\matplotlib\backend_bases.py", line 2113, in _get_output_canvas
-	'%s.' % (format, ', '.join(formats)))
-	ValueError: Format "jpg" is not supported.
-	Supported formats: eps, pdf, pgf, png, ps, raw, rgba, svg, svgz.
 
-then execute `pip3 install pillow`.
+    	Traceback (most recent call last):
+	  	File "post_section.py", line 28, in <module>
+		fig.savefig('post_section.jpg')
+	  	File "F:\Program Files\Python\Python36\lib\site-packages\matplotlib\figure.py", line 1834, in savefig
+		self.canvas.print_figure(fname, **kwargs)
+	  	File "F:\Program Files\Python\Python36\lib\site-packages\matplotlib\backend_bases.py", line 2170, in print_figure
+		canvas = self._get_output_canvas(format)
+	  	File "F:\Program Files\Python\Python36\lib\site-packages\matplotlib\backend_bases.py", line 2113, in _get_output_canvas
+		'%s.' % (format, ', '.join(formats)))
+		ValueError: Format "jpg" is not supported.
+		Supported formats: eps, pdf, pgf, png, ps, raw, rgba, svg, svgz.
+
+	then execute `pip3 install pillow`.
 
 ## Built With
 
