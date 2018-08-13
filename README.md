@@ -52,22 +52,6 @@ Inside each such folder, a JS file, Python script and multiple JSON files will b
 - Once completed, you can run the python script in that particular folder: `python post_section.py` 
 - The graph will be created.
 
-If issue like this occur: 
-
-    Traceback (most recent call last):
-	  File "post_section.py", line 28, in <module>
-	fig.savefig('post_section.jpg')
-	  File "F:\Program Files\Python\Python36\lib\site-packages\matplotlib\figure.py", line 1834, in savefig
-	self.canvas.print_figure(fname, **kwargs)
-	  File "F:\Program Files\Python\Python36\lib\site-packages\matplotlib\backend_bases.py", line 2170, in print_figure
-	canvas = self._get_output_canvas(format)
-	  File "F:\Program Files\Python\Python36\lib\site-packages\matplotlib\backend_bases.py", line 2113, in _get_output_canvas
-	'%s.' % (format, ', '.join(formats)))
-	ValueError: Format "jpg" is not supported.
-	Supported formats: eps, pdf, pgf, png, ps, raw, rgba, svg, svgz.
-
-then execute `pip3 install pillow`.
-
 ## Architecture
 ----------
 ![](https://github.com/AmrishJhaveri/DevOps-Pipeline-Analyzer/blob/master/images/Architecture_db_add.png)
@@ -136,6 +120,21 @@ project_details|JSON Array|List of Jenkinsfile's Project and the parsed JSON out
  
 	If the application is run from index.js in root level, all questions module would be running simultaneously. This is detected by Github API as a `You have triggered an abuse detection mechanism.`. So please execute manually all the questions.
 
+3. If issue like this occur: 
+
+    Traceback (most recent call last):
+	  File "post_section.py", line 28, in <module>
+	fig.savefig('post_section.jpg')
+	  File "F:\Program Files\Python\Python36\lib\site-packages\matplotlib\figure.py", line 1834, in savefig
+	self.canvas.print_figure(fname, **kwargs)
+	  File "F:\Program Files\Python\Python36\lib\site-packages\matplotlib\backend_bases.py", line 2170, in print_figure
+	canvas = self._get_output_canvas(format)
+	  File "F:\Program Files\Python\Python36\lib\site-packages\matplotlib\backend_bases.py", line 2113, in _get_output_canvas
+	'%s.' % (format, ', '.join(formats)))
+	ValueError: Format "jpg" is not supported.
+	Supported formats: eps, pdf, pgf, png, ps, raw, rgba, svg, svgz.
+
+then execute `pip3 install pillow`.
 
 ## Built With
 
