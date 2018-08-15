@@ -2,6 +2,8 @@
 
 The goal of this project is to empirically investigate a large number of devops pipeline programs and obtain statistical data that describe the content and patterns in devops pipelines. We searched and obtained Jenkinsfiles and other pipeline artifacts from open-source repositories, e.g. Github. The result of this investigation is summarized in the [Project Report](https://github.com/AmrishJhaveri/DevOps-Pipeline-Analyzer/blob/master/Project%20Report.pdf).
 
+We used NodeJS to asynchronously retrieve Jenkinsfiles from Github. A Jenkins instance was hosted on Docker to take advantage of it's Jenkins-model-definition plugin which can parse Jenkinsfile and provide it in a JSON format. This data is then used by the Python application to do the analysis and generate the graphs.
+
 ## Getting Started
 
 ----------
